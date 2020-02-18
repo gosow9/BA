@@ -1,0 +1,163 @@
+%
+% skript.tex -- Lecture notes for the PartDiff lectures given at the
+%               MSE Master
+%
+% (c) 2006-2018 Prof. Dr. Andreas Mueller, HSR
+%
+\documentclass[a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{german}
+\usepackage{times}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{csquotes}
+\geometry{papersize={210mm,297mm},total={160mm,240mm},top=31mm,bindingoffset=15mm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amscd}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage{txfonts}
+\usepackage[all]{xy}
+\usepackage{paralist}
+%\usepackage[colorlinks=true]{hyperref}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{pdfpages}
+
+%für Querformat von zeitplan
+\usepackage{pdflscape}
+
+%für Abbreviations
+\usepackage{acronym}
+
+%figure float
+\usepackage{float}
+
+%für python code
+\usepackage{listings}
+
+%bibliography
+\usepackage[hyperref=true,backend=biber,style=ieee,defernumbers=true]{biblatex}
+\addbibresource{references.bib}
+
+\input{common/linsys.tex}
+\makeindex
+
+
+\begin{document}
+\pagestyle{fancy}
+\lhead{}
+\rhead{}
+\frontmatter
+\newcommand\HRule{\noindent\rule{\linewidth}{1.5pt}}
+
+
+
+\hypersetup{
+	colorlinks=true,
+	linktoc=all,
+	linkcolor=blue
+}
+
+
+\newtheorem{satz}{Theorem}[chapter]
+\newtheorem{problem}[satz]{Problem}
+\newtheorem{hilfssatz}[satz]{Lemma}
+\newtheorem{definition}[satz]{Definition}
+\newtheorem{annahme}[satz]{Assumption}
+\newtheorem{aufgabe}[satz]{Task}
+\newenvironment{beispiel}[1][Example]{%
+	\begin{proof}[#1]%
+		\renewcommand{\qedsymbol}{$\bigcirc$}
+	}{\end{proof}}
+%\allowdisplaybreaks
+
+
+\begin{titlepage}
+\vspace*{\stretch{1}}
+\HRule
+\vspace*{10pt}
+\begin{flushright}
+{\LARGE
+Fast Computer Vision based Geometry Estimation}
+
+%\Large{with Rotation, GPS and On-Board-Diagnostics Sensor Data}
+\end{flushright}
+\begin{flushright}
+{\Large Bachelor Thesis}
+\end{flushright}
+\HRule
+
+\vspace{70pt}
+\large
+\textbf{Authors}
+
+Cédric Renda, Manuel Tischhauser
+
+\textbf{Supervisor}
+
+Prof. Dr. Guido M. Schuster 
+
+\textbf{Subject}
+
+Image Processing
+
+
+
+\vspace*{\stretch{2}}
+\begin{center}
+HSR Hochschule Für Technik Rapperswil
+
+\today
+\end{center}
+\end{titlepage}
+
+
+\input{0-abstract/0-abstract.tex}
+\tableofcontents
+
+\mainmatter
+
+\input{00-abbreviations/00-abbreviations.tex}
+\input{1-intro/1-intro.tex}
+\input{2-theory/2-theory.tex}
+\input{3-evaluation/3-evaluation.tex}
+\input{4-development/4-development.tex}
+\input{5-results/5-results.tex}
+\input{6-summary/6-summary.tex}
+
+%bibliography
+\chapter*{References}
+\addcontentsline{toc}{chapter}{References} 
+\printbibliography[heading=none]
+
+%Abbildungsverzeichnis
+\addcontentsline{toc}{chapter}{List of figures} 
+\listoffigures\thispagestyle{fancy}
+
+%Tabellenverzeichnis
+\addcontentsline{toc}{chapter}{List of tables} 
+\listoftables\thispagestyle{fancy}
+
+\addcontentsline{toc}{chapter}{Statement of Plagiarisms} 
+\input{statment_of_plagiarism/statement_of_plagiarism.tex}
+
+\appendix
+\input{Appendix/appendix.tex}
+
+\vfill
+\pagebreak
+\ifodd\value{page}\else\null\clearpage\fi
+\lhead{Index}
+\rhead{}
+\addcontentsline{toc}{chapter}{\indexname}
+\input main.ind
+\end{document}
