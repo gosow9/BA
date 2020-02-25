@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="648116c3-2aae-44b9-aa75-3c6064a10ccb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/software/Image treshhold/treshhold.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/BA.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BA.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/software/JetsonHacks/CSI-Camera" beforeDir="false" afterPath="$PROJECT_DIR$/software/JetsonHacks/CSI-Camera" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/software/JetsonHacks/CSI-Camera/simple_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/software/JetsonHacks/CSI-Camera/simple_camera.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +55,9 @@
       <module name="BA" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/software/JetsonHacks/CSI-Camera" />
       <option name="IS_MODULE_SDK" value="true" />
