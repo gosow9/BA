@@ -1,4 +1,6 @@
 import cv2
+import numpy as np
+import time
 
 def gstreamer_pipeline(
     capture_width=1280,
@@ -36,8 +38,25 @@ def show_camera():
         window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_AUTOSIZE)
         # Window
         while cv2.getWindowProperty("CSI Camera", 0) >= 0:
+            t_ref = time.time()
+
             ret_val, img = cap.read()
-            cv2.imshow("CSI Camera", img)
+            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+            ret, thresh = cv2.threshold(gray, 110, 255, cv2.THRESH_BINARY)
+
+
+            thresh = np.float32(thresh)/255
+            corner = cv2.cornerHarris(thresh, 2, 3, 0.04)
+
+            img[corner > 0.1 * corner.max()] = [0, 0, 255]
+
+            cv2.imshow("corner detection", img)
+            cv2.imshow('binary threshhold', thresh)
+
+            #print fps
+            print(int(1/(time.time()-t_ref)))
+
             # This also acts as
             keyCode = cv2.waitKey(30) & 0xFF
             # Stop the program on the ESC key
