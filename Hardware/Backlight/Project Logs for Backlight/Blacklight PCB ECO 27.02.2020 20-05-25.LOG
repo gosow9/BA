@@ -1,0 +1,12 @@
+Added Pin To Net: NetName=NetD11_1 Pin=D1-1
+Added Pin To Net: NetName=NetD11_1 Pin=D2-1
+Added Pin To Net: NetName=NetD11_1 Pin=D3-1
+Added Pin To Net: NetName=NetD11_1 Pin=D4-1
+Added Pin To Net: NetName=NetD11_1 Pin=D5-1
+Added Pin To Net: NetName=NetD11_1 Pin=D6-1
+Added Pin To Net: NetName=NetD11_1 Pin=D7-1
+Added Pin To Net: NetName=NetD11_1 Pin=D8-1
+Added Pin To Net: NetName=NetD11_1 Pin=D9-1
+Added Pin To Net: NetName=NetD11_1 Pin=D10-1
+Added Pin To Net: NetName=NetD11_1 Pin=J1-1
+Change Net Name : Old Net Name=NetD11_1 New Net Name=VCC
