@@ -3,7 +3,6 @@ import numpy as np
 import imutils
 from imutils import contours
 from scipy.spatial import distance as dist
-
 import time
 
 def gstreamer_pipeline(
@@ -36,6 +35,15 @@ def gstreamer_pipeline(
 def midpoint(ptA, ptB):
 	return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
 
+
+mtx = np.loadtxt('mtx.txt')
+dst = np.loadtxt('dist.txt')
+w = 1280
+h = 720
+
+
+newcameramtx, roi = cv2.getOptimalNewCameraMatrix(mtx,dst,(w,h),1,(w,h))
+
 cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
 if cap.isOpened():
     window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_AUTOSIZE)
@@ -44,6 +52,14 @@ if cap.isOpened():
         t_ref = time.time()
 
         ret_val, img = cap.read()
+
+        # undistort
+        img = cv2.undistort(img, mtx, dst, None, newcameramtx)
+
+        # crop the image
+        x, y, w, h = roi
+        img = img[y:y + h, x:x + w]
+
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
