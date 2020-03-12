@@ -6,11 +6,11 @@ from scipy.spatial import distance as dist
 import time
 
 def gstreamer_pipeline(
-    capture_width=1280,
-    capture_height=720,
+    capture_width=3280,
+    capture_height=2464,
     display_width=1280,
     display_height=720,
-    framerate=30,
+    framerate=20,
     flip_method=0,
 ):
     return (
@@ -54,11 +54,11 @@ if cap.isOpened():
         ret_val, img = cap.read()
 
         # undistort
-        img = cv2.undistort(img, mtx, dst, None, newcameramtx)
+        #img = cv2.undistort(img, mtx, dst, None, newcameramtx)
 
         # crop the image
-        x, y, w, h = roi
-        img = img[y:y + h, x:x + w]
+        #x, y, w, h = roi
+        #img = img[y:y + h, x:x + w]
 
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 

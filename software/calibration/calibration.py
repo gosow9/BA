@@ -39,6 +39,8 @@ for fname in images:
 
 ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
+np.savetxt('rvecs.txt', rvecs)
+np.savetxt('tvecs.txt', tvecs)
 np.savetxt('mtx.txt', mtx)
 np.savetxt('dist.txt', dist)
 
@@ -51,7 +53,7 @@ for i in range(len(objpoints)):
 
 print("mean error: ", mean_error / len(objpoints))
 
-img = cv2.imread('snapshots/snap7.jpg')
+img = cv2.imread('snapshots/snap12.jpg')
 h,  w = img.shape[:2]
 newcameramtx, roi=cv2.getOptimalNewCameraMatrix(mtx,dist,(w,h),1,(w,h))
 
