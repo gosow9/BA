@@ -6,7 +6,7 @@ import glob
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,6,0)
-c_size = 6 #grösse Schachbrettmuster in mm
+c_size = 15 #grösse Schachbrettmuster in mm
 n = 7 # anzahl punkte
 
 objp = np.zeros((n*n,3), np.float32)
@@ -53,10 +53,9 @@ for i in range(len(objpoints)):
 
 print("mean error: ", mean_error / len(objpoints))
 
-img = cv2.imread('snapshots/snap12.jpg')
+img = cv2.imread('test.jpg')
 h,  w = img.shape[:2]
 newcameramtx, roi=cv2.getOptimalNewCameraMatrix(mtx,dist,(w,h),1,(w,h))
-
 
 # undistort
 dst = cv2.undistort(img, mtx, dist, None, newcameramtx)
@@ -66,7 +65,8 @@ dst = cv2.undistort(img, mtx, dist, None, newcameramtx)
 #x,y,w,h = roi
 #dst = dst[y:y+h, x:x+w]
 
-cv2.imshow('calibresult',dst)
+cv2.imshow('original', img)
+cv2.imshow('undistorted',dst)
 cv2.waitKey()
 
 
