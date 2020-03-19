@@ -64,8 +64,8 @@ def order_points(pts):
 
 	return np.array([tl, tr, br, bl], dtype="float32")
 
-mtx = np.loadtxt('chess3280x2464/mtx.txt')
-dst = np.loadtxt('chess3280x2464/dist.txt')
+mtx = np.loadtxt('matlab_calibration/mtx.txt')
+dst = np.loadtxt('matlab_calibration/dist.txt')
 w = 3280
 h = 2464
 
@@ -152,11 +152,11 @@ if cap.isOpened():
         objp = np.concatenate([world_p[0]+imgp[0], world_p[1]+imgp[0], world_p[2]+imgp[0], world_p[3]+imgp[0]])
 
         # Bildebene Transformieren
-        M = cv2.getPerspectiveTransform(imgp, objp)
-        h, w = img.shape[:2]
-        img = cv2.warpPerspective(img, M, (w, h))
-
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # M = cv2.getPerspectiveTransform(imgp, objp)
+        # h, w = img.shape[:2]
+        # img = cv2.warpPerspective(img, M, (w, h))
+        #
+        # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         # edge detection
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
