@@ -9,6 +9,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="jetson1@192.168.178.52:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/jetson1/pycharm" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
   </component>
 </project>

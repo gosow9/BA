@@ -72,8 +72,8 @@ def getContours(cnts):
 
     return np.array(c)
 
-mtx = np.loadtxt('matlab_calibration/mtx.txt')
-dst = np.loadtxt('matlab_calibration/dist.txt')
+mtx = np.loadtxt('intrinsics/mtx.txt')
+dst = np.loadtxt('intrinsics/dst.txt')
 w = 3280
 h = 2464
 
@@ -106,7 +106,6 @@ if cap.isOpened():
         # find rectangles
         cnts_upper, _ = cv2.findContours(edge[0:sep,:], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
         cnts_lower, _ = cv2.findContours(edge[h-sep:h,:], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-
 
         imgp = np.zeros((4, 2))
 
@@ -159,7 +158,7 @@ if cap.isOpened():
         imgp = order_points(imgp)
 
         # undistort imgp
-        imgp = cv2.undistortPoints(imgp, mtx, dst, None, newcameramtx)
+        imgp = cv2.undistortPoints(imgp, mtx, dst)
 
         # pixels/metric
         ppm = dist.euclidean(imgp[0], imgp[1])/200
@@ -192,7 +191,7 @@ if cap.isOpened():
         cnts_m = getContours(cnts_m)
 
         # undistort and warp perspective
-        cnts_trans = cv2.undistortPoints(cnts_m.astype(np.float32), mtx, dst, None, newcameramtx) #float32 important
+        cnts_trans = cv2.undistortPoints(cnts_m.astype(np.float32), mtx, dst) #float32 important
         cnts_trans = cv2.perspectiveTransform(cnts_trans, T, (w, h))
 
         box = cv2.minAreaRect(cnts_trans)
@@ -271,7 +270,7 @@ if cap.isOpened():
         nr = 0
         # Creat a snap if s is pressed
         if keyCode == 115:
-            cv2.imwrite('p{:}.jpg'.format(nr), gray)
+            cv2.imwrite('p{:}.jpg'.format(nr), edge)
             nr += 1
             print('snapshot created')
 
