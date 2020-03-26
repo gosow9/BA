@@ -7,7 +7,7 @@ def gstreamer_pipeline(
     capture_height=720,
     display_width=1280,
     display_height=720,
-    framerate=60,
+    framerate=30,
     flip_method=0,
 ):
     return (
@@ -44,15 +44,17 @@ def show_camera():
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             ret, thresh = cv2.threshold(gray, 110, 255, cv2.THRESH_BINARY)
-
-
             thresh = np.float32(thresh)/255
-            corner = cv2.cornerHarris(thresh, 2, 3, 0.04)
 
-            img[corner > 0.1 * corner.max()] = [0, 0, 255]
+            corner = cv2.goodFeaturesToTrack(thresh, 200, 0.1, 10)
+            corner = np.int0(corner)
 
-            cv2.imshow("corner detection", img)
+            for i in corner:
+                x, y = i.ravel()
+                cv2.circle(img, (x, y), 3, [0,0,255], -1)
+
             cv2.imshow('binary threshhold', thresh)
+            cv2.imshow("corner detection", img)
 
             #print fps
             print(int(1/(time.time()-t_ref)))
