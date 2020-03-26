@@ -2,11 +2,11 @@ import cv2
 import numpy as np
 
 def gstreamer_pipeline(
-    capture_width=1280,
-    capture_height=720,
-    display_width=1280,
-    display_height=720,
-    framerate=30,
+    capture_width=3280,
+    capture_height=2464,
+    display_width=3280,
+    display_height=2464,
+    framerate=20,
     flip_method=2,
 ):
     return (
@@ -35,20 +35,22 @@ if cap.isOpened():
     window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_AUTOSIZE)
     # Window
 
-    nr = 1
+    nr = 0
 
     while cv2.getWindowProperty("CSI Camera", 0) >= 0:
 
         ret_val, img = cap.read()
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        #gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-        cv2.imshow('snapshot', gray)
+        cv2.namedWindow('snapshot', cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('snapshot', 2*820, 2*616)
+        cv2.imshow('snapshot', img)
 
         keyCode = cv2.waitKey(30) & 0xFF
 
         # Creata snap if s is pressed
         if keyCode == 115:
-            cv2.imwrite('snap{:}.jpg'.format(nr), gray)
+            cv2.imwrite('snap{:}.png'.format(nr), img)
 
             print('snapshot created')
 
