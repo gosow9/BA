@@ -1,0 +1,10 @@
+Board Information Report
+Filename     : C:\Users\crenda\Documents\BA\Hardware\Backlight_V2\Backlight_V2.PcbDoc
+Date         : 28.03.2020
+Time         : 22:35:35
+Time Elapsed : 00:00:00
+
+General
+    Board Size, 300.2548mmx200.2548mm
+    Components on board, 90
+count : 2
