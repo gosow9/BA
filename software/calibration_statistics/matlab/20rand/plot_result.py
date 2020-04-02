@@ -5,10 +5,10 @@ def r_dist_model(k1, k2, k3, s, r):
     return s*(1 + k1*r**2 + k2*r**4+k3*r**6)
 
 def t_dist_model_x(p1, p2, x, y, r):
-    return x + 2*p1*x*y+p2*(r+2*x**2)
+    return x + 2*p1*x*y+p2*(r**2+2*x**2)
 
 def t_dist_model_y(p1, p2, x, y, r):
-    return y +  2*p2*x*y+p1*(r+2*y**2)
+    return y +  2*p2*x*y+p1*(r**2+2*y**2)
 
 def full_dist_model_x(k1, k2, k3, p1, p2, x, y, r):
     r_dist = r_dist_model(k1, k2, k3, x, r)
