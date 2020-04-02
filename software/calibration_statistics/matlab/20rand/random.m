@@ -26,10 +26,10 @@ for i = 1:10
     imageFileNames = [];
 
     for j = 1:20
-        f = dir("im/*png");
+        f = dir("../im/*png");
         n = numel(f);
         idx = randi(n);
-        imageFileNames = [imageFileNames, strcat("im/",f(idx).name)];       
+        imageFileNames = [imageFileNames, strcat("../im/",f(idx).name)];       
     end
 
     % Detect checkerboards in images
