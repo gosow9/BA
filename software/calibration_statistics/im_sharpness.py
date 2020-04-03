@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
 import glob
+import os
 
-images = glob.glob('im/*.png')
+images = glob.glob('im2/*.png')
 
 sharp = {}
 
@@ -18,7 +19,7 @@ for fname in images:
         sharp.update({fname: retval[0]})
         
     else:
-        sharp.update({fname: None})
+        os.rename(fname, 'im2/unsharp'+fname[3:])
         
 with open('sharpness.txt','w') as f:
     for s in sharp:
