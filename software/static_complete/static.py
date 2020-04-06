@@ -72,7 +72,7 @@ def getContours(cnts):
     c = []
     for i in range(len(cnts)):
         for j in range(len(cnts[i])):
-            c.append([cnts[i][j][0][0], cnts[i][j][0][1]])
+            c.append([[cnts[i][j][0][0], cnts[i][j][0][1]]])
 
     return np.array(c)
 
@@ -84,11 +84,14 @@ dst = np.loadtxt('intrinsics/dst.txt')
 w = 3280
 h = 2464
 
+map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
+
+
 # define variables for fps
 fps = 0
 
 # separation from edge
-sep = 750
+sep = 700
 
 # open camera
 cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0, capture_width=w, capture_height=h,
@@ -101,12 +104,15 @@ if cap.isOpened():
         t_ref = time.time()
 
         ret_val, img = cap.read()
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         # edge detection
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
         edge = cv2.Canny(gray, 50, 80)
         edge = cv2.dilate(edge, None, iterations=1)
+
+        # undistort edge
+        edge = cv2.remap(edge, map_x, map_y, cv2.INTER_LINEAR)
 
         # find rectangles
         cnts_upper, _ = cv2.findContours(edge[0:sep,:], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -147,7 +153,6 @@ if cap.isOpened():
             p = rect_center(tl, tr, br, bl)
 
             imgp[index] = p
-            cv2.circle(img, (int(p[0]), int(p[1])), 7, (0, 255, 255), -1)
 
             index += 1
 
@@ -163,15 +168,11 @@ if cap.isOpened():
             p = rect_center(tl, tr, br, bl)
 
             imgp[index] = p
-            cv2.circle(img, (int(p[0]), int(p[1])), 7, (0, 255, 255), -1)
 
             index += 1
 
         # order image points
         imgp = order_points(imgp)
-
-        # undistort imgp
-        imgp = cv2.undistortPoints(imgp, mtx, dst)
 
         # pixels/metric
         ppm = dist.euclidean(imgp[0], imgp[1])/200
@@ -196,6 +197,8 @@ if cap.isOpened():
 
         # get transformation matrix
         T = cv2.getPerspectiveTransform(imgp, objp)
+        edge = cv2.warpPerspective(edge, T, (w, h))
+
 
         # find object
         edge = cv2.erode(edge, None, iterations=1)
@@ -208,11 +211,7 @@ if cap.isOpened():
 
         cnts_m = getContours(cnts_m)
 
-        # undistort and warp perspective
-        cnts_trans = cv2.undistortPoints(cnts_m.astype(np.float32), mtx, dst)
-        cnts_trans = cv2.perspectiveTransform(cnts_trans, T, (w, h))
-
-        box = cv2.minAreaRect(cnts_trans)
+        box = cv2.minAreaRect(cnts_m)
         box = cv2.boxPoints(box)
         box[0][1] += sep
         box[1][1] += sep
@@ -241,8 +240,14 @@ if cap.isOpened():
         else:
             fps = 0.9 * fps + 0.1*1 / (time.time() - t_ref)
 
-        # draw rectangle to image
-        box = cv2.minAreaRect(cnts_m)
+        # undistort and warp the complete image
+        img = cv2.remap(img, map_x, map_y, cv2.INTER_LINEAR)
+        img = cv2.warpPerspective(img, T, (w, h))
+
+        #cnts_m = cv2.perspectiveTransform(cnts_m.astype(np.float32), T, (w, h))
+        for p in objp:
+            cv2.circle(img, (int(p[0]), int(p[1])), 7, (0, 255, 255), -1)
+
 
         box = cv2.minAreaRect(cnts_m)
         box = cv2.boxPoints(box)
