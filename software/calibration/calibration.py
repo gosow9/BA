@@ -6,24 +6,21 @@ import glob
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,6,0)
-c_size = 15 #grösse Schachbrettmuster in mm
-n = 7 # anzahl punkte
-
-objp = np.zeros((n*n,3), np.float32)
-objp[:,:2] = np.mgrid[0:n*c_size:c_size,0:n*c_size:c_size].T.reshape(-1,2)
+objp = np.zeros((7*8,3), np.float32)
+objp[:,:2] = np.mgrid[0:8,0:7].T.reshape(-1,2)
 
 # Arrays to store object points and image points from all the images.
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
 
-images = glob.glob('snapshots/*.jpg')
+images = glob.glob('im/*.png')
 
 for fname in images:
     img = cv2.imread(fname)
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
     # Find the chess board corners
-    ret, corners = cv2.findChessboardCorners(gray, (n,n),None)
+    ret, corners = cv2.findChessboardCorners(gray, (8,7),None)
 
     # If found, add object points, image points (after refining them)
     if ret == True:
@@ -33,14 +30,12 @@ for fname in images:
         imgpoints.append(corners2)
 
         # Draw and display the corners
-        img = cv2.drawChessboardCorners(img, (n,n), corners2,ret)
+        img = cv2.drawChessboardCorners(img, (8,7), corners2,ret)
         cv2.imshow('img',img)
         cv2.waitKey(500)
 
 ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
-np.savetxt('rvecs.txt', rvecs)
-np.savetxt('tvecs.txt', tvecs)
 np.savetxt('mtx.txt', mtx)
 np.savetxt('dist.txt', dist)
 

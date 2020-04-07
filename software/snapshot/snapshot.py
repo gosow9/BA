@@ -50,7 +50,7 @@ if cap.isOpened():
 
         # Creata snap if s is pressed
         if keyCode == 115:
-            cv2.imwrite('snap{:}.png'.format(nr), img)
+            cv2.imwrite('im{:}.png'.format(nr), img)
 
             print('snapshot created')
 
