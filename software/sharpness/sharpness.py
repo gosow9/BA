@@ -52,7 +52,7 @@ if cap.isOpened():
         # Process image if s is pressed
         if keyCode == 115:
             print('processing...')
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             # Find the chessboard corners
             ret, corners = cv2.findChessboardCornersSB(gray, (8, 7), flags=cv2.CALIB_CB_ACCURACY)
