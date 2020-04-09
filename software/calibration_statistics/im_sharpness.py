@@ -16,6 +16,7 @@ for fname in images:
     
     if ret == True:
         retval, sharpness = cv2.estimateChessboardSharpness(gray,(10,7), corners)
+        retval1, sharpness1 = cv2.estimateChessboardSharpness(gray,(10,7), corners, vertical=True)
         sharp.update({fname: retval[0]})
         
     else:
