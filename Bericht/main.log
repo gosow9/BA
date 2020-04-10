@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  27 MAR 2020 12:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  10 APR 2020 13:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1872,18 +1872,29 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 ]
 Chapter 2.
-) (./3-evaluation/3-evaluation.tex [5]
+<2-theory/camera/camera.pdf, id=161, 227.86731pt x 234.5041pt>
+File: 2-theory/camera/camera.pdf Graphic file (type pdf)
+<use 2-theory/camera/camera.pdf>
+Package pdftex.def Info: 2-theory/camera/camera.pdf  used on input line 12.
+(pdftex.def)             Requested size: 409.71689pt x 421.69197pt.
+[5]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[6
+[6pdfTeX warning (ext4): destination with the same identifier (name{figure.2.1}
+) has been already used, duplicate ignored
 
-]
-Chapter 3.
-) (./4-development/4-development.tex [7]
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.151 \end{align}
+                  <./2-theory/camera/camera.pdf>])
+(./3-evaluation/3-evaluation.tex [7]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1893,8 +1904,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [8
 
 ]
-Chapter 4.
-) (./5-results/5-results.tex [9]
+Chapter 3.
+) (./4-development/4-development.tex [9]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1904,8 +1915,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [10
 
 ]
-Chapter 5.
-) (./6-summary/6-summary.tex [11]
+Chapter 4.
+) (./5-results/5-results.tex [11]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1915,8 +1926,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [12
 
 ]
-Chapter 6.
-) [13]
+Chapter 5.
+) (./6-summary/6-summary.tex [13]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1926,10 +1937,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [14
 
 ]
-
-LaTeX Warning: Empty bibliography on input line 140.
-
-[15]
+Chapter 6.
+) [15]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1938,11 +1947,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [16
 
-] (./main.lof)
-\tf@lof=\write10
-\openout10 = `main.lof'.
+]
+LaTeX Font Info:    Try loading font information for T1+txtt on input line 140.
 
- [17]
+ (/usr/share/texlive/texmf-dist/tex/latex/txfonts/t1txtt.fd
+File: t1txtt.fd 2000/12/15 v3.1
+) [17]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1951,12 +1961,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [18
 
-] (./main.lot)
-\tf@lot=\write11
-\openout11 = `main.lot'.
+] (./main.lof)
+\tf@lof=\write10
+\openout10 = `main.lof'.
 
- (./statment_of_plagiarism/statement_of_plagiarism.tex
-[19]
+ [19]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1965,12 +1974,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [20
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 3--8
+] (./main.lot)
+\tf@lot=\write11
+\openout11 = `main.lot'.
 
- []
-
-[21]) (./Appendix/appendix.tex
+ (./statment_of_plagiarism/statement_of_plagiarism.tex
+[21]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1979,17 +1988,31 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [22
 
-
 ]
-Appendix A.
-[23]
+Underfull \hbox (badness 10000) in paragraph at lines 3--8
+
+ []
+
+[23]) (./Appendix/appendix.tex
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[24] [25
+[24
+
+
+]
+Appendix A.
+[25]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[26] [27
 
 ])
 
@@ -1998,7 +2021,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[26
+[28
 
 ] (./main.ind)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 163.
@@ -2007,26 +2030,38 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 163.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 163.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 163.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 43C6CCAC70EEFD97D4C9278EE9691616;704.
+(rerunfilecheck)             Checksum: 429B44345F2E09EAE5D868F013954055;941.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30268 strings out of 492982
- 521210 string characters out of 6134896
- 987991 words of memory out of 5000000
- 33172 multiletter control sequences out of 15000+600000
- 41813 words of font info for 80 fonts, out of 8000000 for 9000
+ 30533 strings out of 492982
+ 526146 string characters out of 6134896
+ 997349 words of memory out of 5000000
+ 33410 multiletter control sequences out of 15000+600000
+ 48895 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,11n,54p,3236b,746s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,21n,54p,3236b,1182s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/urw/times/utmr8a.pfb>
-Output written on main.pdf (32 pages, 43452 bytes).
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/rtxr.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/txfonts/txex.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/txfonts/txexa.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/txfonts/txsy.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb
+8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (34 pages, 136301 bytes).
 PDF statistics:
- 259 PDF objects out of 1000 (max. 8388607)
- 220 compressed objects within 3 object streams
- 53 named destinations out of 1000 (max. 500000)
- 125 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 379 PDF objects out of 1000 (max. 8388607)
+ 322 compressed objects within 4 object streams
+ 64 named destinations out of 1000 (max. 500000)
+ 154 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,38 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{cv_calib}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labeltitlesource}{title}
+      \field{title}{{Camera Calibration and 3D Reconstruction}}
+      \verb{urlraw}
+      \verb https://docs.opencv.org/4.3.0/d9/d0c/group__calib3d.html
+      \endverb
+      \verb{url}
+      \verb https://docs.opencv.org/4.3.0/d9/d0c/group__calib3d.html
+      \endverb
+      \keyw{online}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
