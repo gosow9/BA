@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.1)  13 APR 2020 14:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.1)  13 APR 2020 14:18
 entering extended mode
-**./camera.tex
-(camera.tex
+**./Camera2.tex
+(Camera2.tex
 LaTeX2e <2018-12-01>
 
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/latex/standalone\standa
@@ -53,8 +53,8 @@ e' class
 )
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\article.cls"
 Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
-("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\size10.clo"
-File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\size11.clo"
+File: size11.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 )
 \c@part=\count83
 \c@section=\count84
@@ -67,6 +67,8 @@ File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
+)
+\sa@box=\box27
 )
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/latex/pgf/frontendlayer
 \tikz.sty"
@@ -84,7 +86,7 @@ gfutil-common.tex"
 gfutil-common-lists.tex"))
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/utilities\p
 gfutil-latex.def"
-\pgfutil@abb=\box27
+\pgfutil@abb=\box28
 
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ms\everyshi.sty"
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
@@ -217,7 +219,7 @@ hutil.code.tex")
 hparser.code.tex"
 \pgfmath@dimen=\dimen117
 \pgfmath@count=\count98
-\pgfmath@box=\box28
+\pgfmath@box=\box29
 \pgfmath@toks=\toks23
 \pgfmath@stack@operand=\toks24
 \pgfmath@stack@operation=\toks25
@@ -279,9 +281,9 @@ File: pgfcorepathusage.code.tex 2019/07/17 v3.1.4a (3.1.4a)
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\
 pgfcorescopes.code.tex"
 File: pgfcorescopes.code.tex 2019/07/17 v3.1.4a (3.1.4a)
-\pgfpic=\box29
-\pgf@hbox=\box30
-\pgf@layerbox@main=\box31
+\pgfpic=\box30
+\pgf@hbox=\box31
+\pgf@layerbox@main=\box32
 \pgf@picture@serial@count=\count100
 )
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\
@@ -327,7 +329,7 @@ File: pgfcoreimage.code.tex 2019/07/17 v3.1.4a (3.1.4a)
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\
 pgfcoreexternal.code.tex"
 File: pgfcoreexternal.code.tex 2019/07/17 v3.1.4a (3.1.4a)
-\pgfexternal@startupbox=\box32
+\pgfexternal@startupbox=\box33
 ))
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/basiclayer\
 pgfcorelayers.code.tex"
@@ -348,7 +350,7 @@ File: pgfcorerdf.code.tex 2019/07/17 v3.1.4a (3.1.4a)
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/modules\pgf
 moduleshapes.code.tex"
 File: pgfmoduleshapes.code.tex 2019/07/17 v3.1.4a (3.1.4a)
-\pgfnodeparttextbox=\box33
+\pgfnodeparttextbox=\box34
 )
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/modules\pgf
 moduleplot.code.tex"
@@ -403,10 +405,10 @@ File: pgflibraryplothandlers.code.tex 2019/07/17 v3.1.4a (3.1.4a)
 \tikz@lastmovetoy=\dimen152
 \tikzleveldistance=\dimen153
 \tikzsiblingdistance=\dimen154
-\tikz@figbox=\box34
-\tikz@figbox@bg=\box35
-\tikz@tempbox=\box36
-\tikz@tempbox@bg=\box37
+\tikz@figbox=\box35
+\tikz@figbox@bg=\box36
+\tikz@tempbox=\box37
+\tikz@tempbox@bg=\box38
 \tikztreelevel=\count104
 \tikznumberofchildren=\count105
 \tikznumberofcurrentchild=\count106
@@ -425,17 +427,6 @@ File: pgfmodulematrix.code.tex 2019/07/17 v3.1.4a (3.1.4a)
 er/tikz/libraries\tikzlibrarytopaths.code.tex"
 File: tikzlibrarytopaths.code.tex 2019/07/17 v3.1.4a (3.1.4a)
 )))
-\sa@box=\box38
-)
-("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tikz-3dplot\tikz-
-3dplot.sty"
-("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ifthen.sty"
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-)
-("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlay
-er/tikz/libraries\tikzlibrarycalc.code.tex"
-File: tikzlibrarycalc.code.tex 2019/07/17 v3.1.4a (3.1.4a)
-)
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlay
 er/tikz/libraries\tikzlibrary3d.code.tex"
 File: tikzlibrary3d.code.tex 2019/07/17 v3.1.4a (3.1.4a)
@@ -448,52 +439,34 @@ File: tikzlibraryarrows.code.tex 2019/07/17 v3.1.4a (3.1.4a)
 gflibraryarrows.code.tex"
 File: pgflibraryarrows.code.tex 2019/07/17 v3.1.4a (3.1.4a)
 \arrowsize=\dimen155
-)))
-("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/libraries\p
-gflibraryarrows.meta.code.tex"
-File: pgflibraryarrows.meta.code.tex 2019/07/17 v3.1.4a (3.1.4a)
-\pgfarrowinset=\dimen156
-\pgfarrowlength=\dimen157
-\pgfarrowwidth=\dimen158
-\pgfarrowlinewidth=\dimen159
-)
-("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlay
-er/tikz/libraries\tikzlibrarypositioning.code.tex"
-File: tikzlibrarypositioning.code.tex 2019/07/17 v3.1.4a (3.1.4a)
-)
-("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/generic/pgf/frontendlay
-er/tikz/libraries\tikzlibrarybackgrounds.code.tex"
-File: tikzlibrarybackgrounds.code.tex 2019/07/17 v3.1.4a (3.1.4a)
-\pgf@layerbox@background=\box39
-\pgf@layerboxsaved@background=\box40
-) (camera.aux)
-\openout1 = `camera.aux'.
+)) (Camera2.aux)
+\openout1 = `Camera2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
-LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
 
 ABD: EveryShipout initializing macros
 ("C:\Users\Cedric\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-
 pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count112
-\scratchdimen=\dimen160
-\scratchbox=\box41
+\scratchdimen=\dimen156
+\scratchbox=\box39
 \nofMPsegments=\count113
 \nofMParguments=\count114
 \everyMPshowfont=\toks28
 \MPscratchCnt=\count115
-\MPscratchDim=\dimen161
+\MPscratchDim=\dimen157
 \MPnumerator=\count116
 \makeMPintoPDFobject=\count117
 \everyMPtoPDFconversion=\toks29
@@ -547,37 +520,38 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 22.
+(Font)              <10.95> on input line 67.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 22.
+(Font)              <8> on input line 67.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 25.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 25.
- [1
+(Font)              <6> on input line 67.
 
-{C:/Users/Cedric/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] (camera.au
-x) ) 
+Overfull \hbox (107.58665pt too wide) in paragraph at lines 86--87
+[][] 
+ []
+
+[1
+
+{C:/Users/Cedric/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+(Camera2.aux) ) 
 Here is how much of TeX's memory you used:
- 13695 strings out of 492895
- 289565 string characters out of 3123269
- 324799 words of memory out of 3000000
- 17358 multiletter control sequences out of 15000+200000
- 5763 words of font info for 21 fonts, out of 3000000 for 9000
+ 12735 strings out of 492895
+ 268605 string characters out of 3123269
+ 294630 words of memory out of 3000000
+ 16418 multiletter control sequences out of 15000+200000
+ 6679 words of font info for 24 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,9n,68p,418b,936s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmmi10.pfb><C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmmi6.pfb><C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Cedric/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Cedric/AppDa
-ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users
-/Cedric/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.p
-fb><C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmss8.pfb>
-Output written on camera.pdf (1 page, 62428 bytes).
+ 55i,6n,56p,410b,793s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmmi10.pfb><C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Cedric/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Cedric/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/C
+edric/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pf
+b>
+Output written on Camera2.pdf (1 page, 45952 bytes).
 PDF statistics:
- 37 PDF objects out of 1000 (max. 8388607)
+ 29 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
