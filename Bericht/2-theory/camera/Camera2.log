@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.1)  13 APR 2020 14:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.8.1)  13 APR 2020 15:14
 entering extended mode
 **./Camera2.tex
 (Camera2.tex
@@ -525,31 +525,25 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 67.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 67.
+ [1
 
-Overfull \hbox (107.58665pt too wide) in paragraph at lines 86--87
-[][] 
- []
-
-[1
-
-{C:/Users/Cedric/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-(Camera2.aux) ) 
+{C:/Users/Cedric/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] (Camera2.a
+ux) ) 
 Here is how much of TeX's memory you used:
  12735 strings out of 492895
  268605 string characters out of 3123269
- 294630 words of memory out of 3000000
+ 296613 words of memory out of 3000000
  16418 multiletter control sequences out of 15000+200000
  6679 words of font info for 24 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,6n,56p,410b,793s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmmi10.pfb><C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Cedric/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Cedric/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/C
-edric/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pf
-b>
-Output written on Camera2.pdf (1 page, 45952 bytes).
+ 55i,7n,56p,410b,803s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmmi10.pfb><C:/Users/Cedric/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Cedric/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Cedric/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/Cedric/AppD
+ata/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on Camera2.pdf (1 page, 45949 bytes).
 PDF statistics:
  29 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
