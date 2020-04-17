@@ -9,4 +9,5 @@
 *.gz
 *.toc
 *.pdf
-Results/noise/np_images/*
+Results/noise/6k2p4s/np_images/*
+Results/noise/LensFun/np_images/*
