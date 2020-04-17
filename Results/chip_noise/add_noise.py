@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from pylab import rcParams
+from sklearn.linear_model import LinearRegression
+
 
 img_bright = cv2.imread('bright.png')
 gray_bright = cv2.cvtColor(img_bright, cv2.COLOR_BGR2GRAY)
@@ -45,13 +47,21 @@ for s in std:
     
     else:
         sharpness_noise.append(None)
- 
+
+# linear regression  
+reg = LinearRegression().fit(std.reshape(-1,1), sharpness_noise)
+a = reg.coef_[0]
+b = reg.intercept_
+
+line = std*a+b
+
 # use latex-fonts in the plot
 plt.rcParams['font.family'] = 'SIXTGeneral'
 plt.rcParams.update({'font.size': 12})   
  
 fig, ax = plt.subplots(1,1)
-ax.plot(std, sharpness_noise, color='tab:blue')
+ax.plot(std, sharpness_noise, color='tab:blue', label='Sharpness')
+ax.plot(std, line, color='tab:orange', label='Regression\n'+'a = {:.2f}, b = {:.2f}'.format(a, b))
 ax.set_xlim([0, np.max(std)])
 ax.set_xticks([0, 5, 10, 15, 20, 25])
 ax.set_ylim([0, 40])
