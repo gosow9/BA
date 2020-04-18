@@ -42,39 +42,39 @@ def get_imgpoints(r, t):
     R, _ = cv2.Rodrigues(r)
      
     # add transformed checkerboard
-    for i in range(8):
-        for j in range(9):
-            if (i%2==0 and j%2==0) or (i%2!=0 and j%2!=0):
-                for a in range(size):
-                    for b in range(size):
-                        # index with respect to checkboard center
-                        x = i*size + a - x_check
-                        y = j*size + b - y_check
+    # for i in range(8):
+    #     for j in range(9):
+    #         if (i%2==0 and j%2==0) or (i%2!=0 and j%2!=0):
+    #             for a in range(size):
+    #                 for b in range(size):
+    #                     # index with respect to checkboard center
+    #                     x = i*size + a - x_check
+    #                     y = j*size + b - y_check
                         
-                        # project to 3D
-                        x_3D = x/f*z
-                        y_3D = y/f*z
+    #                     # project to 3D
+    #                     x_3D = x/f*z
+    #                     y_3D = y/f*z
                         
-                        vec_3D = np.array([x_3D, y_3D, 0])
+    #                     vec_3D = np.array([x_3D, y_3D, 0])
                         
-                        # transformation
-                        vec_3D_new = R@vec_3D + t
-                        vec_3D_new[2] += z
+    #                     # transformation
+    #                     vec_3D_new = R@vec_3D + t
+    #                     vec_3D_new[2] += z
                         
-                        # distortion and project to 2D
-                        x_2D = vec_3D_new[0]/vec_3D_new[2]
-                        y_2D = vec_3D_new[1]/vec_3D_new[2]
-                        r = np.sqrt(x_2D**2+y_2D**2)
+    #                     # distortion and project to 2D
+    #                     x_2D = vec_3D_new[0]/vec_3D_new[2]
+    #                     y_2D = vec_3D_new[1]/vec_3D_new[2]
+    #                     r = np.sqrt(x_2D**2+y_2D**2)
                         
-                        x_2D_dst = f*full_dist_model_x(k1, k2, k3, k4, k5, k6, p1, p2, s1, s2, x_2D, y_2D, r)
-                        y_2D_dst = f*full_dist_model_y(k1, k2, k3, k4, k5, k6, p1, p2, s3, s4, x_2D, y_2D, r)
+    #                     x_2D_dst = f*full_dist_model_x(k1, k2, k3, k4, k5, k6, p1, p2, s1, s2, x_2D, y_2D, r)
+    #                     y_2D_dst = f*full_dist_model_y(k1, k2, k3, k4, k5, k6, p1, p2, s3, s4, x_2D, y_2D, r)
                         
                     
-                        # new index with respect to image-cooridnates
-                        x_new = int(round(x_2D_dst + x_im))
-                        y_new = int(round(y_2D_dst + y_im))
+    #                     # new index with respect to image-cooridnates
+    #                     x_new = int(round(x_2D_dst + x_im))
+    #                     y_new = int(round(y_2D_dst + y_im))
                         
-                        im[x_new][y_new] = 40
+    #                     im[x_new][y_new] = 40
     
                       
     for i in np.arange(0, 7*size, size):
@@ -201,24 +201,26 @@ for i in range(20):
     imgpoints_s.append(imgp.astype(np.float32))
 
     print(i)
+    
 # calibrate camera
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.001)
 flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL
-ret_s, mtx_s, dist_s, rvecs_s, tvecs_s, newobjp_s, tdin_s, stdex_s, pve_s, stdnewobjp_s = cv2.calibrateCameraROExtended(objpoints, imgpoints, (3280, 2464), 1, None, None, flags=flags)
+ret_s, mtx_s, dist_s, rvecs_s, tvecs_s, newobjp_s, tdin_s, stdex_s, pve_s, stdnewobjp_s = cv2.calibrateCameraROExtended(objpoints_s, imgpoints_s, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
 
 # Compare
-objpoints_c = [] # 3d point in real world space
-imgpoints_c = [] # 2d points in image plane.
+# objpoints_c = [] # 3d point in real world space
+# imgpoints_c = [] # 2d points in image plane.
 
-for img in images:  
-    # Find the chess board corners
-    ret, corners = cv2.findChessboardCornersSB(img.astype(np.uint8), (8,7), flags=cv2.CALIB_CB_ACCURACY)
+# for img in images:  
+#     # Find the chess board corners
+#     ret, corners = cv2.findChessboardCornersSB(img.astype(np.uint8), (8,7), flags=cv2.CALIB_CB_ACCURACY)
 
-    # If found, add object points, image points (after refining them)
-    if ret == True:
-        objpoints_c.append(objp)
-        imgpoints_c.append(corners)
+#     # If found, add object points, image points (after refining them)
+#     if ret == True:
+#         objpoints_c.append(objp)
+#         imgpoints_c.append(corners)
             
-ret_c, mtx_c, dist_c, rvecs_c, tvecs_c, newobjp_c, stdin_c, stdex_c, pve_c, stdnewobjp_c = cv2.calibrateCameraROExtended(objpoints, imgpoints, (3280, 2464), 1, None, None, flags=flags)
+# ret_c, mtx_c, dist_c, rvecs_c, tvecs_c, newobjp_c, stdin_c, stdex_c, pve_c, stdnewobjp_c = cv2.calibrateCameraROExtended(objpoints_c, imgpoints_c, (3280, 2464), 1, None, None, flags=flags)
 
     
 
