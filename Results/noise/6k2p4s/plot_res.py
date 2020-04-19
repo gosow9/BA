@@ -81,7 +81,7 @@ fig1, ax1 = plt.subplots(1,1)
 ax1.plot(r, dst_r_m-r, label='Model')
 
 # sigma = 0
-std = [0, 10, 20, 30, 40 ,50 ,60 ,70, 80, 90]
+std = [0, 10, 20, 30, 40, 50]
 for i in std: 
     # comput curve
     norm_r_0 = np.sqrt((x/fx_c[i])**2+(y/fy_c[i])**2)
@@ -112,7 +112,7 @@ for i in range(len(fx_c)):
  
 ax2.set_xlabel('Standard Deviation')
 ax2.set_ylabel('Mean Error')
-ax2.plot(std_c, me)
+ax2.plot(std_c, me, 'o')
 ax2.grid(True)
 
 # fig3: reprojection error
@@ -205,3 +205,17 @@ ax8.set_xlabel('Standard Deviation')
 ax8.set_ylabel('Error')
 ax8.legend()
 ax8.grid(True)
+
+# fig9: sigma0-model
+# comput curve
+i = 0
+norm_r_0 = np.sqrt((x/fx_c[i])**2+(y/fy_c[i])**2)
+dst_x_0 = fx_c[i]*full_dist_model_x(k1_c[i], k2_c[i], k3_c[i], k4_c[i], k5_c[i], k6_c[i], p1_c[i], p2_c[i], s1_c[i], s2_c[i], x/fx_c[i], y/fy_c[i], norm_r_0)
+dst_y_0 = fy_c[i]*full_dist_model_y(k1_c[i], k2_c[i], k3_c[i], k4_c[i], k5_c[i], k6_c[i], p1_c[i], p2_c[i], s3_c[i], s4_c[i], x/fx_c[i], y/fy_c[i], norm_r_0)
+dst_r_0 = np.sqrt(dst_x_0**2+dst_y_0**2)
+
+fig9, ax9 = plt.subplots(1,1)
+ax9.plot(r, dst_r_0-dst_r_m)
+
+
+
