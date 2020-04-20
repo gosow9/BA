@@ -2,6 +2,9 @@ import numpy as np
 import cv2
 import random
 import time
+import matplotlib.pyplot as plt
+from pylab import rcParams
+
 
 def r_dist_model(k1, k2, k3, k4, k5, k6, q, r):
     return q*(1 + k1*r**2 + k2*r**4 + k3*r**6)/(1 + k4*r**2 + k5*r**4 +k6*r**6)
@@ -40,43 +43,7 @@ def get_imgpoints(r, t):
     z = 250
     
     R, _ = cv2.Rodrigues(r)
-     
-    # add transformed checkerboard
-    for i in range(8):
-        for j in range(9):
-            if (i%2==0 and j%2==0) or (i%2!=0 and j%2!=0):
-                for a in range(size):
-                    for b in range(size):
-                        # index with respect to checkboard center
-                        x = i*size + a - x_check
-                        y = j*size + b - y_check
-                        
-                        # project to 3D
-                        x_3D = x/f*z
-                        y_3D = y/f*z
-                        
-                        vec_3D = np.array([x_3D, y_3D, 0])
-                        
-                        # transformation
-                        vec_3D_new = R@vec_3D + t
-                        vec_3D_new[2] += z
-                        
-                        # distortion and project to 2D
-                        x_2D = vec_3D_new[0]/vec_3D_new[2]
-                        y_2D = vec_3D_new[1]/vec_3D_new[2]
-                        r = np.sqrt(x_2D**2+y_2D**2)
-                        
-                        x_2D_dst = f*full_dist_model_x(k1, k2, k3, k4, k5, k6, p1, p2, s1, s2, x_2D, y_2D, r)
-                        y_2D_dst = f*full_dist_model_y(k1, k2, k3, k4, k5, k6, p1, p2, s3, s4, x_2D, y_2D, r)
-                        
-                    
-                        # new index with respect to image-cooridnates
-                        x_new = int(round(x_2D_dst + x_im))
-                        y_new = int(round(y_2D_dst + y_im))
-                        
-                        im[x_new][y_new] = 40
-    
-                      
+                          
     for i in np.arange(0, 7*size, size):
         for j in np.arange(0, 8*size, size):
             # index with respect to checkboard center
@@ -108,7 +75,7 @@ def get_imgpoints(r, t):
     for d in reversed(imgp):
         imgp_flipped.append([d])
         
-    return np.array(imgp_flipped), im
+    return np.array(imgp_flipped)
 
 t_ref = time.time()
 
@@ -169,24 +136,21 @@ k3 = 38
 k4 = 4
 k5 = 34
 k6 = 40
-p1 = 0.002
-p2 = 0.0019
-s1 = -0.0014
-s2 = -0.001
-s3 = -0.0022
-s4 = 0.00013
-
-dst = [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]
-
+p1 = 0#0.002
+p2 = 0#0.0019
+s1 = 0#-0.0014
+s2 = 0#-0.001
+s3 = 0#-0.0022
+s4 = 0#0.00013
 
 # add noise
-# for i in range(20):
-#     t[i][0] += np.random.normal(0, 10)
-#     t[i][1] += np.random.normal(0, 10)
-#     t[i][2] += np.random.normal(0, 10)
-#     r[i][0] += np.random.normal(0, 0.05)
-#     r[i][1] += np.random.normal(0, 0.05)
-#     r[i][2] += np.random.normal(0, 0.05)    
+for i in range(20):
+    t[i][0] += np.random.normal(0, 10)
+    t[i][1] += np.random.normal(0, 10)
+    t[i][2] += np.random.normal(0, 10)
+    r[i][0] += np.random.normal(0, 0.05)
+    r[i][1] += np.random.normal(0, 0.05)
+    r[i][2] += np.random.normal(0, 0.05)    
 
 
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,6,0)
@@ -194,42 +158,86 @@ objp = np.zeros((7*8,3), np.float32)
 objp[:,:2] = np.mgrid[0:8,0:7].T.reshape(-1,2)
 
 # Arrays to store object points and image points from all the images.
-objpoints_s = [] # 3d point in real world space
-imgpoints_s = [] # 2d points in image plane.
+objpoints = [] # 3d point in real world space
+imgpoints = [] # 2d points in image plane.
 images = []
 
 for i in range(20):
-    imgp, im = get_imgpoints(r[i], t[i])
-    images.append(im)
+    imgp = get_imgpoints(r[i], t[i])   
+    objpoints.append(objp)
+    imgpoints.append(imgp.astype(np.float32))
+  
+# setup calibration
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 500, 10^(-6))
+#flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL
+flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_ZERO_TANGENT_DIST
+
+step = 0.05
+std = np.arange(0, 0+step, step)
+
+ret = []
+mtx = []
+dist = []
+mean_error = []
+
+for s in std:
+    # add noise   
+    imgpoints_n = imgpoints + np.random.normal(0, s, np.shape(imgpoints)).astype(np.float32)
     
-    objpoints_s.append(objp)
-    imgpoints_s.append(imgp.astype(np.float32))
+    # calibrate camera
+    ret_s, mtx_s, dist_s, rvecs_s, tvecs_s, newobjp_s, tdin_s, stdex_s, pve_s, stdnewobjp_s = cv2.calibrateCameraROExtended(objpoints, imgpoints_n, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
 
-    print(i)
+    ret.append(ret_s)
+    mtx.append(mtx_s)
+    dist.append(dist_s)
+
+    d = np.array(imgpoints) - np.array(imgpoints_n)
+    mean_error.append(np.mean(np.abs(d)))
+
+# use latex-fonts in the plot
+plt.rcParams['font.family'] = 'SIXTGeneral'
+plt.rcParams.update({'font.size': 12})
+
+# prepare axis
+res = 1
+x = np.arange(0, 2464/2, res)
+y = np.arange(0, 3280/2, res/2464*3280)
+r = np.sqrt(x**2+y**2)
+
+# compute model
+r_new = np.sqrt((x/f)**2+(y/f)**2)  
+x_m = f*full_dist_model_x(k1, k2, k3, k4, k5, k6, p1, p2, s1, s2, x/f, y/f, r_new)
+y_m = f*full_dist_model_y(k1, k2, k3, k4, k5, k6, p1, p2, s3, s4, x/f, y/f, r_new)
+r_m = np.sqrt(x_m**2+y_m**2)
+
+fig, ax = plt.subplots(1,1)
+ax.plot(r, r_m-r, label='Model')
+ax.grid(True)
+
+for i in range(len(std)):
+    # compute distortion
+    fx_s = mtx[i][0][0]
+    fy_s = mtx[i][1][1]
+    k1_s = dist[i][0][0]
+    k2_s = dist[i][0][1]
+    p1_s = dist[i][0][2]
+    p2_s = dist[i][0][3]
+    k3_s = dist[i][0][4]
+    k4_s = dist[i][0][5]
+    k5_s = dist[i][0][6]
+    k6_s = dist[i][0][7]
+    s1_s = dist[i][0][8]
+    s2_s = dist[i][0][9]
+    s3_s = dist[i][0][10]
+    s4_s = dist[i][0][11]
     
-# calibrate camera
-criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.001)
-flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL
-ret_s, mtx_s, dist_s, rvecs_s, tvecs_s, newobjp_s, tdin_s, stdex_s, pve_s, stdnewobjp_s = cv2.calibrateCameraROExtended(objpoints_s, imgpoints_s, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
-#ret_s, mtx_s, dist_s, rvecs_s, tvecs_s, tdin_s, stdex_s, pve_s = cv2.calibrateCameraExtended(objpoints_s, imgpoints_s, (3280, 2464), None, None, flags=flags, criteria=criteria)
+    r_new = np.sqrt((x/fx_s)**2+(y/fy_s)**2)  
+    x_s = fx_s*full_dist_model_x(k1_s, k2_s, k3_s, k4_s, k5_s, k6_s, p1_s, p2_s, s1_s, s2_s, x/fx_s, y/fy_s, r_new)
+    y_s = fy_s*full_dist_model_y(k1_s, k2_s, k3_s, k4_s, k5_s, k6_s, p1_s, p2_s, s3_s, s4_s, x/fx_s, y/fy_s, r_new)
+    r_s = np.sqrt(x_s**2+y_s**2)
 
-# Compare
-objpoints_c = [] # 3d point in real world space
-imgpoints_c = [] # 2d points in image plane.
+    ax.plot(r, r_s-r, label=r'$\sigma$ = {:.2}'.format(std[i]))
 
-for img in images:  
-    # Find the chess board corners
-    ret, corners = cv2.findChessboardCornersSB(img.astype(np.uint8), (8,7), flags=cv2.CALIB_CB_ACCURACY)
-
-    # If found, add object points, image points (after refining them)
-    if ret == True:
-        objpoints_c.append(objp)
-        imgpoints_c.append(corners)
-            
-ret_c, mtx_c, dist_c, rvecs_c, tvecs_c, newobjp_c, stdin_c, stdex_c, pve_c, stdnewobjp_c = cv2.calibrateCameraROExtended(objpoints_c, imgpoints_c, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
-
-d = np.array(imgpoints_c) - np.array(imgpoints_s)
-mean_error = np.mean(np.abs(d))
-
+ax.legend()
 # print elapsed time
 print((time.time()-t_ref)/60) 
