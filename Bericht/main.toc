@@ -16,9 +16,9 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Tangential distortion}{6}{section*.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Thin prism distortion}{6}{section*.9}
+\contentsline {subsubsection}{Thin prism distortion}{7}{section*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The combined model in OpenCV}{6}{section*.10}
+\contentsline {subsubsection}{The combined model in OpenCV}{7}{section*.10}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Evaluation}{9}{chapter.3}
 \defcounter {refsection}{0}\relax 
