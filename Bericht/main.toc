@@ -10,7 +10,15 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.1}The pinhole camera model}{5}{subsection.2.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.2}The distortion model in OpenCV}{7}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.2}The distortion model in OpenCV}{6}{subsection.2.1.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Radial Distortion}{6}{section*.7}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Tangential distortion}{6}{section*.8}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Thin prism distortion}{6}{section*.9}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{The combined model in OpenCV}{6}{section*.10}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Evaluation}{9}{chapter.3}
 \defcounter {refsection}{0}\relax 
@@ -20,13 +28,13 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {6}Conclusion}{15}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{References}{17}{chapter*.7}
+\contentsline {chapter}{References}{17}{chapter*.11}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{List of figures}{17}{chapter*.7}
+\contentsline {chapter}{List of figures}{17}{chapter*.11}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{List of tables}{19}{chapter*.8}
+\contentsline {chapter}{List of tables}{19}{chapter*.12}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Statement of Plagiarisms}{21}{chapter*.9}
+\contentsline {chapter}{Statement of Plagiarisms}{21}{chapter*.13}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {A}Requirements}{25}{appendix.A}
 \defcounter {refsection}{0}\relax 

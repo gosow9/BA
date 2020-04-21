@@ -32,6 +32,42 @@
       \endverb
       \keyw{online}
     \endentry
+    \entry{weng}{article}{}
+      \name{author}{3}{}{%
+        {{hash=1eeeda988b65fcca4d95b17d604119b9}{%
+           family={{Weng}},
+           familyi={W\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=8b9f796dee36f667d14da89f7a3a2ad5}{%
+           family={{Cohen}},
+           familyi={C\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=a4a66b4b784833632c46e81098dd2857}{%
+           family={{Herniou}},
+           familyi={H\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{fullhash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{bibnamehash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{authorbibnamehash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{authornamehash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{authorfullhash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Pattern Analysis and Machine Intelligence}
+      \field{number}{10}
+      \field{title}{Camera calibration with distortion models and accuracy evaluation}
+      \field{volume}{14}
+      \field{year}{1992}
+      \field{pages}{965\bibrangedash 980}
+      \range{pages}{16}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

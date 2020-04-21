@@ -81,7 +81,7 @@ fig1, ax1 = plt.subplots(1,1)
 ax1.plot(r, dst_r_m-r, label='Model')
 
 # sigma = 0
-std = [0, 10, 20, 30, 40, 50]
+std = [0, 10, 20, 30]
 for i in std: 
     # comput curve
     norm_r_0 = np.sqrt((x/fx_c[i])**2+(y/fy_c[i])**2)

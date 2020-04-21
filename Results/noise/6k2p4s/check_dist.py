@@ -22,7 +22,7 @@ s2_c = np.loadtxt('params/s2.txt')
 s3_c = np.loadtxt('params/s3.txt')
 s4_c = np.loadtxt('params/s4.txt')
 
-s = 80
+s = 0
 fx = fx_c[s]
 fy = fy_c[s]
 cx = cx_c[s]
