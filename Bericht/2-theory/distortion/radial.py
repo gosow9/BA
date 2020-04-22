@@ -65,16 +65,16 @@ for i in range(-616, 616):
     o4.append((x_i_new, y_i_new))
     
 for i in range(1, len(o1)):  
-    cv2.line(im, o1[i-1], o1[i], [40, 39, 214], 15)
+    cv2.line(im, o1[i-1], o1[i], [40, 39, 214], 8)
     
 for i in range(1, len(o2)):  
-    cv2.line(im, o2[i-1], o2[i], [40, 39, 214], 15)
+    cv2.line(im, o2[i-1], o2[i], [40, 39, 214], 8)
 
 for i in range(1, len(o3)):  
-    cv2.line(im, o3[i-1], o3[i], [40, 39, 214], 15)
+    cv2.line(im, o3[i-1], o3[i], [40, 39, 214], 8)
         
 for i in range(1, len(o4)):  
-    cv2.line(im, o4[i-1], o4[i], [40, 39, 214], 15)
+    cv2.line(im, o4[i-1], o4[i], [40, 39, 214], 8)
 
 # distorted 2
 k1 = -2.2
@@ -126,16 +126,16 @@ for i in range(-616, 616):
     o4.append((x_i_new, y_i_new))
     
 for i in range(1, len(o1)):  
-    cv2.line(im, o1[i-1], o1[i], [184, 128, 46], 12)
+    cv2.line(im, o1[i-1], o1[i], [184, 128, 46], 8)
     
 for i in range(1, len(o2)):  
-    cv2.line(im, o2[i-1], o2[i], [184, 128, 46], 12)
+    cv2.line(im, o2[i-1], o2[i], [184, 128, 46], 8)
 
 for i in range(1, len(o3)):  
-    cv2.line(im, o3[i-1], o3[i], [184, 128, 46], 12)
+    cv2.line(im, o3[i-1], o3[i], [184, 128, 46], 8)
         
 for i in range(1, len(o4)):  
-    cv2.line(im, o4[i-1], o4[i], [184, 128, 46], 12)
+    cv2.line(im, o4[i-1], o4[i], [184, 128, 46], 8)
 
 
 cv2.imwrite('radial.png' ,im)

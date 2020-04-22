@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  21 APR 2020 22:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  22 APR 2020 17:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1879,10 +1879,10 @@ Chapter 2.
                                                   \fi \fi 
 l.83 
      ]
-<2-theory/distortion/radial.png, id=178, 3292.3pt x 2473.24pt>
+<2-theory/distortion/radial.png, id=180, 3292.3pt x 2473.24pt>
 File: 2-theory/distortion/radial.png Graphic file (type png)
 <use 2-theory/distortion/radial.png>
-Package pdftex.def Info: 2-theory/distortion/radial.png  used on input line 188
+Package pdftex.def Info: 2-theory/distortion/radial.png  used on input line 190
 .
 (pdftex.def)             Requested size: 409.71689pt x 307.75792pt.
 
@@ -1892,25 +1892,41 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[6]) (./3-evaluation/3-evaluation.tex [7pdfTeX warning (ext4): destination with
- the same identifier (name{figure.2.2}) has been already used, duplicate ignore
-d
+[6]
+<2-theory/distortion/tangential.png, id=193, 3292.3pt x 2473.24pt>
+File: 2-theory/distortion/tangential.png Graphic file (type png)
+<use 2-theory/distortion/tangential.png>
+Package pdftex.def Info: 2-theory/distortion/tangential.png  used on input line
+ 212.
+(pdftex.def)             Requested size: 409.71689pt x 307.75792pt.
+
+Underfull \vbox (badness 1803) has occurred while \output is active []
+
+ [7pdfTeX warning (ext4): destination with the same identifier (name{figure.2.2
+}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1 \chapter
-            {Evaluation} <./2-theory/distortion/radial.png (PNG copy)>]
+l.241 \end{align}
+                  <./2-theory/distortion/radial.png (PNG copy)>])
+(./3-evaluation/3-evaluation.tex
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[8
+[8pdfTeX warning (ext4): destination with the same identifier (name{figure.2.3}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1 \chapter
+            {Evaluation} <./2-theory/distortion/tangential.png (PNG copy)>]
+Chapter 3.
+) (./4-development/4-development.tex [9
 
 ]
-Chapter 3.
-) (./4-development/4-development.tex [9]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2041,10 +2057,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30559 strings out of 492982
- 526595 string characters out of 6134896
- 1001672 words of memory out of 5000000
- 33426 multiletter control sequences out of 15000+600000
+ 30573 strings out of 492982
+ 526908 string characters out of 6134896
+ 1001935 words of memory out of 5000000
+ 33436 multiletter control sequences out of 15000+600000
  50848 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,21n,54p,3236b,1180s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2057,10 +2073,10 @@ pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txsy.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/times/utmri8a.pfb>
-Output written on main.pdf (34 pages, 177229 bytes).
+Output written on main.pdf (34 pages, 400778 bytes).
 PDF statistics:
- 348 PDF objects out of 1000 (max. 8388607)
- 299 compressed objects within 3 object streams
- 71 named destinations out of 1000 (max. 500000)
- 154 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 364 PDF objects out of 1000 (max. 8388607)
+ 313 compressed objects within 4 object streams
+ 74 named destinations out of 1000 (max. 500000)
+ 159 words of extra memory for PDF output out of 10000 (max. 10000000)
 
