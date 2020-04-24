@@ -123,8 +123,19 @@ t19 = np.array([-50, -100, 250], dtype=np.float64)
 r20 = np.array([0.2, -0.2, -0.2], dtype=np.float64)
 t20 = np.array([50, 100, 250], dtype=np.float64)
 
-r = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20]
-t = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20]
+r21 = np.array([0.7, 0.7, 0], dtype=np.float64)
+t21 = np.array([105, -140, 200], dtype=np.float64)
+r22 = np.array([-0.7, 0.7, 0], dtype=np.float64)
+t22 = np.array([105, 140, 200], dtype=np.float64)
+r23 = np.array([0.7, -0.7, 0], dtype=np.float64)
+t23 = np.array([-105, -140, 200], dtype=np.float64)
+r24 = np.array([-0.7, -0.7, 0], dtype=np.float64)
+t24 = np.array([-105, 140, 200], dtype=np.float64)
+
+
+
+r = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24]
+t = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, r21, r22, r23, r24]
 
 # distortion model
 f = 2700
@@ -141,15 +152,14 @@ s2 = -0.001
 s3 = -0.0022
 s4 = 0.00013
 
-# add noise
+# add noise to the first 20
 for i in range(20):
-    t[i][0] += np.random.normal(0, 10)
-    t[i][1] += np.random.normal(0, 10)
-    t[i][2] += np.random.normal(0, 10)
-    r[i][0] += np.random.normal(0, 0.05)
-    r[i][1] += np.random.normal(0, 0.05)
-    r[i][2] += np.random.normal(0, 0.05)    
-
+    t[i][0] += np.random.uniform(-20, 20)
+    t[i][1] += np.random.uniform(-20, 20)
+    t[i][2] += np.random.uniform(-20, 20)
+    r[i][0] += np.random.uniform(-0.1, 0.1)
+    r[i][1] += np.random.uniform(-0.1, 0.1)
+    r[i][2] += np.random.uniform(-0.1, 0.1)    
 
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,6,0)
 objp = np.zeros((7*8,3), np.float32)
@@ -160,18 +170,18 @@ objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
 images = []
 
-for i in range(20):
+for i in range(len(t)):
     imgp = get_imgpoints(r[i], t[i])   
     objpoints.append(objp)
     imgpoints.append(imgp.astype(np.float32))
   
 # setup calibration
-criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 500, 10^(-9))
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 10^(-9))
 flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL
 #flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_ZERO_TANGENT_DIST
  
-step = 0.02
-std = np.arange(0, 0.2+step, step)
+step = 0.03
+std = np.arange(0, 0.3+step, step)
 
 ret = []
 mtx = []
@@ -237,7 +247,7 @@ for i in range(len(std)):
     y_s = fy_s*full_dist_model_y(k1_s, k2_s, k3_s, k4_s, k5_s, k6_s, p1_s, p2_s, s3_s, s4_s, x/fx_s, y/fy_s, r_new)
     r_s = np.sqrt(x_s**2+y_s**2)
 
-    ax.plot(r, r_s-r,'.', label=r'{:}: ret={:.2}, std={:}'.format(i, ret[i], std[i]))
+    ax.plot(r, r_s-r, label=r'{:}: ret={:.2}, std={:}'.format(i, ret[i], std[i]))
 
 ax.legend()
 # print elapsed time

@@ -66,11 +66,16 @@ def checkerboard(r, t):
                         
                         x_2D_dst = f*full_dist_model_x(k1, k2, k3, k4, k5, k6, p1, p2, s1, s2, x_2D, y_2D, r)
                         y_2D_dst = f*full_dist_model_y(k1, k2, k3, k4, k5, k6, p1, p2, s3, s4, x_2D, y_2D, r)
-                        
                     
                         # new index with respect to image-cooridnates
                         x_new = int(round(x_2D_dst + x_im))
                         y_new = int(round(y_2D_dst + y_im))
+                        
+                        if x_new < 0 or x_new >= 2464:
+                            continue
+                        
+                        if y_new < 0 or y_new >= 3280:
+                            continue
                         
                         im[x_new][y_new] = 40
         
@@ -124,8 +129,17 @@ t19 = np.array([-50, -100, 250], dtype=np.float64)
 r20 = np.array([0.2, -0.2, -0.2], dtype=np.float64)
 t20 = np.array([50, 100, 250], dtype=np.float64)
 
-r = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20]
-t = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20]
+r21 = np.array([0.7, 0.7, 0], dtype=np.float64)
+t21 = np.array([105, -140, 200], dtype=np.float64)
+r22 = np.array([-0.7, 0.7, 0], dtype=np.float64)
+t22 = np.array([105, 140, 200], dtype=np.float64)
+r23 = np.array([0.7, -0.7, 0], dtype=np.float64)
+t23 = np.array([-105, -140, 200], dtype=np.float64)
+r24 = np.array([-0.7, -0.7, 0], dtype=np.float64)
+t24 = np.array([-105, 140, 200], dtype=np.float64)
+
+r = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24]
+t = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24]
 
 # distortion model
 f = 2700
@@ -145,16 +159,16 @@ s4 = 0.00013
 dst = [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]
 
 
-# add noise
+# add noise to the first 20
 for i in range(20):
-    t[i][0] += np.random.normal(0, 10)
-    t[i][1] += np.random.normal(0, 10)
-    t[i][2] += np.random.normal(0, 10)
-    r[i][0] += np.random.normal(0, 0.05)
-    r[i][1] += np.random.normal(0, 0.05)
-    r[i][2] += np.random.normal(0, 0.05)    
+    t[i][0] += np.random.uniform(-20, 20)
+    t[i][1] += np.random.uniform(-20, 20)
+    t[i][2] += np.random.uniform(-20, 20)
+    r[i][0] += np.random.uniform(-0.1, 0.1)
+    r[i][1] += np.random.uniform(-0.1, 0.1)
+    r[i][2] += np.random.uniform(-0.1, 0.1)    
 
-for i in range(20):
+for i in range(len(t)):
     im = checkerboard(r[i], t[i])
     np.savetxt('np_images/im{:}.txt'.format(i), im)
     cv2.imwrite('png_images/im{:}.png'.format(i), im)
