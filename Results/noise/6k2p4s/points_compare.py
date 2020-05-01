@@ -245,7 +245,7 @@ for img in images:
             
 ret_c, mtx_c, dist_c, rvecs_c, tvecs_c, newobjp_c, stdin_c, stdex_c, pve_c, stdnewobjp_c = cv2.calibrateCameraROExtended(objpoints_c, imgpoints_c, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
 
-# with blurr
+# with blur
 objpoints_g = [] # 3d point in real world space
 imgpoints_g = [] # 2d points in image plane.
 
