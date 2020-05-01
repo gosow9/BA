@@ -115,8 +115,12 @@ def get_imgpoints(r, t):
     imgp_flipped = []
     for d in reversed(imgp):
         imgp_flipped.append([d])
-        
-    return np.array(imgp_flipped), im
+      
+    imgp_f = []
+    for d in imgp:
+        imgp_f.append([d])
+      
+    return np.array(imgp_flipped), np.array(imgp_f), im
 
 t_ref = time.time()
 
@@ -175,8 +179,11 @@ t23 = np.array([-105, -140, 200], dtype=np.float64)
 r24 = np.array([-0.7, -0.7, 0], dtype=np.float64)
 t24 = np.array([-105, 140, 200], dtype=np.float64)
 
-r = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24]
-t = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24]
+#r = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24]
+#t = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24]
+
+r = [r1, r2, r3, r4, r5, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24]
+t = [t1, t2, t3, t4, t5, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24]
 
 # distortion model
 f = 2700
@@ -197,7 +204,7 @@ dst = [k1, k2, p1, p2, k3, k4, k5, k6, s1, s2, s3, s4]
 
 
 # add noise to the fistst 20
-for i in range(12):
+for i in range(20):
     t[i][0] += np.random.uniform(-10, 10)
     t[i][1] += np.random.uniform(-10, 10)
     t[i][2] += np.random.uniform(-10, 10)
@@ -215,12 +222,15 @@ objpoints_s = [] # 3d point in real world space
 imgpoints_s = [] # 2d points in image plane.
 images = []
 
+imgpoints_f = []
+
 for i in range(len(t)):
-    imgp, im = get_imgpoints(r[i], t[i])
+    imgp, imgp_f, im = get_imgpoints(r[i], t[i])
     images.append(im)
     
     objpoints_s.append(objp)
     imgpoints_s.append(imgp.astype(np.float32))
+    imgpoints_f.append(imgp_f.astype(np.float32))
 
     print(i)
     
@@ -242,7 +252,29 @@ for img in images:
     if ret == True:
         objpoints_c.append(objp)
         imgpoints_c.append(corners)
-            
+        
+    
+d1 = np.mean(np.abs(np.array(imgpoints_s)-np.array(imgpoints_c)))
+
+#comparison
+imgpoints_comp = []
+k = 0
+
+for img in images:  
+    # Find the chess board corners
+    ret, corners = cv2.findChessboardCorners(img.astype(np.uint8), (8,7), None)
+
+    # If found, add object points, image points (after refining them)
+    if ret == True:
+        corners2 = cv2.cornerSubPix(img.astype(np.uint8), corners, (11,11), (-1,-1), criteria)
+        imgpoints_comp.append(corners2)
+
+    else:
+        print(k)
+    k+=1
+
+d2 = np.mean(np.abs(np.array(imgpoints_f)-np.array(imgpoints_comp)))
+           
 ret_c, mtx_c, dist_c, rvecs_c, tvecs_c, newobjp_c, stdin_c, stdex_c, pve_c, stdnewobjp_c = cv2.calibrateCameraROExtended(objpoints_c, imgpoints_c, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
 
 # with blur
@@ -349,74 +381,74 @@ ax.plot(r, r_g-r, label='Gauss')
 ax.grid(True)
 ax.legend()
 
-with open('params_s.txt', 'w') as f:
-    f.write('RMS reprojection error = {:}\n\n'.format(ret_s))
-    f.write('Camera Matrix:\n')
-    f.write('fx = {:} +/- {:}\n'.format(mtx_s[0][0], stdin_s[0][0]))
-    f.write('fy = {:} +/- {:}\n'.format(mtx_s[1][1], stdin_s[1][0]))
-    f.write('cx = {:} +/- {:}\n'.format(mtx_s[0][2], stdin_s[2][0]))
-    f.write('cy = {:} +/- {:}\n\n'.format(mtx_s[1][2], stdin_s[3][0]))
-    f.write('Radial Distortion:\n')
-    f.write('k1 = {:} +/- {:}\n'.format(dist_s[0][0], stdin_s[4][0]))
-    f.write('k2 = {:} +/- {:}\n'.format(dist_s[0][1], stdin_s[5][0]))
-    f.write('k3 = {:} +/- {:}\n'.format(dist_s[0][4], stdin_s[8][0]))
-    f.write('k4 = {:} +/- {:}\n'.format(dist_s[0][5], stdin_s[9][0]))
-    f.write('k5 = {:} +/- {:}\n'.format(dist_s[0][6], stdin_s[10][0]))
-    f.write('k6 = {:} +/- {:}\n\n'.format(dist_s[0][7], stdin_s[11][0]))
-    f.write('Tangential Distortion\n')
-    f.write('p1 = {:} /- {:}\n'.format(dist_s[0][2], stdin_s[6][0]))
-    f.write('p2 = {:} /- {:}\n\n'.format(dist_s[0][3], stdin_s[7][0]))
-    f.write('Thin Prism Distortion:\n')
-    f.write('s1 = {:} +/- {:}\n'.format(dist_s[0][8], stdin_s[12][0]))
-    f.write('s2 = {:} +/- {:}\n'.format(dist_s[0][9], stdin_s[13][0]))
-    f.write('s3 = {:} +/- {:}\n'.format(dist_s[0][10], stdin_s[14][0]))
-    f.write('s4 = {:} +/- {:}\n\n'.format(dist_s[0][11], stdin_s[15][0]))
+# with open('params_s.txt', 'w') as f:
+#     f.write('RMS reprojection error = {:}\n\n'.format(ret_s))
+#     f.write('Camera Matrix:\n')
+#     f.write('fx = {:} +/- {:}\n'.format(mtx_s[0][0], stdin_s[0][0]))
+#     f.write('fy = {:} +/- {:}\n'.format(mtx_s[1][1], stdin_s[1][0]))
+#     f.write('cx = {:} +/- {:}\n'.format(mtx_s[0][2], stdin_s[2][0]))
+#     f.write('cy = {:} +/- {:}\n\n'.format(mtx_s[1][2], stdin_s[3][0]))
+#     f.write('Radial Distortion:\n')
+#     f.write('k1 = {:} +/- {:}\n'.format(dist_s[0][0], stdin_s[4][0]))
+#     f.write('k2 = {:} +/- {:}\n'.format(dist_s[0][1], stdin_s[5][0]))
+#     f.write('k3 = {:} +/- {:}\n'.format(dist_s[0][4], stdin_s[8][0]))
+#     f.write('k4 = {:} +/- {:}\n'.format(dist_s[0][5], stdin_s[9][0]))
+#     f.write('k5 = {:} +/- {:}\n'.format(dist_s[0][6], stdin_s[10][0]))
+#     f.write('k6 = {:} +/- {:}\n\n'.format(dist_s[0][7], stdin_s[11][0]))
+#     f.write('Tangential Distortion\n')
+#     f.write('p1 = {:} /- {:}\n'.format(dist_s[0][2], stdin_s[6][0]))
+#     f.write('p2 = {:} /- {:}\n\n'.format(dist_s[0][3], stdin_s[7][0]))
+#     f.write('Thin Prism Distortion:\n')
+#     f.write('s1 = {:} +/- {:}\n'.format(dist_s[0][8], stdin_s[12][0]))
+#     f.write('s2 = {:} +/- {:}\n'.format(dist_s[0][9], stdin_s[13][0]))
+#     f.write('s3 = {:} +/- {:}\n'.format(dist_s[0][10], stdin_s[14][0]))
+#     f.write('s4 = {:} +/- {:}\n\n'.format(dist_s[0][11], stdin_s[15][0]))
 
-with open('params_c.txt', 'w') as f:
-    f.write('RMS reprojection error = {:}\n\n'.format(ret_c))
-    f.write('Camera Matrix:\n')
-    f.write('fx = {:} +/- {:}\n'.format(mtx_c[0][0], stdin_c[0][0]))
-    f.write('fy = {:} +/- {:}\n'.format(mtx_c[1][1], stdin_c[1][0]))
-    f.write('cx = {:} +/- {:}\n'.format(mtx_c[0][2], stdin_c[2][0]))
-    f.write('cy = {:} +/- {:}\n\n'.format(mtx_c[1][2], stdin_c[3][0]))
-    f.write('Radial Distortion:\n')
-    f.write('k1 = {:} +/- {:}\n'.format(dist_c[0][0], stdin_c[4][0]))
-    f.write('k2 = {:} +/- {:}\n'.format(dist_c[0][1], stdin_c[5][0]))
-    f.write('k3 = {:} +/- {:}\n'.format(dist_c[0][4], stdin_c[8][0]))
-    f.write('k4 = {:} +/- {:}\n'.format(dist_c[0][5], stdin_c[9][0]))
-    f.write('k5 = {:} +/- {:}\n'.format(dist_c[0][6], stdin_c[10][0]))
-    f.write('k6 = {:} +/- {:}\n\n'.format(dist_c[0][7], stdin_c[11][0]))
-    f.write('Tangential Distortion\n')
-    f.write('p1 = {:} /- {:}\n'.format(dist_c[0][2], stdin_c[6][0]))
-    f.write('p2 = {:} /- {:}\n\n'.format(dist_c[0][3], stdin_c[7][0]))
-    f.write('Thin Prism Distortion:\n')
-    f.write('s1 = {:} +/- {:}\n'.format(dist_c[0][8], stdin_c[12][0]))
-    f.write('s2 = {:} +/- {:}\n'.format(dist_c[0][9], stdin_c[13][0]))
-    f.write('s3 = {:} +/- {:}\n'.format(dist_c[0][10], stdin_c[14][0]))
-    f.write('s4 = {:} +/- {:}\n\n'.format(dist_c[0][11], stdin_c[15][0]))
+# with open('params_c.txt', 'w') as f:
+#     f.write('RMS reprojection error = {:}\n\n'.format(ret_c))
+#     f.write('Camera Matrix:\n')
+#     f.write('fx = {:} +/- {:}\n'.format(mtx_c[0][0], stdin_c[0][0]))
+#     f.write('fy = {:} +/- {:}\n'.format(mtx_c[1][1], stdin_c[1][0]))
+#     f.write('cx = {:} +/- {:}\n'.format(mtx_c[0][2], stdin_c[2][0]))
+#     f.write('cy = {:} +/- {:}\n\n'.format(mtx_c[1][2], stdin_c[3][0]))
+#     f.write('Radial Distortion:\n')
+#     f.write('k1 = {:} +/- {:}\n'.format(dist_c[0][0], stdin_c[4][0]))
+#     f.write('k2 = {:} +/- {:}\n'.format(dist_c[0][1], stdin_c[5][0]))
+#     f.write('k3 = {:} +/- {:}\n'.format(dist_c[0][4], stdin_c[8][0]))
+#     f.write('k4 = {:} +/- {:}\n'.format(dist_c[0][5], stdin_c[9][0]))
+#     f.write('k5 = {:} +/- {:}\n'.format(dist_c[0][6], stdin_c[10][0]))
+#     f.write('k6 = {:} +/- {:}\n\n'.format(dist_c[0][7], stdin_c[11][0]))
+#     f.write('Tangential Distortion\n')
+#     f.write('p1 = {:} /- {:}\n'.format(dist_c[0][2], stdin_c[6][0]))
+#     f.write('p2 = {:} /- {:}\n\n'.format(dist_c[0][3], stdin_c[7][0]))
+#     f.write('Thin Prism Distortion:\n')
+#     f.write('s1 = {:} +/- {:}\n'.format(dist_c[0][8], stdin_c[12][0]))
+#     f.write('s2 = {:} +/- {:}\n'.format(dist_c[0][9], stdin_c[13][0]))
+#     f.write('s3 = {:} +/- {:}\n'.format(dist_c[0][10], stdin_c[14][0]))
+#     f.write('s4 = {:} +/- {:}\n\n'.format(dist_c[0][11], stdin_c[15][0]))
 
-with open('params_g.txt', 'w') as f:
-    f.write('RMS reprojection error = {:}\n\n'.format(ret_g))
-    f.write('Camera Matrix:\n')
-    f.write('fx = {:} +/- {:}\n'.format(mtx_g[0][0], stdin_g[0][0]))
-    f.write('fy = {:} +/- {:}\n'.format(mtx_g[1][1], stdin_g[1][0]))
-    f.write('cx = {:} +/- {:}\n'.format(mtx_g[0][2], stdin_g[2][0]))
-    f.write('cy = {:} +/- {:}\n\n'.format(mtx_g[1][2], stdin_g[3][0]))
-    f.write('Radial Distortion:\n')
-    f.write('k1 = {:} +/- {:}\n'.format(dist_g[0][0], stdin_g[4][0]))
-    f.write('k2 = {:} +/- {:}\n'.format(dist_g[0][1], stdin_g[5][0]))
-    f.write('k3 = {:} +/- {:}\n'.format(dist_g[0][4], stdin_g[8][0]))
-    f.write('k4 = {:} +/- {:}\n'.format(dist_g[0][5], stdin_g[9][0]))
-    f.write('k5 = {:} +/- {:}\n'.format(dist_g[0][6], stdin_g[10][0]))
-    f.write('k6 = {:} +/- {:}\n\n'.format(dist_g[0][7], stdin_g[11][0]))
-    f.write('Tangential Distortion\n')
-    f.write('p1 = {:} /- {:}\n'.format(dist_g[0][2], stdin_g[6][0]))
-    f.write('p2 = {:} /- {:}\n\n'.format(dist_g[0][3], stdin_g[7][0]))
-    f.write('Thin Prism Distortion:\n')
-    f.write('s1 = {:} +/- {:}\n'.format(dist_g[0][8], stdin_g[12][0]))
-    f.write('s2 = {:} +/- {:}\n'.format(dist_g[0][9], stdin_g[13][0]))
-    f.write('s3 = {:} +/- {:}\n'.format(dist_g[0][10], stdin_g[14][0]))
-    f.write('s4 = {:} +/- {:}\n\n'.format(dist_g[0][11], stdin_g[15][0]))
+# with open('params_g.txt', 'w') as f:
+#     f.write('RMS reprojection error = {:}\n\n'.format(ret_g))
+#     f.write('Camera Matrix:\n')
+#     f.write('fx = {:} +/- {:}\n'.format(mtx_g[0][0], stdin_g[0][0]))
+#     f.write('fy = {:} +/- {:}\n'.format(mtx_g[1][1], stdin_g[1][0]))
+#     f.write('cx = {:} +/- {:}\n'.format(mtx_g[0][2], stdin_g[2][0]))
+#     f.write('cy = {:} +/- {:}\n\n'.format(mtx_g[1][2], stdin_g[3][0]))
+#     f.write('Radial Distortion:\n')
+#     f.write('k1 = {:} +/- {:}\n'.format(dist_g[0][0], stdin_g[4][0]))
+#     f.write('k2 = {:} +/- {:}\n'.format(dist_g[0][1], stdin_g[5][0]))
+#     f.write('k3 = {:} +/- {:}\n'.format(dist_g[0][4], stdin_g[8][0]))
+#     f.write('k4 = {:} +/- {:}\n'.format(dist_g[0][5], stdin_g[9][0]))
+#     f.write('k5 = {:} +/- {:}\n'.format(dist_g[0][6], stdin_g[10][0]))
+#     f.write('k6 = {:} +/- {:}\n\n'.format(dist_g[0][7], stdin_g[11][0]))
+#     f.write('Tangential Distortion\n')
+#     f.write('p1 = {:} /- {:}\n'.format(dist_g[0][2], stdin_g[6][0]))
+#     f.write('p2 = {:} /- {:}\n\n'.format(dist_g[0][3], stdin_g[7][0]))
+#     f.write('Thin Prism Distortion:\n')
+#     f.write('s1 = {:} +/- {:}\n'.format(dist_g[0][8], stdin_g[12][0]))
+#     f.write('s2 = {:} +/- {:}\n'.format(dist_g[0][9], stdin_g[13][0]))
+#     f.write('s3 = {:} +/- {:}\n'.format(dist_g[0][10], stdin_g[14][0]))
+#     f.write('s4 = {:} +/- {:}\n\n'.format(dist_g[0][11], stdin_g[15][0]))
 
 # print elapsed time
 print((time.time()-t_ref)/60) 
