@@ -21,7 +21,7 @@ for fname in images:
         
     else:
         sharp.update({fname: None})
-        #sos.rename(fname, 'im/unsharp'+fname[3:])
+        os.rename(fname, 'im/del/'+fname[3:])
         
 with open('sharpness.txt','w') as f:
     for s in sharp:

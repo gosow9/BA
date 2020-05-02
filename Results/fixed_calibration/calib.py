@@ -6,6 +6,9 @@ import time
 t_ref = time.time()
 
 images = glob.glob('im/*.png')
+images = ['im/im21.png', 'im/im22.png', 'im/im25.png', 'im/im26.png', 'im/im118.png', 'im/im128.png', 'im/im138.png', 'im/im228.png', 'im/im238.png', 'im/im258.png', 'im/im268.png']
+
+
 
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,6,0)
 objp = np.zeros((7*8,3), np.float32)
@@ -37,8 +40,7 @@ for fname in images:
     
             cv2.waitKey(500)
 
-# select model with 6 ks (k4 and k6 = 0), 4s' (s4 = 0)
-flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL #+ cv2.CALIB_FIX_K4 + cv2.CALIB_FIX_K6 
+flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 300, 10^(-12))
 ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objpoints, imgpoints, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
 
