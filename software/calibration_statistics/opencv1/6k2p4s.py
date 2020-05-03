@@ -18,7 +18,7 @@ def full_dist_model_x(k1, k2, k3, k4, k5, k6, p1, p2, s1, s2, x, y, r):
     t_dist = t_dist_model_x(p1, p1, x, y, r)
     return r_dist + t_dist - x +s1*r**2 + s2*r**4
     
-def full_dist_model_y(k1, k2, k3, k4, k5, k6, p1, p2, s2, s4, x, y, r):
+def full_dist_model_y(k1, k2, k3, k4, k5, k6, p1, p2, s3, s4, x, y, r):
     r_dist = r_dist_model(k1, k2, k3, k4, k5, k6, y, r)
     t_dist = t_dist_model_y(p1, p1, x, y, r)
     return r_dist + t_dist - y + s3*r**2 + s4*r**4

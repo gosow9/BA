@@ -27,7 +27,7 @@ def reconstruction_by_dilation(img, mask, dilation_kernel):
      return img
 
 
-img = cv.imread('Bilder_threshholding/png/snap2.png',0)
+img = cv.imread('Bilder_threshholding/im39.png',0)
 kernel = np.ones((3,3),np.uint8)
 retval, treshhold = cv.threshold(img,114,255, cv.THRESH_BINARY)
 

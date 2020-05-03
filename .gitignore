@@ -1,2 +1,13 @@
-
-.idea/workspace.xml
+*.aux
+*.bbl
+*.lof
+*.log
+*.lof
+*.blg
+*.bbl
+*.aux
+*.gz
+*.toc
+*.pdf
+Results/noise/6k2p4s/np_images/*
+Results/noise/LensFun/np_images/*

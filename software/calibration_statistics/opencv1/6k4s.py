@@ -37,15 +37,16 @@ ax.set_ylabel(r'Distortion (pixel)')
 files = glob.glob('checkerboards/*.npy')
 n = int(len(files)/2)
 
-f = open('6k4s_params.txt', 'w')
+# f = open('6k4s_params.txt', 'w')
 
 for i in range(n):
     objp = np.load('checkerboards/objp{:}.npy'.format(i))
     imgp = np.load('checkerboards/imgp{:}.npy'.format(i))
 
     # select model with 6 ks, 2ps and 2 4'
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 1000, 10**(-9))
     flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL + cv2.CALIB_ZERO_TANGENT_DIST
-    ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objp, imgp, (3280, 2464), 1, None, None, flags=flags)
+    ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objp, imgp, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
       
     # generate plot       
     k1 = dist[0][0]
@@ -84,20 +85,20 @@ for i in range(n):
     ax.legend()
     
     # write to file f
-    f.write('{:}.\n'.format(i+1))
-    f.write('k1 = {:.2} +/- {:.2}\n'.format(k1, std_k1))
-    f.write('k2 = {:.2} +/- {:.2}\n'.format(k2, std_k2))
-    f.write('k3 = {:.2} +/- {:.2}\n'.format(k3, std_k3))
-    f.write('k4 = {:.2} +/- {:.2}\n'.format(k4, std_k4))
-    f.write('k5 = {:.2} +/- {:.2}\n'.format(k5, std_k5))
-    f.write('k6 = {:.2} +/- {:.2}\n'.format(k6, std_k6))
-    f.write('s1 = {:.2} +/- {:.2}\n'.format(s1, std_s1))
-    f.write('s2 = {:.2} +/- {:.2}\n'.format(s2, std_s2))
-    f.write('s3 = {:.2} +/- {:.2}\n'.format(s3, std_s3))
-    f.write('s4 = {:.2} +/- {:.2}\n\n'.format(s4, std_s4))
+    # f.write('{:}.\n'.format(i+1))
+    # f.write('k1 = {:.2} +/- {:.2}\n'.format(k1, std_k1))
+    # f.write('k2 = {:.2} +/- {:.2}\n'.format(k2, std_k2))
+    # f.write('k3 = {:.2} +/- {:.2}\n'.format(k3, std_k3))
+    # f.write('k4 = {:.2} +/- {:.2}\n'.format(k4, std_k4))
+    # f.write('k5 = {:.2} +/- {:.2}\n'.format(k5, std_k5))
+    # f.write('k6 = {:.2} +/- {:.2}\n'.format(k6, std_k6))
+    # f.write('s1 = {:.2} +/- {:.2}\n'.format(s1, std_s1))
+    # f.write('s2 = {:.2} +/- {:.2}\n'.format(s2, std_s2))
+    # f.write('s3 = {:.2} +/- {:.2}\n'.format(s3, std_s3))
+    # f.write('s4 = {:.2} +/- {:.2}\n\n'.format(s4, std_s4))
    
-f.close() 
-fig.savefig('6k4s.pdf')
+# f.close() 
+# fig.savefig('6k4s.pdf')
     
 # print elapsed time
 print((time.time()-t_ref)/60)
