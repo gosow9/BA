@@ -9,7 +9,7 @@ The functions OpenCV provides to calibrate the camera use the so-called pinhole 
 This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane ($p$). After this step, the point is described as a 2D-point in pixel coordinates.  Figure \ref{theory:pin} illustrates this setup.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{2-theory/camera/camera.pdf}
+	%\includegraphics[width=0.9\textwidth]{2-theory/camera/camera.pdf}
 	\caption{Pinhole-model (not up to date).\label{theory:pin}}
 \end{figure} 
 
@@ -152,18 +152,23 @@ P_w\\
 The rotation and translation in $\begin{pmatrix}R&|&t\end{pmatrix}$ are called the extrinsic parameters. The camera matrix $K$ contains analogously the linear intrinsic parameters.
 
 \subsection{The distortion model in OpenCV}
-Non linear distortions, which appear before the projection in \ref{theory:camera-pixel} should be considered too. OpenCV implements the following model:
+Non linear distortions, which appear before the projection in \ref{theory:camera-pixel} should be considered too.
+OpenCV takes the effects of radial, tangential and thin prism distortion into account \cite{cv_calib}. 
+
+\subsubsection{Radial Distortion}
+Radial distortion is caused by the flawed curvature of the lens \cite{weng}.
+It can be modeled with
 \begin{align}
 \begin{pmatrix}
 x''\\
 y''
 \end{pmatrix}=
 \begin{pmatrix}
-x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{1+k_4 r^2+k_5r^4+k_6r^6}+2p_1 x' y'+p_2(r^2+2x'^2)+s_1 r^2+s_2 r^4\\
-y'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{1+k_4 r^2+k_5r^4+k_6r^6}+2p_2x'y'+p_1(r^2+2y'^2)+s_3 r^2+s_4 r^4
-\end{pmatrix}\label{theory:dist}
+x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{1+k_4 r^2+k_5r^4+k_6r^6}\\
+y'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{1+k_4 r^2+k_5r^4+k_6r^6}
+\end{pmatrix}\label{theory:raddist},
 \end{align}
-where $x'$ ad $y'$ are coordinates, described in camera-coordinates, normalized with $Z_c$
+where $x'$ and $y'$ are coordinates, described in camera-coordinates, normalized with $Z_c$
 \begin{align*}
 \begin{pmatrix}
 x'\\
@@ -178,8 +183,62 @@ and r is the radius as taken with respect to the principal point $\begin{pmatrix
 \begin{align*}
 r^2 = x'^2 + y'^2.
 \end{align*}
-\cite{cv_calib}
+This type of distortion is symmetrical about the optical axis.
+Figure \ref{theory:radial} illustrates the effect on a rectangle.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{2-theory/distortion/radial.png}
+	\caption{Different types of radial distortion. Black: no distortion, red: $k_1 = 10$, $k_2=11$, $k_3=12$, $k_4=5$, $k_5=6$, $k_6=7$, blue: $k_1 = -2.2$, $k_2=-1.2$, $k_3=-0.8$, $k_4=-0.4$, $k_5=-0.3$, $k_6=-0.2$\label{theory:radial}}
+\end{figure} 
 
+\subsubsection{Tangential distortion}
+Real optical systems are also subject to tangential distortion. This type of distortion has a decentering effect and occurs, if the line through the optical center of the lens and the principal point is not col-linear with the optical axis \cite{weng}.
+The model
+\begin{align}
+\begin{pmatrix}
+x''\\
+y''
+\end{pmatrix}=
+\begin{pmatrix}
+x' + 2p_1x'y'+p_2(r^2+2x'^2)\\
+y' + 2p_2x'y'+p_1(r^2+2y'^2)
+\end{pmatrix}\label{theory:tandist}
+\end{align}
+takes this into account.
+Figure \ref{theory:tangential} shows the distortion this model introduces.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{2-theory/distortion/tangential.png}
+	\caption{Different types of tangential distortion. Black: no distortion, red: $p_1 = -0.15$, $p_2=-0.4$, blue: $p_1 = 0.15$, $p2=-0.4$\label{theory:tangential}}
+\end{figure} 
+
+\subsubsection{Thin prism distortion}
+Thin prism distortion is partially caused by lens imperfections and camera assembly \cite{weng}.
+It introduces additional radial and tangential distortion, modeled with
+\begin{align}
+\begin{pmatrix}
+x''\\
+y''
+\end{pmatrix}=
+\begin{pmatrix}
+x' + s_1 r^2 + s_2 r^4\\
+y' + s_3 r^2 + s_4 r^4
+\end{pmatrix}\label{theory:prismdist}.
+\end{align}
+
+\subsubsection{The combined model in OpenCV}
+The models in \ref{theory:raddist}, \ref{theory:tandist} and \ref{theory:prismdist} combined result in
+\begin{align}
+\begin{pmatrix}
+x''\\
+y''
+\end{pmatrix}=
+\begin{pmatrix}
+x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{1+k_4 r^2+k_5r^4+k_6r^6}+2p_1 x' y'+p_2(r^2+2x'^2)+s_1 r^2+s_2 r^4\\
+y'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{1+k_4 r^2+k_5r^4+k_6r^6}+2p_2x'y'+p_1(r^2+2y'^2)+s_3 r^2+s_4 r^4
+\end{pmatrix}\label{theory:dist}.
+\end{align}
 In summary, a point in normalized camera-coordinates $\begin{pmatrix}x'&y'\end{pmatrix}^T$ is distorted as modeled in \ref{theory:dist}, which leads to the point $\begin{pmatrix}x''&y''\end{pmatrix}^T$. To get the distorted pixel-coordinates (subscript $d$), the projection has to be applied
 \begin{align*}
 \begin{pmatrix}
@@ -201,10 +260,5 @@ y''\\
 1
 \end{pmatrix},
 \end{align*}
-which completes the model so far. Keep in mind, that when correcting the distortion, equation \ref{theory:dist} has to be inverted.
-
-By taking closer look at the coefficients in \ref{theory:dist}, one can see, that this model is a combination of different distortion models. The parameters $k_1$ to $k_6$ cause a distortion which is symmetric with respect to the principal point in the image plane. This so called radial distortion is caused by the lens, and usually dominates (paper von weng) 
-
-
-
-
+which completes the model so far.
+Keep in mind, that when correcting the distortion, equation \ref{theory:dist} has to be inverted.

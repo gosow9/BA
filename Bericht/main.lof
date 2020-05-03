@@ -4,7 +4,11 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Pinhole-model (not up to date).}}{6}{figure.2.1}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Pinhole-model (not up to date).}}{5}{figure.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Different types of radial distortion. Black: no distortion, red: $k_1 = 10$, $k_2=11$, $k_3=12$, $k_4=5$, $k_5=6$, $k_6=7$, blue: $k_1 = -2.2$, $k_2=-1.2$, $k_3=-0.8$, $k_4=-0.4$, $k_5=-0.3$, $k_6=-0.2$}}{7}{figure.2.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Different types of tangential distortion. Black: no distortion, red: $p_1 = -0.15$, $p_2=-0.4$, blue: $p_1 = 0.15$, $p2=-0.4$}}{8}{figure.2.3}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 

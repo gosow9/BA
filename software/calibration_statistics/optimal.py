@@ -24,7 +24,7 @@ for fname in images:
 
 # keep the 'good' ones (best 20%)
 values = [i for i in sharp.values()]
-thresh = np.percentile(values, 2) 
+thresh = np.percentile(values, 30) 
 images = []
 
 for f in sharp.keys():
@@ -62,14 +62,15 @@ for fname in images:
             cv2.waitKey(500)
 
 # select model with 6 ks (k4 and k6 = 0), 4s' (s4 = 0)
-flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_ZERO_TANGENT_DIST + cv2.CALIB_THIN_PRISM_MODEL + cv2.CALIB_FIX_K4 + cv2.CALIB_FIX_K6 + cv2.CALIB_TILTED_MODEL
-ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objpoints, imgpoints, (3280, 2464), 1, None, None, flags=flags)
+flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL #+ cv2.CALIB_FIX_K4 + cv2.CALIB_FIX_K6 
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 300, 10^(-12))
+ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objpoints, imgpoints, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
 
 # store result to files
-np.savetxt('mtx.txt', mtx)
-np.savetxt('dist.txt', dist)
+np.savetxt('mtx_f.txt', mtx)
+np.savetxt('dist_f.txt', dist)
 
-with open('params_opt.txt', 'w') as f:
+with open('params_opt_f.txt', 'w') as f:
     f.write('RMS reprojection error = {:}\n\n'.format(ret))
     f.write('Camera Matrix:\n')
     f.write('fx = {:} +/- {:}\n'.format(mtx[0][0], stdin[0][0]))
@@ -91,9 +92,6 @@ with open('params_opt.txt', 'w') as f:
     f.write('s2 = {:} +/- {:}\n'.format(dist[0][9], stdin[13][0]))
     f.write('s3 = {:} +/- {:}\n'.format(dist[0][10], stdin[14][0]))
     f.write('s4 = {:} +/- {:}\n\n'.format(dist[0][11], stdin[15][0]))
-    f.write('Tilted Perspective Distortion:\n')
-    f.write('Tx = {:} +/- {:}\n'.format(dist[0][12], stdin[16][0]))
-    f.write('Ty = {:} +/- {:}\n'.format(dist[0][13], stdin[17][0]))
     
     
 # print elapsed time
