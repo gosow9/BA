@@ -2,10 +2,25 @@
 FileName = Backlight_V3.GBR
 AutoAperture = True
 *************************************************************
-Generating : Board
-      File : Backlight_V3.GM2
+Generating : Mechanical 15
+      File : Backlight_V3.GM15
+
+    Adding Layer      : Mechanical 15
 
     Adding Layer      : Board
+
+
+Used DCodes :
+    D12
+    D32
+    D34
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : Backlight_V3.GBO
+
+    Adding Layer      : Bottom Overlay
 
     Adding Layer      : Board
 
@@ -15,10 +30,47 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
-Generating : Bottom Overlay
-      File : Backlight_V3.GBO
+Generating : Bottom Paste
+      File : Backlight_V3.GBP
 
-    Adding Layer      : Bottom Overlay
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Board
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D12
+*************************************************************
+
+*************************************************************
+Generating : Bottom Pad Master
+      File : Backlight_V3.GPB
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+    Adding Layer      : Board
+
+
+Used DCodes :
+    D12
+    D26
+    D27
+    D28
+    D29
+    D30
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : Backlight_V3.GM1
+
+    Adding Layer      : Mechanical 1
 
     Adding Layer      : Board
 
@@ -66,11 +118,82 @@ Used DCodes :
     D13
     D14
     D15
+    D26
+    D27
+    D28
+    D29
+    D30
+*************************************************************
+
+*************************************************************
+Generating : Board
+      File : Backlight_V3.GM2
+
+    Adding Layer      : Board
+
+    Adding Layer      : Board
+
+
+Used DCodes :
+    D12
+*************************************************************
+
+*************************************************************
+Generating : Top Layer
+      File : Backlight_V3.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Board
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D12
+    D13
+    D14
+    D15
+    D25
+    D26
     D27
     D28
     D29
     D30
     D31
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : Backlight_V3.GD1
+
+    Adding Layer      : Board
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D12
+    D35
+    D36
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : Backlight_V3.GG1
+
+    Adding Layer      : Board
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D12
+    D35
 *************************************************************
 
 *************************************************************
@@ -100,54 +223,6 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
-Generating : Drill Drawing
-      File : Backlight_V3.GD1
-
-    Adding Layer      : Board
-
-    Adding Drill Pair : Top Layer-Bottom Layer
-
-    Adding Layer      : Drill Drawing
-
-
-Used DCodes :
-    D12
-    D36
-    D37
-*************************************************************
-
-*************************************************************
-Generating : Drill Guide
-      File : Backlight_V3.GG1
-
-    Adding Layer      : Board
-
-    Adding Drill Pair : Top Layer-Bottom Layer
-
-    Adding Layer      : Drill Guide
-
-
-Used DCodes :
-    D12
-    D36
-*************************************************************
-
-*************************************************************
-Generating : Mechanical 13
-      File : Backlight_V3.GM13
-
-    Adding Layer      : Mechanical 13
-
-    Adding Layer      : Board
-
-
-Used DCodes :
-    D12
-    D33
-    D34
-*************************************************************
-
-*************************************************************
 Generating : Top Paste
       File : Backlight_V3.GTP
 
@@ -168,77 +243,33 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
-Generating : Mechanical 15
-      File : Backlight_V3.GM15
+Generating : Top Overlay
+      File : Backlight_V3.GTO
 
-    Adding Layer      : Mechanical 15
+    Adding Layer      : Top Overlay
+
+    Adding Layer      : Board
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 13
+      File : Backlight_V3.GM13
+
+    Adding Layer      : Mechanical 13
 
     Adding Layer      : Board
 
 
 Used DCodes :
     D12
-    D33
-    D35
-*************************************************************
-
-*************************************************************
-Generating : Mechanical 1
-      File : Backlight_V3.GM1
-
-    Adding Layer      : Mechanical 1
-
-    Adding Layer      : Board
-
-
-Used DCodes :
-    D12
-*************************************************************
-
-*************************************************************
-Generating : Bottom Pad Master
-      File : Backlight_V3.GPB
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
-
-    Adding Layer      : Board
-
-
-Used DCodes :
-    D12
-    D27
-    D28
-    D29
-    D30
-    D31
-*************************************************************
-
-*************************************************************
-Generating : Top Layer
-      File : Backlight_V3.GTL
-
-    Adding Layer      : Top Layer
-
-    Adding Layer      : Board
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D12
-    D13
-    D14
-    D15
-    D25
-    D26
-    D27
-    D28
-    D29
-    D30
-    D31
     D32
+    D33
 *************************************************************
 
 *************************************************************
@@ -248,23 +279,6 @@ Generating : Keep-Out Layer
     Adding Layer      : Keep-Out Layer
 
     Adding Layer      : Board
-
-
-Used DCodes :
-    D12
-*************************************************************
-
-*************************************************************
-Generating : Bottom Paste
-      File : Backlight_V3.GBP
-
-    Adding Layer      : Bottom Paste
-
-    Adding Layer      : Board
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
 
 
 Used DCodes :
@@ -284,26 +298,11 @@ Generating : Bottom Layer
 
 Used DCodes :
     D12
+    D26
     D27
     D28
     D29
     D30
     D31
-    D32
-*************************************************************
-
-*************************************************************
-Generating : Top Overlay
-      File : Backlight_V3.GTO
-
-    Adding Layer      : Top Overlay
-
-    Adding Layer      : Board
-
-
-Used DCodes :
-    D10
-    D11
-    D12
 *************************************************************
 

@@ -1,12 +1,29 @@
-Output: NC Drill Files
-Type  : NC Drill
-From  : Project [Backlight_V3.PrjPcb]
-   Generated File[Backlight_V3.TXT]
-   Generated File[Backlight_V3.LDP]
-   Generated File[Backlight_V3.DRR]
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [Backlight_V3.PrjPcb]
+   Generated File[Backlight_V3.GTO]
+   Generated File[Backlight_V3.GTP]
+   Generated File[Backlight_V3.GTS]
+   Generated File[Backlight_V3.GTL]
+   Generated File[Backlight_V3.GBL]
+   Generated File[Backlight_V3.GBS]
+   Generated File[Backlight_V3.GBP]
+   Generated File[Backlight_V3.GBO]
+   Generated File[Backlight_V3.GM1]
+   Generated File[Backlight_V3.GM2]
+   Generated File[Backlight_V3.GM13]
+   Generated File[Backlight_V3.GM15]
+   Generated File[Backlight_V3.GKO]
+   Generated File[Backlight_V3.GPT]
+   Generated File[Backlight_V3.GPB]
+   Generated File[Backlight_V3.GD1]
+   Generated File[Backlight_V3.GG1]
+   Generated File[Backlight_V3.RUL]
+   Generated File[Backlight_V3.EXTREP]
+   Generated File[Backlight_V3.REP]
 
 
-Files Generated   : 3
+Files Generated   : 20
 Documents Printed : 0
 
-Finished Output Generation At 13:24:47 On 30.04.2020
+Finished Output Generation At 21:02:07 On 03.05.2020
