@@ -3,7 +3,7 @@ import numpy as np
 import glob
 import os
 
-images = glob.glob('im/*.png')
+images = glob.glob('im2/*.png')
 
 sharp = {}
 
@@ -21,8 +21,8 @@ for fname in images:
         
     else:
         sharp.update({fname: None})
-        os.rename(fname, 'im/del/'+fname[3:])
+        os.rename(fname, 'im2/del/'+fname[3:])
         
-with open('sharpness.txt','w') as f:
+with open('sharpness2.txt','w') as f:
     for s in sharp:
         f.write(str(s)+': '+str(sharp[s])+'\n')
