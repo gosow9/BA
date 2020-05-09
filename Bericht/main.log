@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  9 MAY 2020 13:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  9 MAY 2020 14:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1879,7 +1879,7 @@ Chapter 2.
                                                   \fi \fi 
 l.85 \end{align*}
                  ]
-<2-theory/distortion/radial.png, id=198, 3292.3pt x 2473.24pt>
+<2-theory/distortion/radial.png, id=204, 3292.3pt x 2473.24pt>
 File: 2-theory/distortion/radial.png Graphic file (type png)
 <use 2-theory/distortion/radial.png>
 Package pdftex.def Info: 2-theory/distortion/radial.png  used on input line 194
@@ -1893,7 +1893,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [6]
-<2-theory/distortion/tangential.png, id=211, 3292.3pt x 2473.24pt>
+<2-theory/distortion/tangential.png, id=217, 3292.3pt x 2473.24pt>
 File: 2-theory/distortion/tangential.png Graphic file (type png)
 <use 2-theory/distortion/tangential.png>
 Package pdftex.def Info: 2-theory/distortion/tangential.png  used on input line
@@ -1934,6 +1934,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 ]
 Chapter 3.
+<3-development/images/Demonstrator.png, id=255, 1243.64626pt x 1071.00125pt>
+File: 3-development/images/Demonstrator.png Graphic file (type png)
+<use 3-development/images/Demonstrator.png>
+Package pdftex.def Info: 3-development/images/Demonstrator.png  used on input l
+ine 14.
+(pdftex.def)             Requested size: 409.71689pt x 352.84319pt.
 ) (./4-results/4-results.tex [11]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1941,11 +1947,17 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[12
+[12pdfTeX warning (ext4): destination with the same identifier (name{figure.3.1
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1 \chapter
+            {Results} <./3-development/images/Demonstrator.png>]
+Chapter 4.
+) (./5-summary/5-summary.tex [13
 
 ]
-Chapter 4.
-) (./5-summary/5-summary.tex [13]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2047,33 +2059,43 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 162.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 162.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 162.
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A68C4F1D81F585FAB0036010EDAB9E48;1182.
+
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: 275BD3C2FD50DC4E8D125EE6896A84D6;1248
+(rerunfilecheck)             After:  3C7578CF4928B5A5E7ADCFEDA8A2FAE1;1306.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30582 strings out of 492982
- 527015 string characters out of 6134896
- 1002103 words of memory out of 5000000
- 33444 multiletter control sequences out of 15000+600000
+ 30595 strings out of 492982
+ 527326 string characters out of 6134896
+ 1002161 words of memory out of 5000000
+ 33451 multiletter control sequences out of 15000+600000
  50848 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,21n,54p,3236b,1180s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/txfonts/rtxr.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/txfonts/t1xtt.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/tx
-fonts/txex.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txexa.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txsy.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/urw/times/utmri8a.pfb>
-Output written on main.pdf (34 pages, 406044 bytes).
+ 55i,21n,54p,3236b,1182s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{subsection.3.2.1} has been referenced but does no
+t exist, replaced by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/
+texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/txfonts/rtxr.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/txfonts/t1xtt.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfo
+nts/txex.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txexa.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txsy.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/urw/times/utmri8a.pfb>
+Output written on main.pdf (34 pages, 1290031 bytes).
 PDF statistics:
- 390 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
- 79 named destinations out of 1000 (max. 500000)
- 183 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 404 PDF objects out of 1000 (max. 8388607)
+ 351 compressed objects within 4 object streams
+ 83 named destinations out of 1000 (max. 500000)
+ 196 words of extra memory for PDF output out of 10000 (max. 10000000)
 
