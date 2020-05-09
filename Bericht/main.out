@@ -4,14 +4,16 @@
 \BOOKMARK [1][-]{section.2.1}{Camera Calibration in OpenCV}{chapter.2}% 4
 \BOOKMARK [2][-]{subsection.2.1.1}{The pinhole camera model}{section.2.1}% 5
 \BOOKMARK [2][-]{subsection.2.1.2}{The distortion model in OpenCV}{section.2.1}% 6
-\BOOKMARK [0][-]{chapter.3}{Evaluation}{}% 7
-\BOOKMARK [0][-]{chapter.4}{Development}{}% 8
-\BOOKMARK [0][-]{chapter.5}{Results}{}% 9
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 10
-\BOOKMARK [0][-]{chapter*.11}{References}{}% 11
-\BOOKMARK [0][-]{chapter*.11}{List of figures}{}% 12
-\BOOKMARK [0][-]{chapter*.12}{List of tables}{}% 13
-\BOOKMARK [0][-]{chapter*.13}{Statement of Plagiarisms}{}% 14
-\BOOKMARK [0][-]{appendix.A}{Requirements}{}% 15
-\BOOKMARK [1][-]{section.A.1}{Assignment}{appendix.A}% 16
-\BOOKMARK [1][-]{section.A.2}{Requirement Specification}{appendix.A}% 17
+\BOOKMARK [2][-]{subsection.2.1.3}{Reprojection error}{section.2.1}% 7
+\BOOKMARK [2][-]{subsection.2.1.4}{Error propagation as further quality assessment}{section.2.1}% 8
+\BOOKMARK [0][-]{chapter.3}{Evaluation}{}% 9
+\BOOKMARK [0][-]{chapter.4}{Development}{}% 10
+\BOOKMARK [0][-]{chapter.5}{Results}{}% 11
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 12
+\BOOKMARK [0][-]{chapter*.11}{References}{}% 13
+\BOOKMARK [0][-]{chapter*.11}{List of figures}{}% 14
+\BOOKMARK [0][-]{chapter*.12}{List of tables}{}% 15
+\BOOKMARK [0][-]{chapter*.13}{Statement of Plagiarisms}{}% 16
+\BOOKMARK [0][-]{appendix.A}{Requirements}{}% 17
+\BOOKMARK [1][-]{section.A.1}{Assignment}{appendix.A}% 18
+\BOOKMARK [1][-]{section.A.2}{Requirement Specification}{appendix.A}% 19

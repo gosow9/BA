@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  22 APR 2020 17:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  9 MAY 2020 11:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1877,12 +1877,12 @@ Chapter 2.
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.83 
-     ]
-<2-theory/distortion/radial.png, id=180, 3292.3pt x 2473.24pt>
+l.85 \end{align*}
+                 ]
+<2-theory/distortion/radial.png, id=192, 3292.3pt x 2473.24pt>
 File: 2-theory/distortion/radial.png Graphic file (type png)
 <use 2-theory/distortion/radial.png>
-Package pdftex.def Info: 2-theory/distortion/radial.png  used on input line 190
+Package pdftex.def Info: 2-theory/distortion/radial.png  used on input line 194
 .
 (pdftex.def)             Requested size: 409.71689pt x 307.75792pt.
 
@@ -1893,11 +1893,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [6]
-<2-theory/distortion/tangential.png, id=193, 3292.3pt x 2473.24pt>
+<2-theory/distortion/tangential.png, id=205, 3292.3pt x 2473.24pt>
 File: 2-theory/distortion/tangential.png Graphic file (type png)
 <use 2-theory/distortion/tangential.png>
 Package pdftex.def Info: 2-theory/distortion/tangential.png  used on input line
- 212.
+ 216.
 (pdftex.def)             Requested size: 409.71689pt x 307.75792pt.
 
 Underfull \vbox (badness 1803) has occurred while \output is active []
@@ -1907,9 +1907,8 @@ Underfull \vbox (badness 1803) has occurred while \output is active []
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.241 \end{align}
-                  <./2-theory/distortion/radial.png (PNG copy)>])
-(./3-evaluation/3-evaluation.tex
+l.245 \end{align}
+                  <./2-theory/distortion/radial.png (PNG copy)>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1921,12 +1920,10 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1 \chapter
-            {Evaluation} <./2-theory/distortion/tangential.png (PNG copy)>]
-Chapter 3.
-) (./4-development/4-development.tex [9
-
-]
+l.275 C
+       alibration functions in OpenCV return the overall \acs{rms} reproject...
+ <./2-theory/distortion/tangential.png (PNG copy)>])
+(./3-evaluation/3-evaluation.tex [9]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1936,8 +1933,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [10
 
 ]
-Chapter 4.
-) (./5-results/5-results.tex [11]
+Chapter 3.
+) (./4-development/4-development.tex [11]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1947,8 +1944,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [12
 
 ]
-Chapter 5.
-) (./6-summary/6-summary.tex [13]
+Chapter 4.
+) (./5-results/5-results.tex [13]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1958,8 +1955,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [14
 
 ]
-Chapter 6.
-) [15]
+Chapter 5.
+) (./6-summary/6-summary.tex [15]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1969,10 +1966,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [16
 
 ]
-LaTeX Font Info:    Try loading font information for T1+txtt on input line 140.
-
- (/usr/share/texlive/texmf-dist/tex/latex/txfonts/t1txtt.fd
-File: t1txtt.fd 2000/12/15 v3.1
+Chapter 6.
 ) [17]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1982,11 +1976,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [18
 
-] (./main.lof)
-\tf@lof=\write10
-\openout10 = `main.lof'.
+]
+LaTeX Font Info:    Try loading font information for T1+txtt on input line 140.
 
- [19]
+ (/usr/share/texlive/texmf-dist/tex/latex/txfonts/t1txtt.fd
+File: t1txtt.fd 2000/12/15 v3.1
+) [19]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1995,12 +1990,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [20
 
-] (./main.lot)
-\tf@lot=\write11
-\openout11 = `main.lot'.
+] (./main.lof)
+\tf@lof=\write10
+\openout10 = `main.lof'.
 
- (./statment_of_plagiarism/statement_of_plagiarism.tex
-[21]
+ [21]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2009,12 +2003,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [22
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 3--8
+] (./main.lot)
+\tf@lot=\write11
+\openout11 = `main.lot'.
 
- []
-
-[23]) (./Appendix/appendix.tex
+ (./statment_of_plagiarism/statement_of_plagiarism.tex
+[23]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2023,17 +2017,31 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [24
 
-
 ]
-Appendix A.
-[25]
+Underfull \hbox (badness 10000) in paragraph at lines 3--8
+
+ []
+
+[25]) (./Appendix/appendix.tex
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[26] [27
+[26
+
+
+]
+Appendix A.
+[27]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[28] [29
 
 ])
 
@@ -2042,7 +2050,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[28
+[30
 
 ] (./main.ind)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 163.
@@ -2051,19 +2059,19 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 163.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 163.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 163.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6D16ACC9EB08C85AC27F66D28BF767EB;945.
+(rerunfilecheck)             Checksum: 21B7FF7392D29C9C9D74DDC99D2D4675;1118.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30573 strings out of 492982
- 526908 string characters out of 6134896
- 1001935 words of memory out of 5000000
- 33436 multiletter control sequences out of 15000+600000
+ 30586 strings out of 492982
+ 527086 string characters out of 6134896
+ 1002100 words of memory out of 5000000
+ 33443 multiletter control sequences out of 15000+600000
  50848 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,21n,54p,3236b,1180s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,21n,54p,3236b,1182s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/txfonts/rtxr.pfb></usr/share/texlive/texmf-dist/fonts/type
@@ -2073,10 +2081,10 @@ pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txsy.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/times/utmri8a.pfb>
-Output written on main.pdf (34 pages, 400778 bytes).
+Output written on main.pdf (36 pages, 406154 bytes).
 PDF statistics:
- 364 PDF objects out of 1000 (max. 8388607)
- 313 compressed objects within 4 object streams
- 74 named destinations out of 1000 (max. 500000)
- 159 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 392 PDF objects out of 1000 (max. 8388607)
+ 339 compressed objects within 4 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 175 words of extra memory for PDF output out of 10000 (max. 10000000)
 
