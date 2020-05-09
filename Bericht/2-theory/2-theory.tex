@@ -2,8 +2,12 @@
 This chapter takes a closer look at the theory and technology applied in this thesis.
 
 \section{Camera Calibration in OpenCV}
-This section describes the theory behind the calibration process in OpenCV 4.3.0, which is the latest version at the time of writing this thesis.
+Camera calibration is needed to obtain camera parameters like focal length and center point.
+Further, it provides a method to correct distortions caused by the imperfect optics according to a certain distortion models.
+For that, a set of images of a known pattern (usually a checkerboard) have to be taken from different view-points an angles.
+These points provide the training data which is needed to estimate all the coefficients.
 
+This section describes the theory behind the calibration process in OpenCV 4.3.0, which is the latest version at the time of writing this thesis.
 \subsection{The pinhole camera model}
 The functions OpenCV provides to calibrate the camera use the so-called pinhole camera model \cite{cv_calib}.
 This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane ($p$). After this step, the point is described as a 2D-point in pixel coordinates.  Figure \ref{theory:pin} illustrates this setup.
@@ -262,3 +266,45 @@ y''\\
 \end{align*}
 which completes the model so far.
 Keep in mind, that when correcting the distortion, equation \ref{theory:dist} has to be inverted.
+
+\subsection{Reprojection error}
+The reprojection error is a value to asses the quality of a calibration.
+It is the error between the detected image point and the projection (using the obtained coefficients) of its corresponding world point onto the image plane.
+Since it only uses the points, which where previously used to obtain the calibration-parameters, it can be interpreted as a training error rate.
+
+Calibration functions in OpenCV return the overall \acs{rms} reprojection error \cite{cv_calib}.
+
+\subsection{Error propagation as further quality assessment}
+As argued before, the reprojection error is a training error rate.
+A low reprojection error is therefore not necessarily enough to estimate, how good the calibration really performs.
+
+OpenCV returns with its extended calibration functions not only the camera intrinsics, but also an estimated standard deviation of each coefficient \cite{cv_calib}.
+Under assumption that low standard deviations suggest a good calibration, it is valid to combine all standard deviations into one value using the propagation of uncertainty.
+
+The propagation of error states that influence of each error of the inputs $x_i$ on the output value $y$ of a function
+\begin{align*}
+	y = f(x_1, x_2,..,x_n)
+\end{align*}
+can be linearly approximated and summed up to:
+\begin{align}
+	\Delta y = \sqrt{\sum_{i=1}^{n}\left(\frac{\partial y}{\partial x_i}\Delta x_i \right)^2} \label{theory:prop}.
+\end{align}
+
+Applied to \ref{theory:dist}, this leads to
+\begin{align*}
+	\Delta x''=\sqrt{\sum_{i=1}^{6}\left(\frac{\partial x''}{\partial k_i}\Delta k_i \right)^2+\sum_{i=1}^{2}\left( \frac{\partial x''}{\partial p_i}\Delta p_i\right)^2+\sum_{i=1}^{4}\left( \frac{\partial x''}{\partial s_i}\Delta s_i\right)^2}
+\end{align*}
+and
+\begin{align*}
+	\Delta y''=\sqrt{\sum_{i=1}^{6}\left(\frac{\partial y''}{\partial k_i}\Delta k_i \right)^2+\sum_{i=1}^{2}\left( \frac{\partial y''}{\partial p_i}\Delta p_i\right)^2+\sum_{i=1}^{4}\left( \frac{\partial y''}{\partial s_i}\Delta s_i\right)^2}.
+\end{align*}
+It is at this point not intended to go into further computations of the derivatives.
+If we look at pixel coordinates from the center of the image, btw. $c_x=0$ and $c_y=0$, the radius (distance from the centerpoint) can be expressed as
+\begin{align*}
+	r = \sqrt{(f_x\cdot x'')^2+(f_y\cdot y'')^2}
+\end{align*}
+and therefore, if errors in $f_x$ and $f_y$ are neglected, with the propagation in \ref{theory:prop} applied
+\begin{align}
+	\Delta r = \sqrt{\left(\frac{\partial r}{\partial x''} \Delta x''\right)^2+\left(\frac{\partial r}{\partial y''} \Delta y''\right)^2}\label{theory:delta_r}.
+\end{align}
+This value $\Delta r$ can now be plotted over half the diagonal of an image to compare calibration coefficients of different calibration approaches.
