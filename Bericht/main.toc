@@ -26,9 +26,13 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Development}{11}{chapter.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.1}Software}{11}{section.3.1}
+\contentsline {section}{\numberline {3.1}Calibration}{11}{section.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.2}Hardware}{11}{section.3.2}
+\contentsline {section}{\numberline {3.2}Software}{11}{section.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.3}Hardware}{11}{section.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.3.1}Demonstrator}{11}{subsection.3.3.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {4}Results}{13}{chapter.4}
 \defcounter {refsection}{0}\relax 
