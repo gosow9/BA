@@ -2,15 +2,15 @@
 This chapter takes a closer look at the theory and technology applied in this thesis.
 
 \section{Camera Calibration in OpenCV}
-Camera calibration is needed to obtain camera parameters like focal length and center point.
+Camera calibration is needed to obtain camera parameters like focal length and the principal point.
 Further, it provides a method to correct distortions caused by the imperfect optics according to a certain distortion models.
-For that, a set of images of a known pattern (usually a checkerboard) have to be taken from different view-points an angles.
-These points provide the training data which is needed to estimate all the coefficients.
+In order to do that, images of a known pattern (usually a checkerboard) have to be taken from different view-points an angles.
+These points provide the data which is needed to estimate all the coefficients.
 
 This section describes the theory behind the calibration process in OpenCV 4.3.0, which is the latest version at the time of writing this thesis.
 \subsection{The pinhole camera model}
 The functions OpenCV provides to calibrate the camera use the so-called pinhole camera model \cite{cv_calib}.
-This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane ($p$). After this step, the point is described as a 2D-point in pixel coordinates.  Figure \ref{theory:pin} illustrates this setup.
+This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane. After this step, the point is described as a 2D-point ($p$) in pixel coordinates.  Figure \ref{theory:pin} illustrates this setup.
 \begin{figure}[ht]
 	\centering
 	%\includegraphics[width=0.9\textwidth]{2-theory/camera/camera.pdf}
@@ -40,7 +40,7 @@ t_y\\
 t_z\\
 \end{pmatrix}}_{t}.
 \end{align*}
-The vector $P_w$ is first rotated by $R$ and the translated by $t$. This can be written in one single matrix:
+The point $P_w$ described as a vector is first rotated by $R$ and the translated by $t$. This can be written in one single matrix:
 \begin{align}
 \begin{pmatrix}
 X_c\\
@@ -83,9 +83,9 @@ c_x\\
 c_y
 \end{pmatrix}.
 \end{align*}
-where $f_x$ and $f_y$ are the focal length $f$ (in world units) normalized by their respective pixel size (in world units). Thus $f_x$ and $f_y$ are the same, if the pixels are quadratic.
+where $f_x$ and $f_y$ are the focal length $f$ (in world units) normalized by their respective pixel size (in world units). Thus $f_x$ and $f_y$ are equal, if the pixels are quadratic.
 
-By adding the principal point $\begin{pmatrix}c_x&c_y\end{pmatrix}^T$, which is usually close to the image center, it is taken into account, that pixel-coordinates are specified with respect to the upper left corner of the image plane. .
+By adding the principal point $\begin{pmatrix}c_x&c_y\end{pmatrix}^T$, which is usually close to the image center, it is taken into account, that pixel-coordinates are specified with respect to the upper left corner of the image plane.
 It is now simpler to write this in homogeneous coordinates:
 \begin{align}
 \begin{pmatrix}
@@ -156,7 +156,7 @@ P_w\\
 The rotation and translation in $\begin{pmatrix}R&|&t\end{pmatrix}$ are called the extrinsic parameters. The camera matrix $K$ contains analogously the linear intrinsic parameters.
 
 \subsection{The distortion model in OpenCV}
-Non linear distortions, which appear before the projection in \ref{theory:camera-pixel} should be considered too.
+Non-linear distortions, which appear before the projection in \ref{theory:camera-pixel} should be considered too.
 OpenCV takes the effects of radial, tangential and thin prism distortion into account \cite{cv_calib}. 
 
 \subsubsection{Radial Distortion}
@@ -182,7 +182,7 @@ y'
 X_c/Z_c\\
 Y_c/Z_c
 \end{pmatrix}
-\end{align*}from
+\end{align*}
 and r is the radius as taken with respect to the principal point $\begin{pmatrix}c_x&c_y\end{pmatrix}^T$
 \begin{align*}
 r^2 = x'^2 + y'^2.
@@ -196,7 +196,7 @@ Figure \ref{theory:radial} illustrates the effect on a rectangle.
 \end{figure} 
 
 \subsubsection{Tangential distortion}
-Real optical systems are also subject to tangential distortion. This type of distortion has a decentering effect and occurs, if the line through the optical center of the lens and the principal point is not col-linear with the optical axis \cite{weng}.
+Real optical systems are also subject to tangential distortion. This type of distortion has a decentering effect and occurs, if the line through the optical center of the lens and the principal point is not co-linear with the optical axis \cite{weng}.
 The model
 \begin{align}
 \begin{pmatrix}
@@ -299,12 +299,12 @@ and
 	\Delta y''=\sqrt{\sum_{i=1}^{6}\left(\frac{\partial y''}{\partial k_i}\Delta k_i \right)^2+\sum_{i=1}^{2}\left( \frac{\partial y''}{\partial p_i}\Delta p_i\right)^2+\sum_{i=1}^{4}\left( \frac{\partial y''}{\partial s_i}\Delta s_i\right)^2}.
 \end{align*}
 It is at this point not intended to go into further computations of the derivatives.
-If we look at pixel coordinates from the center of the image, btw. $c_x=0$ and $c_y=0$, the radius (distance from the centerpoint) can be expressed as
+If we look at pixel coordinates from the center of the image, btw. $c_x=0$ and $c_y=0$, the radius (distance from the center-point) can be expressed as
 \begin{align*}
 	r = \sqrt{(f_x\cdot x'')^2+(f_y\cdot y'')^2}
 \end{align*}
-and therefore, if errors in $f_x$ and $f_y$ are neglected, with the propagation in \ref{theory:prop} applied
+and therefore, if deviations in $f_x$ and $f_y$ are neglected, with the propagation in \ref{theory:prop} applied
 \begin{align}
 	\Delta r = \sqrt{\left(\frac{\partial r}{\partial x''} \Delta x''\right)^2+\left(\frac{\partial r}{\partial y''} \Delta y''\right)^2}\label{theory:delta_r}.
 \end{align}
-This value $\Delta r$ can now be plotted over half the diagonal of an image to compare calibration coefficients of different calibration approaches.
+This value $\Delta r$ can now be plotted over half the diagonal of an image to compare calibration coefficients of different calibrations.
