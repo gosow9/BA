@@ -10,11 +10,11 @@ import numpy as np
 
 
 def gstreamer_pipeline(
-    capture_width=1920,
-    capture_height=1080,
+    capture_width=3280,
+    capture_height=2464,
     display_width=1280,
     display_height=720,
-    framerate=30,
+    framerate=20,
     flip_method=0,
 ):
     return (
@@ -48,10 +48,10 @@ def show_camera():
             t = time.time()
             ret_val, img = cap.read()
             imggray  = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            #(thresh, blackAndWhiteImage) = cv2.threshold(imggray, 127, 255, cv2.THRESH_BINARY)
+            (thresh, blackAndWhiteImage) = cv2.threshold(imggray, 127, 255, cv2.THRESH_BINARY)
             t = t-time.time()
             print(t)
-            cv2.imshow("CSI Camera", imggray)
+            #cv2.imshow("CSI Camera", img)
             # This also acts as
             keyCode = cv2.waitKey(30) & 0xFF
             # Stop the program on the ESC key
