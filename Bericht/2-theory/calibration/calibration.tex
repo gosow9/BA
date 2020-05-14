@@ -12,10 +12,16 @@ The functions OpenCV provides to calibrate the camera use the so-called pinhole 
 This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane ($p$). After this step, the point is described as a 2D-point in pixel coordinates.  Figure \ref{theory:pin} illustrates this setup.
 \begin{figure}[ht]
 	\centering
-	%\includegraphics[width=0.9\textwidth]{2-theory/camera/camera.pdf}
-	\caption{Pinhole-model (not up to date).\label{theory:pin}}
+	\includegraphics[width=0.9\textwidth]{2-theory/cam/Camera2.pdf}
+	\caption{Pinhole-model whole camera.\label{theory:pin1}}
 \end{figure} 
 
+\begin{figure}[ht]
+	\centering
+
+	\includegraphics[width=0.9\textwidth]{2-theory/cam/camera3.pdf}
+	\caption{Pinhole-model simple model.\label{theory:pin2}}
+\end{figure}
 The transition from the world-coordinates to the camera-coordiantes can be described as 
 \begin{align*}
 \underbrace{\begin{pmatrix}
