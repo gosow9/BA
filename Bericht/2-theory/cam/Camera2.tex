@@ -1,4 +1,4 @@
-\documentclass[border=10pt,11pt]{standalone}
+\documentclass[border=1pt,1pt]{standalone}
 \usepackage{tikz}
 \usetikzlibrary{3d}
 \usetikzlibrary{arrows}
@@ -10,13 +10,13 @@
     inner sep=0pt, outer sep=2pt,%
     axis/.style={thick,->},
     wave/.style={thick,color=#1,smooth},
-    polaroid/.style={fill=black!60!white, opacity=0.3},
+    polaroid/.style={fill=black!60!white, opacity=0.01},
 ]
 
-	\node[canvas is zy plane at x=0,above right,opacity=0.7] (foto) at (0,-5.2,-4) {\includegraphics[width=0.8\textwidth,angle=90]{slice.png}};
-	\node[canvas is zy plane at x=0,above right,opacity=0.7] (foto) at (10,-0.7,-4) {\includegraphics[width=0.4\textwidth,angle=270]{slice.png}};
+	\node[canvas is zy plane at x=0,above right,opacity=0.1] (foto) at (0,-4.1,-3.1) {\includegraphics[width=8cm,height=6cm,angle=270]{turtle.jpg}};
+	\node[canvas is zy plane at x=0,above right,opacity=0.5] (foto) at (12,- 2.1,-1.55) {\includegraphics[width=4cm,height=3cm,angle=90]{turtle.jpg}};
 
-\node[canvas is zy plane at x=0,above right,opacity=0.2] (foto) at (2.5,-0.7,-4) {\includegraphics[width=0.4\textwidth,angle=90]{slice.png}};
+\node[canvas is zy plane at x=0,above right,opacity=0.2] (foto) at (4,-2 .1,-1.55) {\includegraphics[width=4cm,height=3cm,angle=270]{turtle.jpg}};
 
     % Colors
     \colorlet{darkgreen}{green!50!black}
@@ -37,16 +37,25 @@
     %    plot (\x, { cos(1.0*\x r)*sin(2.0*\x r)}, {§§ sin(1.0*\x r)*sin(2.0*\x r)})
     %    plot (\x, {-cos(1.0*\x r)*sin(2.0*\x r)}, {-sin(1.0*\x r)*sin(2.0*\x r)});
 
+	\draw[red, dashed]   (0, -4, -3) -- (12,2, 1.5);
+	%\draw[red, dashed,thick]   (0, 4, -3) -- (12,-2, 1.5);
+	\draw[red, dashed,opacity=0.2]   (4, 2, -1.5) -- (0,4, -3);	
+	\draw[red, dashed]   (4, 2, -1.5) -- (12,-2, 1.5);
+	\draw[red, dashed]   (0, -4, 3) -- (12,2, -1.5);
+	\draw[red, dashed]   (0, 4, 3) -- (12,-2, -1.5);
 
 
     \filldraw[polaroid] (0,-4,-3) -- (0,-4,3) -- (0,4,3) -- (0,4,-3) -- (0,-4,-3);
+    
+	\draw[thick,<->,darkred,fill=white] (8,-2.1,-1.5) -- (12, -2.1, -1.5) node[midway,fill=white, left]{F};
+	\draw[thick,<->,darkred,fill=white] (4,-2.1,-1.5) -- (8, -2.1, -1.5) node[midway,fill=white, left]{F};
 	
-	\filldraw[polaroid] (12,-2,-1.5) -- (12,-2,1.5) node[opacity=1,above, sloped, midway]{Camera Sesnor} -- (12,2,1.5) -- (12,2,-1.5) -- (12,-2,-1.5);
+	\draw[gray] (4,-2,1.5)--(4,2,1.5) node[gray,fill=white, anchor=center, above] {virtual image plane};
+		
+	
+	
+	\filldraw[polaroid] (12,-2,-1.5) -- (12,-2,1.5) node[opacity=1,above, sloped, midway]{Image plane} -- (12,2,1.5) -- (12,2,-1.5) -- (12,-2,-1.5);
 	%\draw[polaroid]   (10, -2,  -1.5) -- (10, -2,   1.5) -- (10, 2, 1.5) -- (10, 2, -1.5) -- cycle;
-	\draw[darkred, dashed]   (0, -4, -3) -- (12,2, 1.5);
-	\draw[darkred, dashed]   (0, 4, -3) -- (12,-2, 1.5);
-	\draw[darkred, dashed]   (0, -4, 3) -- (12,2, -1.5);
-	\draw[darkred, dashed]   (0, 4, 3) -- (12,-2, -1.5);
 
     % Electric field vectors
    % \draw[wave=blue, variable=\x,samples at={0,0.25,...,6}]
@@ -81,7 +90,7 @@
 %\shade[draw] (-1,-1) rectangle (1,1);
 \fill (0,0) circle[radius=0.1cm] ;
 
-\path [draw=gray!70, thick, line cap=round, every node/.style={align=center, font=\scriptsize\sffamily}] (0,0,0) to (1,1,0) node {Pin\\hole};
+\path [draw=gray!70, thick, line cap=round, every node/.style={align=center, font=\scriptsize\sffamily}] (0,0,0) to (1,1,0) node[fill=white] {Pin\\hole};
 
 \end{scope}
 
