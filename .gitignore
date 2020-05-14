@@ -8,6 +8,6 @@
 *.aux
 *.gz
 *.toc
-*.pdf
+Bericht/main.pdf
 Results/noise/6k2p4s/np_images/*
 Results/noise/LensFun/np_images/*

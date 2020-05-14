@@ -1,12 +1,14 @@
-\section{Camera Calibration in OpenCV}
+\section{Camera Calibration in OpenCV\label{theory:calibration}}
 Camera calibration is needed to obtain camera parameters like focal length and center point.
 Further, it provides a method to correct distortions caused by the imperfect optics according to a certain distortion models.
-For that, a set of images of a known pattern (usually a checkerboard) have to be taken from different view-points an angles.
+For that, images of a known pattern (usually a checkerboard) have to be taken from different view-points an angles.
 These points provide the training data which is needed to estimate all the coefficients.
 
-This section describes the theory behind the calibration process in OpenCV 4.3.0, which is the latest version at the time of writing this thesis.
-\subsection{The pinhole camera model}
-The functions OpenCV provides to calibrate the camera use the so-called pinhole camera model \cite{cv_calib}.
+This section describes the theory behind the calibration process in OpenCV.
+Subsections \ref{theory:pinhole} and \ref{theory:distortion} adapt the parts of the theory and notation from the OpenCV 4.3.0 documentation \cite{cv_calib}, which is the latest version at the time of writing this thesis.
+
+\subsection{The pinhole camera model\label{theory:pinhole}}
+The functions OpenCV provides to calibrate the camera use the so-called pinhole camera model.
 This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane ($p$). After this step, the point is described as a 2D-point in pixel coordinates.  Figure \ref{theory:pin} illustrates this setup.
 \begin{figure}[ht]
 	\centering
@@ -152,10 +154,9 @@ P_w\\
 \end{align}
 The rotation and translation in $\begin{pmatrix}R&|&t\end{pmatrix}$ are called the extrinsic parameters. The camera matrix $K$ contains analogously the linear intrinsic parameters.
 
-\subsection{The distortion model in OpenCV}
+\subsection{The distortion model in OpenCV\label{theory:distortion}}
 Non linear distortions, which appear before the projection in \ref{theory:camera-pixel} should be considered too.
-OpenCV takes the effects of radial, tangential and thin prism distortion into account \cite{cv_calib}. 
-
+OpenCV takes the effects of radial, tangential and thin prism distortion into account.
 \subsubsection{Radial Distortion}
 Radial distortion is caused by the flawed curvature of the lens \cite{weng}.
 It can be modeled with
@@ -188,7 +189,7 @@ This type of distortion is symmetrical about the optical axis.
 Figure \ref{theory:radial} illustrates the effect on a rectangle.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{2-theory/distortion/radial.png}
+	\includegraphics[width=0.9\textwidth]{2-theory/calibration/distortion/radial.png}
 	\caption{Different types of radial distortion. Black: no distortion, red: $k_1 = 10$, $k_2=11$, $k_3=12$, $k_4=5$, $k_5=6$, $k_6=7$, blue: $k_1 = -2.2$, $k_2=-1.2$, $k_3=-0.8$, $k_4=-0.4$, $k_5=-0.3$, $k_6=-0.2$\label{theory:radial}}
 \end{figure} 
 
@@ -210,8 +211,8 @@ Figure \ref{theory:tangential} shows the distortion this model introduces.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{2-theory/distortion/tangential.png}
-	\caption{Different types of tangential distortion. Black: no distortion, red: $p_1 = -0.15$, $p_2=-0.4$, blue: $p_1 = 0.15$, $p2=-0.4$\label{theory:tangential}}
+	\includegraphics[width=0.9\textwidth]{2-theory/calibration/distortion/tangential.png}
+	\caption{Different types of tangential distortion (example adapted from \cite{weng}). Black: no distortion, red: $p_1 = -0.15$, $p_2=-0.4$, blue: $p_1 = 0.15$, $p2=-0.4$\label{theory:tangential}}
 \end{figure} 
 
 \subsubsection{Thin prism distortion}
@@ -282,7 +283,7 @@ The propagation of error states that influence of each error of the inputs $x_i$
 \begin{align*}
 	y = f(x_1, x_2,..,x_n)
 \end{align*}
-can be linearly approximated and summed up to:
+can be linearly approximated and summed up to \cite{benno}:
 \begin{align}
 	\Delta y = \sqrt{\sum_{i=1}^{n}\left(\frac{\partial y}{\partial x_i}\Delta x_i \right)^2} \label{theory:prop}.
 \end{align}

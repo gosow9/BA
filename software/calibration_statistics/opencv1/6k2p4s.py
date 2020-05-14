@@ -37,7 +37,6 @@ plt.rcParams.update({'font.size': 12})
 
 # prepare plots
 fig, ax = plt.subplots(1, 1)
-ax.set_title(r'6 radial, 2 tangential, 4 prism')
 ax.set_xlabel(r'Radius (pixel)')
 ax.set_ylabel(r'Distortion (pixel)')
 
@@ -53,7 +52,8 @@ for i in range(n):
 
     # select model with 6 ks, 2ps and 2 4'
     flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL
-    ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objp, imgp, (3280, 2464), 1, None, None, flags=flags)
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 300, 10^(-12))
+    ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objp, imgp, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
       
     # generate plot       
     k1 = dist[0][0]
@@ -91,9 +91,14 @@ for i in range(n):
     dist_y = fy*full_dist_model_y(k1, k2, k3, k4, k5, k6, p1, p2, s3, s4, x/fx, y/fy, new_r)
     dist_r = np.sqrt(dist_x**2 + dist_y**2)
     
-    label = '{:}: re = {:.2}'.format(i+1, ret)
+    label = '{:}: '.format(i+1) + r'$e_{rp} = $' + '{:.2}'.format(ret)
     ax.plot(r, dist_r-r, label=label)
     ax.legend()
+    ax.grid(True)
+    ax.set_xlim([0, 2051])
+    ax.set_ylim([0, 40])
+    ax.set_xticks([0, 500, 1000, 1500, 2000])
+    ax.set_yticks([0, 10, 20, 30, 40])
     
     # write to file f
     f.write('{:}.\n'.format(i+1))
