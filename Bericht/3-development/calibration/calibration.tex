@@ -10,16 +10,14 @@ Lens imperfections can therefore cause deviations in the measurement of several 
 To calibrate a camera in OpenCV, one has to take images of a known 2D-pattern.
 It is reasonable to use a checkerboard, since OpenCV provides functions to detect checkerboard-corners reliably with subpixel precision.
 
-\subsection{How to obtain a usable calibration}
+\subsection{Calibration statistics\label{development:statistics}}
 First attempts to calibrate the camera failed.
 Despite reprojection errors of $<0.3$ pixels, the obtained distortion coefficients did not seem to deliver a good undistortion of the image.
-Furthermore, new attempts with slightly different images of the checkerboard resulted in totally different coefficients.
-
+Furthermore, new attempts with slightly different images of the checkerboard resulted in totally different coefficients. 
 It is therefore important to take a closer look at the technical aspects of the calibration process.
 
-\subsubsection{Calibration statistics}
 To get more insight what went wrong, some sort of statistics is needed.
-200 images of the checkerboard from different view-points and angles has been taken.
+200 images of the checkerboard from different view-points and angles have been taken.
 A couple of these images are shown in Figure  \ref{development:im}
 
 \begin{figure}[ht]
@@ -35,10 +33,15 @@ A couple of these images are shown in Figure  \ref{development:im}
 \end{figure}
 
 Randomly selected from these 200 are ten sets of each 20 images.
-Now is the camera calibrated separately with each set.
-To visualize the result, the difference from the distorted (real) and undistorted (corrected) on all locations of half the diagonal in the upper right quadrant of the image is plotted.
-In other words, we take a look at the distortion between the image center and the upper right corner (min to max radius).
+Now, the camera is calibrated separately with each set.
+To visualize the result, the difference from the (with the model in equation \ref{theory:dist}) distorted and undistorted pixel-position is plotted. 
+And this on all locations of half the diagonal in the upper right quadrant of the image.
+In other words, we take a look at the distortion between the image center and the upper right corner where the minimal $r_{\text{min}}=0$, respectively the image center and the maximal radius $r_{\text{max}}=2051$ which is of course depends on the image resolution.
+
+
 This plot is shown in Figure \ref{development:stat}.
+Each label displays the reprojection error.
+The problems which occurred in the first attempts are clearly visible in the scattering of the curves.
 
 \begin{figure}[ht]
 	\centering
@@ -47,8 +50,42 @@ This plot is shown in Figure \ref{development:stat}.
 \end{figure}
 
 The distortion model introduces decentering effects and one could argue, that this plot should be made in all quadrants of the image.
-But since the decentering effects are rather small in comparison with the radial distortion which is symmetric with respect to the centerpoint it should be sufficient to plot only one quadrant.
-it is therefore assumed, that if the distortions are high in one quadrant, that the distortions in all other quadrants is also high and vice versa.
+But since the decentering effects are rather small in comparison with the radial distortion which is symmetric with respect to the centerpoint, it should be sufficient to plot only one quadrant.
+Thus the assumption is made, that if the distortions are high in one quadrant, that the distortions in all other quadrants is also high and vice versa.
 
+\subsubsection{Checkerboards out of numpy-arrays}  
+To estimate the contribution to the bad result of for example additive or sharpness of the edges, one has the observe each effect isolated.
 
+In order to do that, a python script was written, which generates a checkerboard as a numpy-array.
+This array is then translated and rotated in three dimensions, and projected back to the 2D-plane.
+As a last step, the images is distorted by the model in \ref{theory:dist} with the coefficients set to:
+\begin{center}
+	\begin{tabular}{lll}
+		$k_1 = 4.1$   &$k_2 = 36$     &$k_3 = 38$\\
+		$k_4 = 4$     &$k_5 = 34$     &$k_6 = 40$\\
+		$p_1 = 0.002$ &$p_2 = 0.0019$ &$s_1 = -0.0014$\\
+		$s_2 = -0.001$&$s_3 = -0.0022$&$s_4 = 0.00013$	
+	\end{tabular} 
+\end{center}
+These coefficients were not chosen randomly, but are taken from an earlier failed calibration.
+They should therefore not be completely off.
+Some of these images are shown in Figure \ref{development:nump}
 
+\begin{figure}[ht]
+	\centering
+	\subfigure[\label{development:nump0}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump0.png}}
+	\subfigure[\label{development:nump1}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump1.png}}
+	\subfigure[\label{development:nump2}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump2.png}}
+	
+	\subfigure[\label{development:nump3}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump3.png}}
+	\subfigure[\label{development:nump4}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump4.png}}
+	\subfigure[\label{development:numo5}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump5.png}}
+	\caption{Some of the numpy-arrays \label{development:nump}}		
+\end{figure}
+
+These Images can now be further manipulated to simulate real effects.
+To asses, how much these effects influence the calibration, the coefficients obtained by the calibration process can be compared to the real coefficients which were used to distort the images in the first place.
+
+\subsection{Possible reasons}
+This section takes a closer look on details, which could be influencing the calibration and lead to the bad results in section \ref{development:statistics}.
+  

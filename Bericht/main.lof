@@ -4,39 +4,53 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Pinhole-model whole camera.}}{6}{figure.2.1}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Pinhole-model whole camera.}}{6}{figure.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Pinhole-model simple model.}}{7}{figure.2.2}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Pinhole-model simple model.}}{7}{figure.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Different types of radial distortion. Black: no distortion, red: $k_1 = 10$, $k_2=11$, $k_3=12$, $k_4=5$, $k_5=6$, $k_6=7$, blue: $k_1 = -2.2$, $k_2=-1.2$, $k_3=-0.8$, $k_4=-0.4$, $k_5=-0.3$, $k_6=-0.2$}}{8}{figure.2.3}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Different types of radial distortion. Black: no distortion, red: $k_1 = 10$, $k_2=11$, $k_3=12$, $k_4=5$, $k_5=6$, $k_6=7$, blue: $k_1 = -2.2$, $k_2=-1.2$, $k_3=-0.8$, $k_4=-0.4$, $k_5=-0.3$, $k_6=-0.2$}}{8}{figure.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Different types of tangential distortion (example adapted from \cite {weng}). Black: no distortion, red: $p_1 = -0.15$, $p_2=-0.4$, blue: $p_1 = 0.15$, $p2=-0.4$}}{9}{figure.2.4}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Different types of tangential distortion (example adapted from \cite {weng}). Black: no distortion, red: $p_1 = -0.15$, $p_2=-0.4$, blue: $p_1 = 0.15$, $p2=-0.4$}}{9}{figure.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Light source in 3d}}{11}{figure.2.5}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Light source in 3d}}{11}{figure.2.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Light distribution}}{12}{figure.2.6}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Light distribution}}{12}{figure.2.6}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Some of the 200 images }}{14}{figure.3.1}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Some of the 200 images }}{14}{figure.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{14}{figure.3.1}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{14}{figure.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{14}{figure.3.1}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{14}{figure.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{14}{figure.3.1}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{14}{figure.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{14}{figure.3.1}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{14}{figure.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{14}{figure.3.1}%
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{14}{figure.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {}}}{14}{figure.3.1}%
+\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {}}}{14}{figure.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Distortion over the radius according to different sets if images}}{15}{figure.3.2}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Distortion over the radius according to different sets if images}}{15}{figure.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.3}{\ignorespaces 3D-Model of the demonstrator}}{16}{figure.3.3}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Some of the numpy-arrays }}{16}{figure.3.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.4}{\ignorespaces 3D-Model of the back-light PCB}}{17}{figure.3.4}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{16}{figure.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{16}{figure.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{16}{figure.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{16}{figure.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{16}{figure.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {}}}{16}{figure.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.4}{\ignorespaces 3D-Model of the demonstrator}}{17}{figure.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.5}{\ignorespaces 3D-Model of the back-light PCB}}{18}{figure.3.5}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
