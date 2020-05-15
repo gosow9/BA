@@ -1,0 +1,18 @@
+
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+%%%<
+
+
+%% document-wide tikz options and styles
+\begin{document}
+	\begin{tikzpicture}
+	
+\draw[fill = black](-5,0) circle(0.2);
+\foreach \i in {0,30,...,360}
+{
+	\draw[ultra thick,->,yellow!80!black](-5,0)--({sin(\i)-5},{cos(\i)});
+}
+	\end{tikzpicture}
+\end{document}
