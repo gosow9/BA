@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7400) (preloaded format=pdflatex 2020.5.13)  15 MAY 2020 01:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7400) (preloaded format=pdflatex 2020.5.13)  15 MAY 2020 04:15
 entering extended mode
 **./main.tex
 (main.tex
@@ -1541,6 +1541,12 @@ File: 2-theory/backlight/light.pdf Graphic file (type pdf)
 <use 2-theory/backlight/light.pdf>
 Package pdftex.def Info: 2-theory/backlight/light.pdf  used on input line 8.
 (pdftex.def)             Requested size: 409.71689pt x 267.2087pt.
+<2-theory/backlight/lightsource.pdf, id=358, 519.276pt x 467.16733pt>
+File: 2-theory/backlight/lightsource.pdf Graphic file (type pdf)
+<use 2-theory/backlight/lightsource.pdf>
+Package pdftex.def Info: 2-theory/backlight/lightsource.pdf  used on input line
+ 16.
+(pdftex.def)             Requested size: 455.24408pt x 409.57591pt.
 )) (3-development/3-development.tex
 [11pdfTeX warning (ext4): destination with the same identifier (name{figure.2.5
 }) has been already used, duplicate ignored
@@ -1548,49 +1554,56 @@ Package pdftex.def Info: 2-theory/backlight/light.pdf  used on input line 8.
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.1 \chapter
-            {Development} <./2-theory/backlight/light.pdf>] [12
+            {Development} <./2-theory/backlight/light.pdf>] [12pdfTeX warning (
+ext4): destination with the same identifier (name{figure.2.6}) has been already
+ used, duplicate ignored
 
-]
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1 \chapter
+            {Development} <./2-theory/backlight/lightsource.pdf>]
 Chapter 3.
 (3-development/calibration/calibration.tex
-<3-development/calibration/images/im0.png, id=383, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im0.png, id=406, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im0.png Graphic file (type png)
 <use 3-development/calibration/images/im0.png>
 Package pdftex.def Info: 3-development/calibration/images/im0.png  used on inpu
 t line 27.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im1.png, id=384, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im1.png, id=407, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im1.png Graphic file (type png)
 <use 3-development/calibration/images/im1.png>
 Package pdftex.def Info: 3-development/calibration/images/im1.png  used on inpu
 t line 28.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im2.png, id=385, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im2.png, id=408, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im2.png Graphic file (type png)
 <use 3-development/calibration/images/im2.png>
 Package pdftex.def Info: 3-development/calibration/images/im2.png  used on inpu
 t line 29.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im3.png, id=386, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im3.png, id=409, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im3.png Graphic file (type png)
 <use 3-development/calibration/images/im3.png>
 Package pdftex.def Info: 3-development/calibration/images/im3.png  used on inpu
 t line 31.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im4.png, id=387, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im4.png, id=410, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im4.png Graphic file (type png)
 <use 3-development/calibration/images/im4.png>
 Package pdftex.def Info: 3-development/calibration/images/im4.png  used on inpu
 t line 32.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im5.png, id=388, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im5.png, id=411, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im5.png Graphic file (type png)
 <use 3-development/calibration/images/im5.png>
 Package pdftex.def Info: 3-development/calibration/images/im5.png  used on inpu
 t line 33.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
- [13]
-<3-development/calibration/images/stat.pdf, id=397, 462.52798pt x 346.89601pt>
+ [13
+
+]
+<3-development/calibration/images/stat.pdf, id=420, 462.52798pt x 346.89601pt>
 File: 3-development/calibration/images/stat.pdf Graphic file (type pdf)
 <use 3-development/calibration/images/stat.pdf>
 Package pdftex.def Info: 3-development/calibration/images/stat.pdf  used on inp
@@ -1598,7 +1611,7 @@ ut line 45.
 (pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
 )
 (3-development/software/software.tex) (3-development/hardware/hardware.tex
-<3-development/images/Demonstrator.png, id=398, 1243.64626pt x 1071.00125pt>
+<3-development/images/Demonstrator.png, id=421, 1243.64626pt x 1071.00125pt>
 File: 3-development/images/Demonstrator.png Graphic file (type png)
 <use 3-development/images/Demonstrator.png>
 Package pdftex.def Info: 3-development/images/Demonstrator.png  used on input l
@@ -1616,7 +1629,7 @@ lopment/calibration/images/im1.png (PNG copy)> <./3-development/calibration/ima
 ges/im2.png (PNG copy)> <./3-development/calibration/images/im3.png (PNG copy)>
  <./3-development/calibration/images/im4.png (PNG copy)> <./3-development/calib
 ration/images/im5.png (PNG copy)>]
-<3-development/images/Backlight.png, id=411, 762.4485pt x 425.48962pt>
+<3-development/images/Backlight.png, id=434, 762.4485pt x 425.48962pt>
 File: 3-development/images/Backlight.png Graphic file (type png)
 <use 3-development/images/Backlight.png>
 Package pdftex.def Info: 3-development/images/Backlight.png  used on input line
@@ -1723,10 +1736,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31913 strings out of 480812
- 563705 string characters out of 2905081
- 1252368 words of memory out of 3000000
- 47066 multiletter control sequences out of 15000+200000
+ 31921 strings out of 480812
+ 563969 string characters out of 2905081
+ 1252413 words of memory out of 3000000
+ 47072 multiletter control sequences out of 15000+200000
  584213 words of font info for 107 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,21n,60p,3238b,911s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1735,20 +1748,21 @@ miktex-texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/share/miktex
 -texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/share/miktex-texmf
 /fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/share/miktex-texmf/fonts/
 type1/public/amsfonts/cm/cmr10.pfb></usr/local/share/miktex-texmf/fonts/type1/p
-ublic/amsfonts/cm/cmr7.pfb></usr/local/share/miktex-texmf/fonts/type1/public/am
-sfonts/cm/cmss8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/
-cm/cmsy7.pfb></home/crenda/.miktex/texmfs/install/fonts/type1/public/txfonts/rt
-cxr.pfb></home/crenda/.miktex/texmfs/install/fonts/type1/public/txfonts/rtxmi.p
-fb></home/crenda/.miktex/texmfs/install/fonts/type1/public/txfonts/rtxr.pfb></h
-ome/crenda/.miktex/texmfs/install/fonts/type1/public/txfonts/txex.pfb></home/cr
-enda/.miktex/texmfs/install/fonts/type1/public/txfonts/txexa.pfb></home/crenda/
-.miktex/texmfs/install/fonts/type1/public/txfonts/txsy.pfb></home/crenda/.mikte
-x/texmfs/install/fonts/type1/urw/times/utmb8a.pfb></home/crenda/.miktex/texmfs/
-install/fonts/type1/urw/times/utmr8a.pfb></home/crenda/.miktex/texmfs/install/f
-onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (40 pages, 64371855 bytes).
+ublic/amsfonts/cm/cmr5.pfb></usr/local/share/miktex-texmf/fonts/type1/public/am
+sfonts/cm/cmr7.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/c
+m/cmss8.pfb></usr/local/share/miktex-texmf/fonts/type1/public/amsfonts/cm/cmsy7
+.pfb></home/crenda/.miktex/texmfs/install/fonts/type1/public/txfonts/rtcxr.pfb>
+</home/crenda/.miktex/texmfs/install/fonts/type1/public/txfonts/rtxmi.pfb></hom
+e/crenda/.miktex/texmfs/install/fonts/type1/public/txfonts/rtxr.pfb></home/cren
+da/.miktex/texmfs/install/fonts/type1/public/txfonts/txex.pfb></home/crenda/.mi
+ktex/texmfs/install/fonts/type1/public/txfonts/txexa.pfb></home/crenda/.miktex/
+texmfs/install/fonts/type1/public/txfonts/txsy.pfb></home/crenda/.miktex/texmfs
+/install/fonts/type1/urw/times/utmb8a.pfb></home/crenda/.miktex/texmfs/install/
+fonts/type1/urw/times/utmr8a.pfb></home/crenda/.miktex/texmfs/install/fonts/typ
+e1/urw/times/utmri8a.pfb>
+Output written on main.pdf (40 pages, 64394122 bytes).
 PDF statistics:
- 631 PDF objects out of 1000 (max. 8388607)
- 109 named destinations out of 1000 (max. 500000)
- 347 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 657 PDF objects out of 1000 (max. 8388607)
+ 110 named destinations out of 1000 (max. 500000)
+ 352 words of extra memory for PDF output out of 10000 (max. 10000000)
 
