@@ -53,8 +53,8 @@ The distortion model introduces decentering effects and one could argue, that th
 But since the decentering effects are rather small in comparison with the radial distortion which is symmetric with respect to the centerpoint, it should be sufficient to plot only one quadrant.
 Thus the assumption is made, that if the distortions are high in one quadrant, that the distortions in all other quadrants is also high and vice versa.
 
-\subsubsection{Checkerboards out of numpy-arrays}  
-To estimate the contribution to the bad result of for example additive or sharpness of the edges, one has the observe each effect isolated.
+\subsection{Numpy-checkerboards\label{development:checker}}  
+To estimate the contribution to the bad result of for example additive noise or blurred edges, one has the observe each effect isolated.
 
 In order to do that, a python script was written, which generates a checkerboard as a numpy-array.
 This array is then translated and rotated in three dimensions, and projected back to the 2D-plane.
@@ -67,9 +67,12 @@ As a last step, the images is distorted by the model in \ref{theory:dist} with t
 		$s_2 = -0.001$&$s_3 = -0.0022$&$s_4 = 0.00013$	
 	\end{tabular} 
 \end{center}
-These coefficients were not chosen randomly, but are taken from an earlier failed calibration.
+These coefficients were not chosen randomly, but were taken from a calibration which was made with one of the ten sets from the calibration statistics in \ref{development:statistics}.
 They should therefore not be completely off.
-Some of these images are shown in Figure \ref{development:nump}
+Some of these (in total 24) images are shown in Figure \ref{development:nump}
+To stay close to the real camera, these are not black and white images.
+The black part has a value of 40 and the white a value of 170.
+The means of the images come with these values close to 127, which is the value which the exposure control of the camera aims to achieve.
 
 \begin{figure}[ht]
 	\centering
@@ -79,13 +82,57 @@ Some of these images are shown in Figure \ref{development:nump}
 	
 	\subfigure[\label{development:nump3}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump3.png}}
 	\subfigure[\label{development:nump4}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump4.png}}
-	\subfigure[\label{development:numo5}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump5.png}}
+	\subfigure[\label{development:nump5}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump5.png}}
 	\caption{Some of the numpy-arrays \label{development:nump}}		
 \end{figure}
 
-These Images can now be further manipulated to simulate real effects.
+These numpy-checkerboards can now be further manipulated to simulate real effects.
 To asses, how much these effects influence the calibration, the coefficients obtained by the calibration process can be compared to the real coefficients which were used to distort the images in the first place.
 
-\subsection{Possible reasons}
-This section takes a closer look on details, which could be influencing the calibration and lead to the bad results in section \ref{development:statistics}.
-  
+\subsection{Possible cause of errors}
+This subsection takes a closer look on details, which could be influencing the calibration and lead to the bad results in section \ref{development:statistics}.
+The numpy-checkerboards where hereby used as a basis.
+
+\subsubsection{Location of the checkerboard in the image}
+To show that it is important to include images in the calibration process, in which the checkerboard has corners very close to the image corners, the calibration has been performed two times.
+The first did include images like \ref{development:nump0} - \ref{development:nump4} and similar, but not images, where the checkerboard reached outside the frame, like \ref{development:nump5}.
+The second calibration included all images.
+
+Again a plot of the distortion, as described in section \ref{development:statistics} is generated.
+This plot shown in Figure \ref{development:loc}, contains the real model coefficients and the ones, which were obtained by the calibration.
+The label displays additionally the reprojection error.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/location.pdf}
+	\caption{Comparison of the calibration to the model. 1: Excluding images with checkerboards overlapping the frame, 2: All images included \label{development:loc}}
+\end{figure}
+There is no discussion that the second calibration (including all images) does a much better job and follows the real curve closer.
+At the maximal radius, the difference between the model and the second calibration is 2.12 pixel.
+This also illustrates, that the reprojection error is really a training error rate and is not sufficient to asses the quality of the calibration.
+
+One further observation can be made: The second calibration represents some sort of best case calibration.
+The only error comes from the detection of the checkerboard corners and since these numpy-checkerboards have the sharpest possible edges and there is no noise in the image, it is impossible detect the corners more precise in a real environment with these methods.
+thus to get a better calibration, a better feature detection is necessary and its development would take more steps into account which are not in the scope of this thesis.
+
+\subsubsection{Additive noise in the image} 
+Exposure in photography contains of three parts: aperture, shutter speed and ISO (light sensitivity).
+The camera operates in automatic exposure control and tries to fix the average brightness to 127.
+Since the aperture is fixed, it can only adjust the shutter speed and ISO.
+If the overall environment is dark, the control needs to make the chip more sensitive against the incoming light by increasing the ISO.
+This introduces noise into each image.
+
+To get more insight on the properties of the noise, an image of a white background was taken.
+The histogram of this image with a Gaussian fit is shown in Figure \ref{development:noise_dist}.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/noise_distribution.pdf}
+	\caption{Histogram of an uniform white background with an Gaussian fit\label{development:noise_dist}}
+\end{figure}
+Since the background itself is (approximately) uniformly white, there should theoretically only be one spike at the intensity of 127 (fixed by the automatic exposure control).
+But there is also noise introduced by the chip of the camera, which blurres the histogram.
+As this plot shows, the assumption that the noise has a normal-distribution is, as one might expected, supported.
+
+To understand now, how much this noise influences the calibration, zero mean additive white Gaussian noise with standard deviations from 0 to 50 (stepsize $=0.5$) is added onto each image and the calibration performed. 
+
+
+

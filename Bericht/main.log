@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  15 MAY 2020 12:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  16 MAY 2020 17:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1875,12 +1875,12 @@ Chapter 2.
 
 LaTeX Warning: Reference `theory:pin' on page 5 undefined on input line 12.
 
-<2-theory/cam/Camera2.pdf, id=264, 452.69728pt x 388.13507pt>
+<2-theory/cam/Camera2.pdf, id=276, 452.69728pt x 388.13507pt>
 File: 2-theory/cam/Camera2.pdf Graphic file (type pdf)
 <use 2-theory/cam/Camera2.pdf>
 Package pdftex.def Info: 2-theory/cam/Camera2.pdf  used on input line 15.
 (pdftex.def)             Requested size: 409.71689pt x 351.2905pt.
-<2-theory/cam/camera3.pdf, id=265, 357.68028pt x 293.11607pt>
+<2-theory/cam/camera3.pdf, id=277, 357.68028pt x 293.11607pt>
 File: 2-theory/cam/camera3.pdf Graphic file (type pdf)
 <use 2-theory/cam/camera3.pdf>
 Package pdftex.def Info: 2-theory/cam/camera3.pdf  used on input line 22.
@@ -1906,13 +1906,13 @@ ate ignored
                                                   \fi \fi 
 l.189 \end{align*}
                   from <./2-theory/cam/camera3.pdf>]
-<2-theory/calibration/distortion/radial.png, id=337, 3292.3pt x 2473.24pt>
+<2-theory/calibration/distortion/radial.png, id=349, 3292.3pt x 2473.24pt>
 File: 2-theory/calibration/distortion/radial.png Graphic file (type png)
 <use 2-theory/calibration/distortion/radial.png>
 Package pdftex.def Info: 2-theory/calibration/distortion/radial.png  used on in
 put line 198.
 (pdftex.def)             Requested size: 409.71689pt x 307.75792pt.
-<2-theory/calibration/distortion/tangential.png, id=340, 3292.3pt x 2473.24pt>
+<2-theory/calibration/distortion/tangential.png, id=352, 3292.3pt x 2473.24pt>
 File: 2-theory/calibration/distortion/tangential.png Graphic file (type png)
 <use 2-theory/calibration/distortion/tangential.png>
 Package pdftex.def Info: 2-theory/calibration/distortion/tangential.png  used o
@@ -1947,12 +1947,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [10]
-<2-theory/backlight/light.pdf, id=378, 321.41179pt x 209.61713pt>
+<2-theory/backlight/light.pdf, id=390, 321.41179pt x 209.61713pt>
 File: 2-theory/backlight/light.pdf Graphic file (type pdf)
 <use 2-theory/backlight/light.pdf>
 Package pdftex.def Info: 2-theory/backlight/light.pdf  used on input line 8.
 (pdftex.def)             Requested size: 409.71689pt x 267.2087pt.
-<2-theory/backlight/lightsource.pdf, id=379, 519.276pt x 467.16733pt>
+<2-theory/backlight/lightsource.pdf, id=391, 519.276pt x 467.16733pt>
 File: 2-theory/backlight/lightsource.pdf Graphic file (type pdf)
 <use 2-theory/backlight/lightsource.pdf>
 Package pdftex.def Info: 2-theory/backlight/lightsource.pdf  used on input line
@@ -1981,37 +1981,37 @@ l.1 \chapter
             {Development} <./2-theory/backlight/lightsource.pdf>]
 Chapter 3.
 (./3-development/calibration/calibration.tex
-<3-development/calibration/images/im0.png, id=428, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im0.png, id=440, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im0.png Graphic file (type png)
 <use 3-development/calibration/images/im0.png>
 Package pdftex.def Info: 3-development/calibration/images/im0.png  used on inpu
 t line 25.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im1.png, id=429, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im1.png, id=441, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im1.png Graphic file (type png)
 <use 3-development/calibration/images/im1.png>
 Package pdftex.def Info: 3-development/calibration/images/im1.png  used on inpu
 t line 26.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im2.png, id=430, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im2.png, id=442, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im2.png Graphic file (type png)
 <use 3-development/calibration/images/im2.png>
 Package pdftex.def Info: 3-development/calibration/images/im2.png  used on inpu
 t line 27.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im3.png, id=431, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im3.png, id=443, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im3.png Graphic file (type png)
 <use 3-development/calibration/images/im3.png>
 Package pdftex.def Info: 3-development/calibration/images/im3.png  used on inpu
 t line 29.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im4.png, id=432, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im4.png, id=444, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im4.png Graphic file (type png)
 <use 3-development/calibration/images/im4.png>
 Package pdftex.def Info: 3-development/calibration/images/im4.png  used on inpu
 t line 30.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/im5.png, id=433, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/im5.png, id=445, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/im5.png Graphic file (type png)
 <use 3-development/calibration/images/im5.png>
 Package pdftex.def Info: 3-development/calibration/images/im5.png  used on inpu
@@ -2020,50 +2020,49 @@ t line 31.
  [13
 
 ]
-<3-development/calibration/images/stat.pdf, id=442, 462.52798pt x 346.89601pt>
+<3-development/calibration/images/stat.pdf, id=454, 462.52798pt x 346.89601pt>
 File: 3-development/calibration/images/stat.pdf Graphic file (type pdf)
 <use 3-development/calibration/images/stat.pdf>
 Package pdftex.def Info: 3-development/calibration/images/stat.pdf  used on inp
 ut line 48.
 (pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
-<3-development/calibration/images/nump0.png, id=445, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/nump0.png, id=458, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump0.png Graphic file (type png)
 <use 3-development/calibration/images/nump0.png>
 Package pdftex.def Info: 3-development/calibration/images/nump0.png  used on in
-put line 76.
+put line 79.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/nump1.png, id=446, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/nump1.png, id=459, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump1.png Graphic file (type png)
 <use 3-development/calibration/images/nump1.png>
 Package pdftex.def Info: 3-development/calibration/images/nump1.png  used on in
-put line 77.
+put line 80.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/nump2.png, id=447, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/nump2.png, id=460, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump2.png Graphic file (type png)
 <use 3-development/calibration/images/nump2.png>
 Package pdftex.def Info: 3-development/calibration/images/nump2.png  used on in
-put line 78.
+put line 81.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/nump3.png, id=448, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/nump3.png, id=461, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump3.png Graphic file (type png)
 <use 3-development/calibration/images/nump3.png>
 Package pdftex.def Info: 3-development/calibration/images/nump3.png  used on in
-put line 80.
+put line 83.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/nump4.png, id=449, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/nump4.png, id=462, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump4.png Graphic file (type png)
 <use 3-development/calibration/images/nump4.png>
 Package pdftex.def Info: 3-development/calibration/images/nump4.png  used on in
-put line 81.
+put line 84.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-<3-development/calibration/images/nump5.png, id=450, 3292.3pt x 2473.24pt>
+<3-development/calibration/images/nump5.png, id=463, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump5.png Graphic file (type png)
 <use 3-development/calibration/images/nump5.png>
 Package pdftex.def Info: 3-development/calibration/images/nump5.png  used on in
-put line 82.
+put line 85.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
-)
-(./3-development/software/software.tex
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2075,27 +2074,84 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1 \section
-            {Software} <./3-development/calibration/images/im0.png (PNG copy)> 
-<./3-development/calibration/images/im1.png (PNG copy)> <./3-development/calibr
-ation/images/im2.png (PNG copy)> <./3-development/calibration/images/im3.png (P
-NG copy)> <./3-development/calibration/images/im4.png (PNG copy)> <./3-developm
-ent/calibration/images/im5.png (PNG copy)>])
-(./3-development/hardware/hardware.tex
-<3-development/images/Demonstrator.png, id=465, 1243.64626pt x 1071.00125pt>
-File: 3-development/images/Demonstrator.png Graphic file (type png)
-<use 3-development/images/Demonstrator.png>
-Package pdftex.def Info: 3-development/images/Demonstrator.png  used on input l
-ine 7.
-(pdftex.def)             Requested size: 409.71689pt x 352.84319pt.
+l.91 
+      <./3-development/calibration/images/im0.png (PNG copy)> <./3-development/
+calibration/images/im1.png (PNG copy)> <./3-development/calibration/images/im2.
+png (PNG copy)> <./3-development/calibration/images/im3.png (PNG copy)> <./3-de
+velopment/calibration/images/im4.png (PNG copy)> <./3-development/calibration/i
+mages/im5.png (PNG copy)>]
+<3-development/calibration/images/location.pdf, id=482, 462.52798pt x 346.89601
+pt>
+File: 3-development/calibration/images/location.pdf Graphic file (type pdf)
+<use 3-development/calibration/images/location.pdf>
+Package pdftex.def Info: 3-development/calibration/images/location.pdf  used on
+ input line 106.
+(pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
  [15pdfTeX warning (ext4): destination with the same identifier (name{figure.3.
 2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
+l.116 
+       <./3-development/calibration/images/stat.pdf>]
+<3-development/calibration/images/noise_distribution.pdf, id=537, 462.52798pt x
+ 346.89601pt>
+File: 3-development/calibration/images/noise_distribution.pdf Graphic file (typ
+e pdf)
+<use 3-development/calibration/images/noise_distribution.pdf>
+Package pdftex.def Info: 3-development/calibration/images/noise_distribution.pd
+f  used on input line 128.
+(pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
+)
+(./3-development/software/software.tex) (./3-development/hardware/hardware.tex
+<3-development/images/Demonstrator.png, id=538, 1243.64626pt x 1071.00125pt>
+File: 3-development/images/Demonstrator.png Graphic file (type png)
+<use 3-development/images/Demonstrator.png>
+Package pdftex.def Info: 3-development/images/Demonstrator.png  used on input l
+ine 7.
+(pdftex.def)             Requested size: 409.71689pt x 352.84319pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[16pdfTeX warning (ext4): destination with the same identifier (name{figure.3.3
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.9 \end{figure}
+                 <./3-development/calibration/images/nump0.png (PNG copy)> <./3
+-development/calibration/images/nump1.png (PNG copy)> <./3-development/calibrat
+ion/images/nump2.png (PNG copy)> <./3-development/calibration/images/nump3.png 
+(PNG copy)> <./3-development/calibration/images/nump4.png (PNG copy)> <./3-deve
+lopment/calibration/images/nump5.png (PNG copy)>] [17pdfTeX warning (ext4): des
+tination with the same identifier (name{figure.3.4}) has been already used, dup
+licate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.9 \end{figure}
+                 <./3-development/calibration/images/location.pdf>]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[18pdfTeX warning (ext4): destination with the same identifier (name{figure.3.5
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
 l.10 \newpage
-              <./3-development/calibration/images/stat.pdf>]
-<3-development/images/Backlight.png, id=515, 762.4485pt x 425.48962pt>
+              <./3-development/calibration/images/noise_distribution.pdf>]
+<3-development/images/Backlight.png, id=641, 762.4485pt x 425.48962pt>
 File: 3-development/images/Backlight.png Graphic file (type png)
 <use 3-development/images/Backlight.png>
 Package pdftex.def Info: 3-development/images/Backlight.png  used on input line
@@ -2117,37 +2173,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--24
 
  []
 
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 14.49998pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[16pdfTeX warning (ext4): destination with the same identifier (name{figure.3.3
+[19pdfTeX warning (ext4): destination with the same identifier (name{figure.3.6
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.24 \subsection
-                {Production cost} <./3-development/calibration/images/nump0.png
- (PNG copy)> <./3-development/calibration/images/nump1.png (PNG copy)> <./3-dev
-elopment/calibration/images/nump2.png (PNG copy)> <./3-development/calibration/
-images/nump3.png (PNG copy)> <./3-development/calibration/images/nump4.png (PNG
- copy)> <./3-development/calibration/images/nump5.png (PNG copy)>]))
-(./4-results/4-results.tex [17pdfTeX warning (ext4): destination with the same 
-identifier (name{figure.3.4}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.1 \chapter
-            {Results} <./3-development/images/Demonstrator.png>]
+                {Production cost} <./3-development/images/Demonstrator.png>]))
+(./4-results/4-results.tex
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[18pdfTeX warning (ext4): destination with the same identifier (name{figure.3.5
+[20pdfTeX warning (ext4): destination with the same identifier (name{figure.3.7
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
@@ -2155,20 +2195,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 l.1 \chapter
             {Results} <./3-development/images/Backlight.png>]
 Chapter 4.
-) (./5-summary/5-summary.tex [19
+) (./5-summary/5-summary.tex [21
 
 ]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 14.49998pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[20
-
-]
-Chapter 5.
-) [21]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2178,10 +2207,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [22
 
 ]
-LaTeX Font Info:    Try loading font information for T1+txtt on input line 139.
-
- (/usr/share/texlive/texmf-dist/tex/latex/txfonts/t1txtt.fd
-File: t1txtt.fd 2000/12/15 v3.1
+Chapter 5.
 ) [23]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2191,11 +2217,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [24
 
-] (./main.lof)
-\tf@lof=\write10
-\openout10 = `main.lof'.
+]
+LaTeX Font Info:    Try loading font information for T1+txtt on input line 139.
 
- [25]
+ (/usr/share/texlive/texmf-dist/tex/latex/txfonts/t1txtt.fd
+File: t1txtt.fd 2000/12/15 v3.1
+) [25]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2204,12 +2231,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [26
 
-] (./main.lot)
-\tf@lot=\write11
-\openout11 = `main.lot'.
+] (./main.lof)
+\tf@lof=\write10
+\openout10 = `main.lof'.
 
- (./statment_of_plagiarism/statement_of_plagiarism.tex
-[27]
+ [27]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2218,12 +2244,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [28
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 3--8
+] (./main.lot)
+\tf@lot=\write11
+\openout11 = `main.lot'.
 
- []
-
-[29]) (./Appendix/appendix.tex
+ (./statment_of_plagiarism/statement_of_plagiarism.tex
+[29]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2232,19 +2258,24 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [30
 
-
 ]
-Appendix A.
-[31]
+Underfull \hbox (badness 10000) in paragraph at lines 3--8
+
+ []
+
+[31]) (./Appendix/appendix.tex
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[32] [33
+[32
 
-])
+
+]
+Appendix A.
+[33]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2253,6 +2284,26 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [34
 
+]
+Appendix B.
+[35]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[36] [37
+
+])
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[38
+
 ] (./main.ind)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 162.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 162.
@@ -2260,7 +2311,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 162.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 162.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 162.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 58151BFA0492610EAB31861A06A9F1D3;2166.
+(rerunfilecheck)             Checksum: 9D7BD00ED98DB73815F5B543F56DC929;2327.
 
 
 LaTeX Warning: There were undefined references.
@@ -2270,10 +2321,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30870 strings out of 492982
- 534076 string characters out of 6134896
- 999121 words of memory out of 5000000
- 33639 multiletter control sequences out of 15000+600000
+ 30899 strings out of 492982
+ 534887 string characters out of 6134896
+ 1000500 words of memory out of 5000000
+ 33657 multiletter control sequences out of 15000+600000
  57790 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,21n,54p,3236b,1207s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2294,10 +2345,10 @@ fonts/txexa.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txsy.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (40 pages, 64560151 bytes).
+Output written on main.pdf (44 pages, 64589328 bytes).
 PDF statistics:
- 709 PDF objects out of 1000 (max. 8388607)
- 582 compressed objects within 6 object streams
- 121 named destinations out of 1000 (max. 500000)
- 390 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 842 PDF objects out of 1000 (max. 8388607)
+ 645 compressed objects within 7 object streams
+ 130 named destinations out of 1000 (max. 500000)
+ 416 words of extra memory for PDF output out of 10000 (max. 10000000)
 

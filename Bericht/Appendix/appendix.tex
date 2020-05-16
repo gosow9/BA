@@ -1,3 +1,25 @@
+\chapter{Partial derivatives of the distortion model}
+Shown are all partial derivatives of the distortion model in \ref{theory:dist} which are needed to implement the error propagation in subsection \ref{theory:error_propagation}.
+
+\begin{align*}
+\frac{\partial x''}{\partial k_1}&=\frac{r^2 x'}{1+k_4 r^2+k_5 r^4+k_6 r^6}&\frac{\partial x''}{\partial p_1}&=2x'y'\\
+\frac{\partial x''}{\partial k_2}&=\frac{r^4 x'}{1+k_4 r^2+k_5 r^4+k_6 r^6}&\frac{\partial x''}{\partial p_2}&=r^2+2x'^2\\
+\frac{\partial x''}{\partial k_3}&=\frac{r^6 x'}{1+k_4 r^2+k_5 r^4+k_6 r^6}&\frac{\partial x''}{\partial s_1}&=r^2\\
+\frac{\partial x''}{\partial k_4}&=-r^2x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{(1+k_4 r^2+k_5 r^4+k_6 r^6)^2}&\frac{\partial x''}{\partial s_2}&=r^4\\
+\frac{\partial x''}{\partial k_5}&=-r^4x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{(1+k_4 r^2+k_5 r^4+k_6 r^6)^2}&\frac{\partial x''}{\partial s_3}&=0\\
+\frac{\partial x''}{\partial k_6}&=-r^6x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{(1+k_4 r^2+k_5 r^4+k_6 r^6)^2}&\frac{\partial x''}{\partial s_4}&=0\\
+\end{align*}
+
+\begin{align*}
+\frac{\partial y''}{\partial k_1}&=\frac{r^2 x'}{1+k_4 r^2+k_5 r^4+k_6 r^6}&\frac{\partial y''}{\partial p_1}&=r^2+2y'^2\\
+\frac{\partial y''}{\partial k_2}&=\frac{r^4 x'}{1+k_4 r^2+k_5 r^4+k_6 r^6}&\frac{\partial y''}{\partial p_2}&=2x'y'\\
+\frac{\partial y''}{\partial k_3}&=\frac{r^6 x'}{1+k_4 r^2+k_5 r^4+k_6 r^6}&\frac{\partial y''}{\partial s_1}&=0\\
+\frac{\partial y''}{\partial k_4}&=-r^2x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{(1+k_4 r^2+k_5 r^4+k_6 r^6)^2}&\frac{\partial y''}{\partial s_2}&=0\\
+\frac{\partial y''}{\partial k_5}&=-r^4x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{(1+k_4 r^2+k_5 r^4+k_6 r^6)^2}&\frac{\partial y''}{\partial s_3}&=r^2\\
+\frac{\partial y''}{\partial k_6}&=-r^6x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{(1+k_4 r^2+k_5 r^4+k_6 r^6)^2}&\frac{\partial y''}{\partial s_4}&=r^4\\
+\end{align*}
+
+
 \chapter{Requirements}
 
 \section{Assignment}
