@@ -85,13 +85,13 @@ t_ref = time.time()
 
 # define rotation and translation
 r1 = np.array([0.7, 0.7, 0], dtype=np.float64)
-t1 = np.array([50, -80, 200], dtype=np.float64)
+t1 = np.array([40, -65, 200], dtype=np.float64)
 r2 = np.array([-0.7, 0.7, 0], dtype=np.float64)
-t2 = np.array([50, 80, 200], dtype=np.float64)
+t2 = np.array([40, 65, 200], dtype=np.float64)
 r3 = np.array([0.7, -0.7, 0], dtype=np.float64)
-t3 = np.array([-50, -80, 200], dtype=np.float64)
+t3 = np.array([-40, -65, 200], dtype=np.float64)
 r4 = np.array([-0.7, -0.7, 0], dtype=np.float64)
-t4 = np.array([-50, 80, 200], dtype=np.float64)
+t4 = np.array([-40, 65, 200], dtype=np.float64)
 
 r5 = np.array([-0.5, -0.4, 0.3], dtype=np.float64)
 t5 = np.array([30, -60, 120], dtype=np.float64)

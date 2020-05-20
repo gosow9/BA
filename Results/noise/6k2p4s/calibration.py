@@ -25,7 +25,7 @@ s2 = []
 s3 = []
 s4 = []
 
-step = 1
+step = 0.5
 std = np.arange(0, 50+step, step)
 
 for sigma in std:
@@ -37,7 +37,7 @@ for sigma in std:
     objpoints = [] # 3d point in real world space
     imgpoints = [] # 2d points in image plane.
 
-    images = glob.glob('np_images/*.txt')
+    images = glob.glob('np_images/f/*.txt')
 
     s = []
     for fname in images:
@@ -64,7 +64,7 @@ for sigma in std:
    
     
     # select model
-    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 50, 10**(-9))
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 300, 10**(-12))
     flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL
     ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objpoints, imgpoints, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
 

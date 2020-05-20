@@ -6,7 +6,7 @@ import time
 t_ref = time.time()
 
 # select model
-criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 50, 10**(-9))
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 300, 10**(-12))
 flags = cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_THIN_PRISM_MODEL
 
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,6,0)

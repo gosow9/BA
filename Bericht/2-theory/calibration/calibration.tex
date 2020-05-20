@@ -278,7 +278,7 @@ Since it only uses the points, which where previously used to obtain the calibra
 
 Calibration functions in OpenCV return the overall \acs{rms} reprojection error \cite{cv_calib}.
 
-\subsection{Error propagation as further quality assessment}
+\subsection{Error propagation as further quality assessment\label{theory:error_propagation}}
 As argued before, the reprojection error is a training error rate.
 A low reprojection error is therefore not necessarily enough to estimate, how good the calibration really performs.
 
@@ -303,7 +303,7 @@ and
 	\Delta y''=\sqrt{\sum_{i=1}^{6}\left(\frac{\partial y''}{\partial k_i}\Delta k_i \right)^2+\sum_{i=1}^{2}\left( \frac{\partial y''}{\partial p_i}\Delta p_i\right)^2+\sum_{i=1}^{4}\left( \frac{\partial y''}{\partial s_i}\Delta s_i\right)^2}.
 \end{align*}
 It is at this point not intended to go into further computations of the derivatives.
-If we look at pixel coordinates from the center of the image, btw. $c_x=0$ and $c_y=0$, the radius (distance from the centerpoint) can be expressed as
+If we look at pixel coordinates from the center of the image, respectively $c_x=0$ and $c_y=0$, the radius (distance from the centerpoint) can be expressed as
 \begin{align*}
 	r = \sqrt{(f_x\cdot x'')^2+(f_y\cdot y'')^2}
 \end{align*}
