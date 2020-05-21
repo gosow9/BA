@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  16 MAY 2020 17:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.3.27)  21 MAY 2020 20:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2024,43 +2024,43 @@ t line 31.
 File: 3-development/calibration/images/stat.pdf Graphic file (type pdf)
 <use 3-development/calibration/images/stat.pdf>
 Package pdftex.def Info: 3-development/calibration/images/stat.pdf  used on inp
-ut line 48.
+ut line 47.
 (pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
 <3-development/calibration/images/nump0.png, id=458, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump0.png Graphic file (type png)
 <use 3-development/calibration/images/nump0.png>
 Package pdftex.def Info: 3-development/calibration/images/nump0.png  used on in
-put line 79.
+put line 78.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
 <3-development/calibration/images/nump1.png, id=459, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump1.png Graphic file (type png)
 <use 3-development/calibration/images/nump1.png>
 Package pdftex.def Info: 3-development/calibration/images/nump1.png  used on in
-put line 80.
+put line 79.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
 <3-development/calibration/images/nump2.png, id=460, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump2.png Graphic file (type png)
 <use 3-development/calibration/images/nump2.png>
 Package pdftex.def Info: 3-development/calibration/images/nump2.png  used on in
-put line 81.
+put line 80.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
 <3-development/calibration/images/nump3.png, id=461, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump3.png Graphic file (type png)
 <use 3-development/calibration/images/nump3.png>
 Package pdftex.def Info: 3-development/calibration/images/nump3.png  used on in
-put line 83.
+put line 82.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
 <3-development/calibration/images/nump4.png, id=462, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump4.png Graphic file (type png)
 <use 3-development/calibration/images/nump4.png>
 Package pdftex.def Info: 3-development/calibration/images/nump4.png  used on in
-put line 84.
+put line 83.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
 <3-development/calibration/images/nump5.png, id=463, 3292.3pt x 2473.24pt>
 File: 3-development/calibration/images/nump5.png Graphic file (type png)
 <use 3-development/calibration/images/nump5.png>
 Package pdftex.def Info: 3-development/calibration/images/nump5.png  used on in
-put line 85.
+put line 84.
 (pdftex.def)             Requested size: 136.5746pt x 102.5734pt.
 
 
@@ -2074,7 +2074,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.91 
+l.90 
       <./3-development/calibration/images/im0.png (PNG copy)> <./3-development/
 calibration/images/im1.png (PNG copy)> <./3-development/calibration/images/im2.
 png (PNG copy)> <./3-development/calibration/images/im3.png (PNG copy)> <./3-de
@@ -2085,14 +2085,14 @@ pt>
 File: 3-development/calibration/images/location.pdf Graphic file (type pdf)
 <use 3-development/calibration/images/location.pdf>
 Package pdftex.def Info: 3-development/calibration/images/location.pdf  used on
- input line 106.
+ input line 105.
 (pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
  [15pdfTeX warning (ext4): destination with the same identifier (name{figure.3.
 2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.116 
+l.115 
        <./3-development/calibration/images/stat.pdf>]
 <3-development/calibration/images/noise_distribution.pdf, id=537, 462.52798pt x
  346.89601pt>
@@ -2100,19 +2100,15 @@ File: 3-development/calibration/images/noise_distribution.pdf Graphic file (typ
 e pdf)
 <use 3-development/calibration/images/noise_distribution.pdf>
 Package pdftex.def Info: 3-development/calibration/images/noise_distribution.pd
-f  used on input line 128.
+f  used on input line 127.
 (pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
-)
-(./3-development/software/software.tex) (./3-development/hardware/hardware.tex
-<3-development/images/Demonstrator.png, id=538, 1243.64626pt x 1071.00125pt>
-File: 3-development/images/Demonstrator.png Graphic file (type png)
-<use 3-development/images/Demonstrator.png>
-Package pdftex.def Info: 3-development/images/Demonstrator.png  used on input l
-ine 7.
-(pdftex.def)             Requested size: 409.71689pt x 352.84319pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+<3-development/calibration/images/noise_rpe.pdf, id=539, 462.52798pt x 346.8960
+1pt>
+File: 3-development/calibration/images/noise_rpe.pdf Graphic file (type pdf)
+<use 3-development/calibration/images/noise_rpe.pdf>
+Package pdftex.def Info: 3-development/calibration/images/noise_rpe.pdf  used o
+n input line 141.
+(pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2125,19 +2121,19 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.9 \end{figure}
-                 <./3-development/calibration/images/nump0.png (PNG copy)> <./3
--development/calibration/images/nump1.png (PNG copy)> <./3-development/calibrat
-ion/images/nump2.png (PNG copy)> <./3-development/calibration/images/nump3.png 
-(PNG copy)> <./3-development/calibration/images/nump4.png (PNG copy)> <./3-deve
-lopment/calibration/images/nump5.png (PNG copy)>] [17pdfTeX warning (ext4): des
-tination with the same identifier (name{figure.3.4}) has been already used, dup
-licate ignored
+l.146 
+       <./3-development/calibration/images/nump0.png (PNG copy)> <./3-developme
+nt/calibration/images/nump1.png (PNG copy)> <./3-development/calibration/images
+/nump2.png (PNG copy)> <./3-development/calibration/images/nump3.png (PNG copy)
+> <./3-development/calibration/images/nump4.png (PNG copy)> <./3-development/ca
+libration/images/nump5.png (PNG copy)>] [17pdfTeX warning (ext4): destination w
+ith the same identifier (name{figure.3.4}) has been already used, duplicate ign
+ored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.9 \end{figure}
-                 <./3-development/calibration/images/location.pdf>]
+l.146 
+       <./3-development/calibration/images/location.pdf>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2149,9 +2145,58 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
+l.146 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+3.6}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.146 
+       <./3-development/calibration/images/noise_distribution.pdf> <./3-develop
+ment/calibration/images/noise_rpe.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./3-development/calibration/images/nois
+e_rpe.pdf): PDF inclusion: multiple pdfs with page group included in a single p
+age
+>]
+<3-development/calibration/images/noise_k.pdf, id=674, 462.52798pt x 346.89601p
+t>
+File: 3-development/calibration/images/noise_k.pdf Graphic file (type pdf)
+<use 3-development/calibration/images/noise_k.pdf>
+Package pdftex.def Info: 3-development/calibration/images/noise_k.pdf  used on 
+input line 150.
+(pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
+<3-development/calibration/images/nump1_blurred.png, id=675, 3292.3pt x 2473.24
+pt>
+File: 3-development/calibration/images/nump1_blurred.png Graphic file (type png
+)
+<use 3-development/calibration/images/nump1_blurred.png>
+Package pdftex.def Info: 3-development/calibration/images/nump1_blurred.png  us
+ed on input line 163.
+(pdftex.def)             Requested size: 409.71689pt x 307.75792pt.
+<3-development/calibration/images/blurred.pdf, id=676, 462.52798pt x 346.89601p
+t>
+File: 3-development/calibration/images/blurred.pdf Graphic file (type pdf)
+<use 3-development/calibration/images/blurred.pdf>
+Package pdftex.def Info: 3-development/calibration/images/blurred.pdf  used on 
+input line 169.
+(pdftex.def)             Requested size: 409.71689pt x 307.30202pt.
+) (./3-development/software/software.tex)
+(./3-development/hardware/hardware.tex
+<3-development/images/Demonstrator.png, id=677, 1243.64626pt x 1071.00125pt>
+File: 3-development/images/Demonstrator.png Graphic file (type png)
+<use 3-development/images/Demonstrator.png>
+Package pdftex.def Info: 3-development/images/Demonstrator.png  used on input l
+ine 7.
+(pdftex.def)             Requested size: 409.71689pt x 352.84319pt.
+ [19pdfTeX warning (ext4): destination with the same identifier (name{figure.3.
+7}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
 l.10 \newpage
-              <./3-development/calibration/images/noise_distribution.pdf>]
-<3-development/images/Backlight.png, id=641, 762.4485pt x 425.48962pt>
+              <./3-development/calibration/images/noise_k.pdf>]
+<3-development/images/Backlight.png, id=707, 762.4485pt x 425.48962pt>
 File: 3-development/images/Backlight.png Graphic file (type png)
 <use 3-development/images/Backlight.png>
 Package pdftex.def Info: 3-development/images/Backlight.png  used on input line
@@ -2173,42 +2218,51 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--24
 
  []
 
-[19pdfTeX warning (ext4): destination with the same identifier (name{figure.3.6
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[20pdfTeX warning (ext4): destination with the same identifier (name{figure.3.8
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.24 \subsection
-                {Production cost} <./3-development/images/Demonstrator.png>]))
-(./4-results/4-results.tex
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 14.49998pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[20pdfTeX warning (ext4): destination with the same identifier (name{figure.3.7
-}) has been already used, duplicate ignored
+                {Production cost} <./3-development/calibration/images/nump1_blu
+rred.png (PNG copy)>])) (./4-results/4-results.tex [21pdfTeX warning (ext4): de
+stination with the same identifier (name{figure.3.9}) has been already used, du
+plicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.1 \chapter
-            {Results} <./3-development/images/Backlight.png>]
-Chapter 4.
-) (./5-summary/5-summary.tex [21
-
-]
+            {Results} <./3-development/calibration/images/blurred.pdf>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[22
+[22pdfTeX warning (ext4): destination with the same identifier (name{figure.3.1
+0}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1 \chapter
+            {Results}pdfTeX warning (ext4): destination with the same identifie
+r (name{figure.3.11}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1 \chapter
+            {Results} <./3-development/images/Demonstrator.png> <./3-developmen
+t/images/Backlight.png>]
+Chapter 4.
+) (./5-summary/5-summary.tex [23
 
 ]
-Chapter 5.
-) [23]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2218,10 +2272,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [24
 
 ]
-LaTeX Font Info:    Try loading font information for T1+txtt on input line 139.
-
- (/usr/share/texlive/texmf-dist/tex/latex/txfonts/t1txtt.fd
-File: t1txtt.fd 2000/12/15 v3.1
+Chapter 5.
 ) [25]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2231,11 +2282,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [26
 
-] (./main.lof)
-\tf@lof=\write10
-\openout10 = `main.lof'.
+]
+LaTeX Font Info:    Try loading font information for T1+txtt on input line 139.
 
- [27]
+ (/usr/share/texlive/texmf-dist/tex/latex/txfonts/t1txtt.fd
+File: t1txtt.fd 2000/12/15 v3.1
+) [27]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2244,12 +2296,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [28
 
-] (./main.lot)
-\tf@lot=\write11
-\openout11 = `main.lot'.
+] (./main.lof)
+\tf@lof=\write10
+\openout10 = `main.lof'.
 
- (./statment_of_plagiarism/statement_of_plagiarism.tex
-[29]
+ [29]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2258,12 +2309,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [30
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 3--8
+] (./main.lot)
+\tf@lot=\write11
+\openout11 = `main.lot'.
 
- []
-
-[31]) (./Appendix/appendix.tex
+ (./statment_of_plagiarism/statement_of_plagiarism.tex
+[31]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2272,10 +2323,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [32
 
-
 ]
-Appendix A.
-[33]
+Underfull \hbox (badness 10000) in paragraph at lines 3--8
+
+ []
+
+[33]) (./Appendix/appendix.tex
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -2284,8 +2337,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [34
 
+
 ]
-Appendix B.
+Appendix A.
 [35]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2293,7 +2347,18 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[36] [37
+[36
+
+]
+Appendix B.
+[37]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[38] [39
 
 ])
 
@@ -2302,7 +2367,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[38
+[40
 
 ] (./main.ind)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 162.
@@ -2311,7 +2376,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 162.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 162.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 162.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 9D7BD00ED98DB73815F5B543F56DC929;2327.
+(rerunfilecheck)             Checksum: 54A07EE314E3745D2E719FBBE6D36B8B;2327.
 
 
 LaTeX Warning: There were undefined references.
@@ -2321,10 +2386,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30899 strings out of 492982
- 534887 string characters out of 6134896
- 1000500 words of memory out of 5000000
- 33657 multiletter control sequences out of 15000+600000
+ 30934 strings out of 492982
+ 536072 string characters out of 6134896
+ 1000803 words of memory out of 5000000
+ 33681 multiletter control sequences out of 15000+600000
  57790 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,21n,54p,3236b,1207s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2345,10 +2410,10 @@ fonts/txexa.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txsy.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (44 pages, 64589328 bytes).
+Output written on main.pdf (46 pages, 65357939 bytes).
 PDF statistics:
- 842 PDF objects out of 1000 (max. 8388607)
- 645 compressed objects within 7 object streams
- 130 named destinations out of 1000 (max. 500000)
- 416 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 965 PDF objects out of 1000 (max. 8388607)
+ 693 compressed objects within 7 object streams
+ 137 named destinations out of 1000 (max. 500000)
+ 436 words of extra memory for PDF output out of 10000 (max. 10000000)
 

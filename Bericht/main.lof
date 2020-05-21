@@ -52,9 +52,17 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Histogram of an uniform white background with an Gaussian fit}}{18}{figure.3.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.6}{\ignorespaces 3D-Model of the demonstrator}}{19}{figure.3.6}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Reprojection error in dependence of additive noise}}{18}{figure.3.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.7}{\ignorespaces 3D-Model of the back-light PCB}}{20}{figure.3.7}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Blue: Calibrated radial coefficients in dependence of additive noise (deviation = $\sigma $). Red: Real coefficient}}{19}{figure.3.7}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Blurred image}}{20}{figure.3.8}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Blurred calibration}}{21}{figure.3.9}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.10}{\ignorespaces 3D-Model of the demonstrator}}{22}{figure.3.10}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.11}{\ignorespaces 3D-Model of the back-light PCB}}{22}{figure.3.11}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 

@@ -81,7 +81,7 @@ fig1, ax1 = plt.subplots(1,1)
 ax1.plot(r, dst_r_m-r, label='Model')
 
 # sigma = 0
-std = [0, 10, 20, 30]
+std = [0, 10, 20, 50]
 for i in std: 
     # comput curve
     norm_r_0 = np.sqrt((x/fx_c[i])**2+(y/fy_c[i])**2)
@@ -119,8 +119,10 @@ ax2.grid(True)
 fig3, ax3 = plt.subplots(1,1)
 ax3.plot(std_c, rpe_c)
 ax3.set_xlabel('Standard Deviation')
-ax3.set_ylabel('RMS Reprojection Error')
+ax3.set_ylabel('Reprojection Error')
 ax3.grid(True)
+ax3.set_xlim([0,50])
+ax3.set_ylim([0, 1.6])
 
 # fig4: sharpness
 fig4, ax4 = plt.subplots(1,1)
@@ -131,35 +133,62 @@ ax4.grid(True)
 
 # fig5: k
 fig5, ax5 = plt.subplots(2,3)
-ax5[0][0].plot(std_c, k1_c)
-ax5[0][0].set_xlabel('Standard Deviation')
-ax5[0][0].set_ylabel('k1')
+plt.tight_layout()
+
+ax5[0][0].plot(std_c, k1_c, label='calibrated')
+ax5[0][0].plot(std_c, k1_m*np.ones(np.shape(std_c)), color='tab:red')
+ax5[0][0].set_xlabel(r'$\sigma$')
+ax5[0][0].set_ylabel(r'$k_1$')
 ax5[0][0].grid(True)
+ax5[0][0].set_xlim([0, 50])
+ax5[0][0].set_xticks([0, 10, 20, 30, 40, 50])
+ax5[0][0].annotate(k1_m, (4,k1_m+1.5), color='tab:red')
 
 ax5[0][1].plot(std_c, k2_c)
-ax5[0][1].set_xlabel('Standard Deviation')
-ax5[0][1].set_ylabel('k2')
+ax5[0][1].plot(std_c, k2_m*np.ones(np.shape(std_c)), color='tab:red')
+ax5[0][1].set_xlabel(r'$\sigma$')
+ax5[0][1].set_ylabel(r'$k_2$')
 ax5[0][1].grid(True)
+ax5[0][1].set_xlim([0, 50])
+ax5[0][1].set_xticks([0, 10, 20, 30, 40, 50])
+ax5[0][1].annotate(k2_m, (4,k2_m+0.8), color='tab:red')
 
 ax5[0][2].plot(std_c, k3_c)
-ax5[0][2].set_xlabel('Standard Deviation')
-ax5[0][2].set_ylabel('k3')
+ax5[0][2].plot(std_c, k3_m*np.ones(np.shape(std_c)), color='tab:red')
+ax5[0][2].set_xlabel(r'$\sigma$')
+ax5[0][2].set_ylabel(r'$k_3$')
 ax5[0][2].grid(True)
+ax5[0][2].set_xlim([0, 50])
+ax5[0][2].set_xticks([0, 10, 20, 30, 40, 50])
+ax5[0][2].annotate(k3_m, (4,k3_m+15), color='tab:red')
 
 ax5[1][0].plot(std_c, k4_c)
-ax5[1][0].set_xlabel('Standard Deviation')
-ax5[1][0].set_ylabel('k4')
+ax5[1][0].plot(std_c, k4_m*np.ones(np.shape(std_c)), color='tab:red')
+ax5[1][0].set_xlabel(r'$\sigma$')
+ax5[1][0].set_ylabel(r'$k_4$')
 ax5[1][0].grid(True)
+ax5[1][0].set_xlim([0, 50])
+ax5[1][0].set_xticks([0, 10, 20, 30, 40, 50])
+ax5[1][0].annotate(k4_m, (4,k4_m+1.5), color='tab:red')
 
 ax5[1][1].plot(std_c, k5_c)
-ax5[1][1].set_xlabel('Standard Deviation')
-ax5[1][1].set_ylabel('k5')
+ax5[1][1].plot(std_c, k5_m*np.ones(np.shape(std_c)), color='tab:red')
+ax5[1][1].set_xlabel(r'$\sigma$')
+ax5[1][1].set_ylabel(r'$k_5$')
 ax5[1][1].grid(True)
+ax5[1][1].set_xlim([0, 50])
+ax5[1][1].set_xticks([0, 10, 20, 30, 40, 50])
+ax5[1][1].annotate(k5_m, (4,k5_m+0.3), color='tab:red')
 
 ax5[1][2].plot(std_c, k6_c)
-ax5[1][2].set_xlabel('Standard Deviation')
-ax5[1][2].set_ylabel('k6')
+ax5[1][2].plot(std_c, k6_m*np.ones(np.shape(std_c)), color='tab:red')
+ax5[1][2].set_xlabel(r'$\sigma$')
+ax5[1][2].set_ylabel(r'$k_6$')
 ax5[1][2].grid(True)
+ax5[1][2].set_xlim([0, 50])
+ax5[1][2].set_xticks([0, 10, 20, 30, 40, 50])
+ax5[1][2].annotate(k6_m, (4,k6_m+15), color='tab:red')
+
 
 # fig6: p
 fig6, ax6 = plt.subplots(1, 2)
