@@ -36,8 +36,7 @@ Randomly selected from these 200 are ten sets of each 20 images.
 Now, the camera is calibrated separately with each set.
 To visualize the result, the difference from the (with the model in equation \ref{theory:dist}) distorted and undistorted pixel-position is plotted. 
 And this on all locations of half the diagonal in the upper right quadrant of the image.
-In other words, we take a look at the distortion between the image center and the upper right corner where the minimal $r_{\text{min}}=0$, respectively the image center and the maximal radius $r_{\text{max}}=2051$ which is of course depends on the image resolution.
-
+In other words, we take a look at the distortion between the image center and the upper right corner where the minimal $r_{\text{min}}=0$, respectively the image center and the maximal radius $r_{\text{max}}=2051$ which of course depends on the image resolution.
 
 This plot is shown in Figure \ref{development:stat}.
 Each label displays the reprojection error.
@@ -112,7 +111,7 @@ This also illustrates, that the reprojection error is really a training error ra
 
 One further observation can be made: The second calibration represents some sort of best case calibration.
 The only error comes from the detection of the checkerboard corners and since these numpy-checkerboards have the sharpest possible edges and there is no noise in the image, it is impossible detect the corners more precise in a real environment with these methods.
-thus to get a better calibration, a better feature detection is necessary and its development would take more steps into account which are not in the scope of this thesis.
+Thus to get a better calibration, a better feature detection is necessary and its development would take more steps into account which are not in the scope of this thesis.
 
 \subsubsection{Additive noise in the image} 
 Exposure in photography contains of three parts: aperture, shutter speed and ISO (light sensitivity).
@@ -134,5 +133,39 @@ As this plot shows, the assumption that the noise has a normal-distribution is, 
 
 To understand now, how much this noise influences the calibration, zero mean additive white Gaussian noise with standard deviations from 0 to 50 (stepsize $=0.5$) is added onto each image and the calibration performed. 
 
+It turns out, that more noise does not necessarily mean a worse calibration.
+But there are some insights, which can be taken from this experiment.
+Figure \ref{development:noise_rpe} shows how the reprojection error depends on the standard deviation of the additive white noise.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/noise_rpe.pdf}
+	\caption{Reprojection error in dependence of additive noise\label{development:noise_rpe}}
+\end{figure}
+It was to be expected, that the reprojection error increases with more noise, but what really could pose a problem are the spikes.
+It seems, that after a standard deviation of 25, bad reprojection errors become more likely even if the underlying increase is linear.
 
+This can also be seen in Figure \ref{development:noise_k} where the radial coefficients are plotted.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/noise_k.pdf}
+	\caption{Blue: Calibrated radial coefficients in dependence of additive noise (deviation = $\sigma$). Red: Real coefficient\label{development:noise_k}}
+\end{figure}
+Again it seems that the calibration is not very reliable after a standard deviation of 25.
+One can conclude, that noise does not affect the calibration directly, but can lead to unreliable results.
+thus it is necessary to keep noise as low as possible .
+this can be done by letting enough light reach the camera sensor, that the exposure control can keep the light sensitivity (ISO) low.
 
+\subsubsection{Blurred images}
+To get a grasp how the sharpness of each image affect the calibration, the numpy-checkerboards where convolved with a gaussian kernel of size $61\times 61$.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/nump1_blurred.png}
+	\caption{Blurred image\label{development:nump_blurred}}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/blurred.pdf}
+	\caption{Blurred calibration\label{development:blurred}}
+\end{figure}
