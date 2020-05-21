@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>main &#8212; Demonstrator 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for main</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">main module</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">morph</span>
+
+
+<div class="viewcode-block" id="gstreamer_pipeline"><a class="viewcode-back" href="../main.html#main.gstreamer_pipeline">[docs]</a><span class="k">def</span> <span class="nf">gstreamer_pipeline</span><span class="p">(</span>
+    <span class="n">capture_width</span><span class="o">=</span><span class="mi">3280</span><span class="p">,</span>
+    <span class="n">capture_height</span><span class="o">=</span><span class="mi">2464</span><span class="p">,</span>
+    <span class="n">display_width</span><span class="o">=</span><span class="mi">3280</span><span class="p">,</span>
+    <span class="n">display_height</span><span class="o">=</span><span class="mi">2464</span><span class="p">,</span>
+    <span class="n">framerate</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="s2">&quot;nvarguscamerasrc ! &quot;</span>
+        <span class="s2">&quot;video/x-raw(memory:NVMM), &quot;</span>
+        <span class="s2">&quot;width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, &quot;</span>
+        <span class="s2">&quot;format=(string)NV12, framerate=(fraction)</span><span class="si">%d</span><span class="s2">/1 ! &quot;</span>
+        <span class="s2">&quot;nvvidconv flip-method=</span><span class="si">%d</span><span class="s2"> ! &quot;</span>
+        <span class="s2">&quot;video/x-raw, width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, format=(string)BGRx ! &quot;</span>
+        <span class="s2">&quot;videoconvert ! &quot;</span>
+        <span class="s2">&quot;video/x-raw, format=(string)BGR ! appsink&quot;</span>
+        <span class="o">%</span> <span class="p">(</span>
+            <span class="n">capture_width</span><span class="p">,</span>
+            <span class="n">capture_height</span><span class="p">,</span>
+            <span class="n">framerate</span><span class="p">,</span>
+            <span class="n">flip_method</span><span class="p">,</span>
+            <span class="n">display_width</span><span class="p">,</span>
+            <span class="n">display_height</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># To flip the image, modify the flip_method parameter (0 and 2 are the most common)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">gstreamer_pipeline</span><span class="p">(</span><span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">gstreamer_pipeline</span><span class="p">(</span><span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CAP_GSTREAMER</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cap</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span>
+        <span class="n">window_handle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_AUTOSIZE</span><span class="p">)</span>
+        <span class="c1"># Window</span>
+        <span class="k">while</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getWindowProperty</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">ret_val</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">imggray</span>  <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">blackAndWhiteImage</span><span class="p">)</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">imggray</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">-</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+            <span class="c1">#cv2.imshow(&quot;CSI Camera&quot;, img)</span>
+            <span class="c1"># This also acts as</span>
+            <span class="n">keyCode</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+            <span class="c1"># Stop the program on the ESC key</span>
+            <span class="k">if</span> <span class="n">keyCode</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="n">cap</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to open camera&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Demonstrator</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../morph.html">morph module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Cédric Renda, Manuel Tischhauser.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

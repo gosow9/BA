@@ -5,49 +5,52 @@ Spyder Editor
 This is a temporary script file.
 """
 
-
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import cv2 as cv
 import os
 import glob
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
-
-def opening_by_reconstruction(img, erosion_kernel, dilation_kernel):
-     im_eroded = cv.erode(img, erosion_kernel)
-     im_opened = reconstruction_by_dilation(im_eroded, img, dilation_kernel)
-     return im_opened
+import scipy.misc
 
 
-def reconstruction_by_dilation(img, mask, dilation_kernel):
-     im_old = img.copy()
-     while(1):
-         img = cv.dilate(img, dilation_kernel)
-         img = cv.bitwise_and(img, mask)
-         if np.array_equal(im_old, img):
-             break
-         im_old = img.copy()
-     return img
+#images = [cv.imread(file,0) for file in glob.glob("BacklightFeder/*.png")]
+#imag = [cv.cvtColor(file, cv.COLOR_BGR2RGB) for file in images]
 
-
-images = [cv.imread(file,0) for file in glob.glob("BacklightFeder/*.png")]
-imag = [cv.cvtColor(file, cv.COLOR_BGR2RGB) for file in images]
-
-#img = cv.imread('BacklightFeder/Full80.png',0)
-#imag = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+img = cv.imread('b_2lines.png',0)
+imag = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
 #img = images[0]
 #kernel = np.ones((3,3),np.uint8)
 #retval, treshhold = cv.threshold(img,114,255, cv.THRESH_BINARY)
-
+plt.plot(img[400])
+plt.plot(img[1400])
+plt.plot(img[1])
 #for nr in range(90, 99, 5):
-plt.figure("original{}".format(50))
-plt.subplot(211)
+#plt.figure("original{}".format(50))
+#plt.subplot(211)
 #retval, treshhold = cv.threshold(imag,114,255, cv.THRESH_BINARY)
-plt.imshow(imag[50])
+plt.figure()
+plt.imshow(img,cmap="gray")
+
+
+img = scipy.misc.imresize(img, 0.1, interp='nearest')
+xx, yy = np.mgrid[0:img.shape[0], 0:img.shape[1]]
+xx = xx*10
+yy = yy*10
+# create the figure
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+ax.plot_surface(xx, yy, img ,rstride=1, cstride=1, cmap=plt.cm.coolwarm, linewidth=0)
+plt.figure()
+plt.contour(xx, yy, img , cmap=plt.cm.coolwarm, linewidth=0)
+
+# show it
+plt.show()
 #plt.hist(imag.ravel(),256,[0,256])
-plt.subplot(212)
-plt.hist(imag[50].ravel(), bins=256, range=(0, 256), fc='k', ec='k')
+#plt.subplot(212)
+#plt.hist(imag[50].ravel(), bins=256, range=(0, 256), fc='k', ec='k')
 
 
 #fig2 = plt.figure("histos")
