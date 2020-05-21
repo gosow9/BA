@@ -77,8 +77,8 @@ def getContours(cnts):
     return np.array(c)
 
 # load camera intrinsics
-mtx = np.loadtxt('intrinsics/mtx.txt')
-dst = np.loadtxt('intrinsics/dst.txt')
+mtx = np.loadtxt('intrinsics/mtx_lowdist.txt')
+dst = np.loadtxt('intrinsics/dist_lowdist.txt')
 
 # define resolution
 w = 3280

@@ -5,7 +5,7 @@ import time
 
 t_ref = time.time()
 
-images = glob.glob('im2/*.png')
+images = glob.glob('im_lowdist/*.png')
 #images = ['im/im21.png', 'im/im22.png', 'im/im25.png', 'im/im26.png', 'im/im118.png', 'im/im128.png', 'im/im138.png', 'im/im228.png', 'im/im238.png', 'im/im258.png', 'im/im268.png']
 
 
@@ -45,10 +45,10 @@ criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 300, 10^(-12))
 ret, mtx, dist, rvecs, tvecs, newobjp, stdin, stdex, pve, stdnewobjp = cv2.calibrateCameraROExtended(objpoints, imgpoints, (3280, 2464), 1, None, None, flags=flags, criteria=criteria)
 
 # store result to files
-np.savetxt('mtx2.txt', mtx)
-np.savetxt('dist2.txt', dist)
+np.savetxt('mtx_lowdist.txt', mtx)
+np.savetxt('dist_lowdist.txt', dist)
 
-with open('params2.txt', 'w') as f:
+with open('params_lowdist.txt', 'w') as f:
     f.write('RMS reprojection error = {:}\n\n'.format(ret))
     f.write('Camera Matrix:\n')
     f.write('fx = {:} +/- {:}\n'.format(mtx[0][0], stdin[0][0]))
