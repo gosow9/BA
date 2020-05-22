@@ -145,6 +145,7 @@ It was to be expected, that the reprojection error increases with more noise, bu
 It seems, that after a standard deviation of 25, bad reprojection errors become more likely even if the underlying increase is linear.
 
 This can also be seen in Figure \ref{development:noise_k} where the radial coefficients are plotted.
+Tangential and thin prism coefficients are not shown, since they show similar plots.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/noise_k.pdf}
@@ -156,16 +157,29 @@ thus it is necessary to keep noise as low as possible .
 this can be done by letting enough light reach the camera sensor, that the exposure control can keep the light sensitivity (ISO) low.
 
 \subsubsection{Blurred images}
-To get a grasp how the sharpness of each image affect the calibration, the numpy-checkerboards where convolved with a gaussian kernel of size $61\times 61$.
-
+To get a grasp how the sharpness of each image affect the calibration, the numpy-checkerboards where convolved with a gaussian kernel of size $71\times 71$.
+A blurred image is show in Figure \ref{development:nump_blurred}.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/nump1_blurred.png}
 	\caption{Blurred image\label{development:nump_blurred}}
 \end{figure}
-
+With these blurred images, it is still possible to obtain a good calibration as Figure \ref{development:blurred} shows.
+The blue curve is again the model, the first (orange) curve is plotted with coefficients of the calibration out of the unaltered images and the second (blue) with the blurred images.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/blurred.pdf}
 	\caption{Blurred calibration\label{development:blurred}}
 \end{figure}
+Even tough the reprojection error of the second calibration is slightly higher, it does not seem that the calibration itself is worse.
+But if the images is blurred even more (with bigger size of the kernel), it is not possible to detect the checkerboard corners.
+Images which are not sharp, do therefore not affect the calibration, since slightly blurred images do not make the calibration worse, and strongly blurred images are sorted out since no checkerboard corners can be detected.
+
+\subsubsection{Summary}
+Concerning the images used for the calibration, the most important insights are:
+\begin{itemize}
+\item Including images, with checkerboard corners close to the edges makes the calibration much more stable.
+\item Noise should be kept as low as possible. To ensure this, one should try to get as much light on the sensor of the camera, so that the automatic exposure control can reduce the ISO to a minimum.
+\item Blurred images do not affect the calibration. But since the blurry images are sorted out, it is necessary to have a certain amount of good images.
+\end{itemize}
+By taking these points into account, it should be possible to obtain the optimal calibration with the introduced methods.
