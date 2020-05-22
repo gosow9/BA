@@ -44,3 +44,70 @@ def reconstruction_by_dilation(img, mask, dilation_kernel):
             break
         im_old = img.copy()
     return img
+
+
+def get_edge_erroded(img, kernel):
+    """
+    Implements edge detection with an eroded image.
+
+    :param img: 2d image
+    :type img: InputArray
+    :param kernel: errosion kernel
+    :type kernel: InputArray
+    :return: Processed image
+    :return type: OutputArray
+    """
+    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret3, thresh = cv2.threshold(imgray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_TRIANGLE)
+    erode = cv2.erode(thresh, kernel, iterations=1)
+    return cv2.subtract(thresh, erode)
+
+
+def get_edge_dilated(img, kernel):
+    """
+    Implements edge detection with an dilated image.
+
+    :param img: 2d image
+    :type img: InputArray
+    :param kernel: errosion kernel
+    :type kernel: InputArray
+    :return: Processed image
+    :return type: OutputArray
+    """
+    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret3, thresh = cv2.threshold(imgray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_TRIANGLE)
+    return cv2.subtract(cv2.dilate(thresh, kernel, iterations=1), thresh)
+
+
+def get_edge_grad(img, kernel):
+    """
+    Implements edge detection with an difference of a dilated and eroded image.
+
+    :param img: 2d image
+    :type img: InputArray
+    :param kernel: errosion kernel
+    :type kernel: InputArray
+    :return: Processed image
+    :return type: OutputArray
+    """
+    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret3, thresh = cv2.threshold(imgray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_TRIANGLE)
+    return cv2.morphologyEx(thresh, cv2.MORPH_GRADIENT, kernel)
+
+
+def get_edge_errosion_dilation(img, kernel):
+    """
+    Implements edge detection with an difference of a dilated and eroded image.
+
+    :param img: 2d image
+    :type img: InputArray
+    :param kernel: errosion kernel
+    :type kernel: InputArray
+    :return: Processed image
+    :return type: OutputArray
+    """
+    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret3, thresh = cv2.threshold(imgray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_TRIANGLE)
+    erode = cv2.erode(thresh, kernel, iterations=1)
+    dilat = cv2.dilate(thresh, kernel, iterations=1)
+    return cv2.subtract(dilat, erode)
