@@ -5,7 +5,7 @@ main module
 import cv2
 import numpy as np
 import time
-import morph
+from morph import *
 
 
 def gstreamer_pipeline(
@@ -58,16 +58,39 @@ if __name__ == "__main__":
     print(gstreamer_pipeline(flip_method=0))
     cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
     if cap.isOpened():
-        window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_AUTOSIZE)
+        window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_NORMAL)
         # Window
+        t = time.time()
+        background = np.ones((2464, 3280), np.int8)
+        im = np.ones((2464, 3280), np.int8)
+        while time.time()-t < 5 and cv2.getWindowProperty("CSI Camera", 0) >= 0:
+            ret_val, img = cap.read()
+            im = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            print("Init mode")
+            thresh_value = np.max(im)
+            print(thresh_value)
+            cv2.imshow("CSI Camera", im)
+            keyCode = cv2.waitKey(30) & 0xFF
+            # Stop the program on the ESC key
+            if keyCode == 27:
+                break
+        background = background * thresh_value - im
+        print("Entering measurment mode")
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        grad = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
         while cv2.getWindowProperty("CSI Camera", 0) >= 0:
             t = time.time()
             ret_val, img = cap.read()
-            imggray  = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            (thresh, blackAndWhiteImage) = cv2.threshold(imggray, 127, 255, cv2.THRESH_BINARY)
+            #Diffrent types to get the edge use one:
+            #out = get_edge_errosion_dilation(img, grad)
+            out = get_edge_erroded(img, kernel)
+            #out = get_edge_dilated(img, kernel)
+            #out = get_edge_grad(img, grad)
             t = t-time.time()
             print(t)
-            #cv2.imshow("CSI Camera", img)
+            # Show the edges for visual control
+            cv2.resizeWindow("CSI Camera", 820, 616)
+            cv2.imshow("CSI Camera", out)
             # This also acts as
             keyCode = cv2.waitKey(30) & 0xFF
             # Stop the program on the ESC key
