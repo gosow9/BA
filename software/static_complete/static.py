@@ -86,7 +86,6 @@ h = 2464
 
 map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
 
-
 # define variables for fps
 fps = 0
 
@@ -102,7 +101,6 @@ if cap.isOpened():
     # Window
     while cv2.getWindowProperty('Camera', 0) >= 0:
         t_ref = time.time()
-
         ret_val, img = cap.read()
 
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -113,6 +111,7 @@ if cap.isOpened():
 
         # undistort edge
         edge = cv2.remap(edge, map_x, map_y, cv2.INTER_LINEAR)
+
 
         # find rectangles
         cnts_upper, _ = cv2.findContours(edge[0:sep,:], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -141,6 +140,22 @@ if cap.isOpened():
         if len(cnts_upper) != 2 or len(cnts_lower) != 2:
             print('No calibration points detected')
             continue
+
+        # undistort cnts_upper
+        # for c in cnts_upper:
+        #     x_tmp = c[0][0][0]
+        #     y_tmp = c[0][0][1]
+        #
+        #     c[0][0][1] = map_x[y_tmp][x_tmp]
+        #     c[0][0][1] = map_y[y_tmp][x_tmp]
+        #
+        # # undistort cnts_lower
+        # for c in cnts_upper:
+        #     x_tmp = c[0][0][0]
+        #     y_tmp = c[0][0][1]
+        #
+        #     c[0][0][1] = map_x[y_tmp][x_tmp]
+        #     c[0][0][1] = map_y[y_tmp][x_tmp]
 
         # collect calibration points
         imgp = np.zeros((4, 2))
@@ -234,6 +249,9 @@ if cap.isOpened():
         dimB = dB / ppm
 
         print('Frame ok')
+
+
+
         # compute fps
         if fps == 0:
             fps = 1 / (time.time() - t_ref)

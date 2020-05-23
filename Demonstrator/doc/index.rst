@@ -12,7 +12,7 @@ Welcome to Demonstrator's documentation!
 
    main
    morph
-
+   geometry
 
 
 Indices and tables

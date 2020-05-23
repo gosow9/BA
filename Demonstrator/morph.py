@@ -1,5 +1,5 @@
 """
-This model contains the morphological functions.
+This modul contains the morphological functions.
 """
 import cv2
 import numpy as np
