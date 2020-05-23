@@ -58,14 +58,15 @@ def gstreamer_pipeline(
 
 if __name__ == "__main__":
     # load calibration params
-    mtx = np.loadtxt('intrinsics/mtx_lowdist.txt')
-    dst = np.loadtxt('intrinsics/dist_lowdist.txt')
-
+    mtx = np.eye(3,3)#np.loadtxt('intrinsics/mtx_lowdist.txt')
+    dst = None#np.loadtxt('intrinsics/dist_lowdist.txt')
+    w = 3280
+    h = 2464
     # get calibration map
     map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
 
     # separation from edge
-    sep = 700
+    sep = 1000
 
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
     print(gstreamer_pipeline(flip_method=0))
@@ -74,8 +75,8 @@ if __name__ == "__main__":
         window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_NORMAL)
         # Window
         t = time.time()
-        background = np.ones((2464, 3280), np.int8)
-        im = np.ones((2464, 3280), np.int8)
+        background = np.ones((2464, 3280), np.uint8)
+        im = np.ones((2464, 3280), np.uint8)
         while time.time()-t < 5 and cv2.getWindowProperty("CSI Camera", 0) >= 0:
             ret_val, img = cap.read()
             im = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -91,7 +92,9 @@ if __name__ == "__main__":
         print("Entering measurment mode")
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         grad = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
+        fps = 0
         while cv2.getWindowProperty("CSI Camera", 0) >= 0:
+            t_ref = time.time()
             ret_val, img = cap.read()
             # Diffrent types to get the edge use one:
             #out = get_edge_errosion_dilation(img, grad)
@@ -194,7 +197,7 @@ if __name__ == "__main__":
             (tltrX, tltrY) = midpoint(tl, tr)
             (blbrX, blbrY) = midpoint(bl, br)
             (tlblX, tlblY) = midpoint(tl, bl)
-            (trbrX, trbrY) = midpoint(tr, br
+            (trbrX, trbrY) = midpoint(tr, br)
 
             # compute the euclidean distance between the midpoints
             dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
@@ -203,17 +206,22 @@ if __name__ == "__main__":
             # compute the size of the object
             dimA = dA / ppm
             dimB = dB / ppm
-
+            if fps == 0:
+                fps = 1/(time.time()-t_ref)
+            else:
+                fps = 0.9*fps + 0.1/(time.time()-t_ref)
             # the larger is the lenght
             if dimA > dimB:
-                print('l = {:.2}, w = {:.2}'.format(dimA, dimB))
+                print('l = {:.2f}, w = {:.2f}'.format(dimA, dimB))
 
             else:
-                print('l = {:.2}, w = {:.2}'.format(dimB, dimA))
+                print('l = {:.2f}, w = {:.2f}'.format(dimB, dimA))
 
             # Show the edges for visual control
             cv2.resizeWindow("CSI Camera", 820, 616)
+            cv2.putText(out, "FPS:{:.3f}".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
             cv2.imshow("CSI Camera", out)
+
             # This also acts as
             keyCode = cv2.waitKey(30) & 0xFF
             # Stop the program on the ESC key
