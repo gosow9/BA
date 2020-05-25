@@ -112,7 +112,6 @@ if cap.isOpened():
         # undistort edge
         edge = cv2.remap(edge, map_x, map_y, cv2.INTER_LINEAR)
 
-
         # find rectangles
         cnts_upper, _ = cv2.findContours(edge[0:sep,:], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
         cnts_lower, _ = cv2.findContours(edge[h-sep:h,:], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)

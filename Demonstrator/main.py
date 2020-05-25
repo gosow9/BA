@@ -21,17 +21,17 @@ def gstreamer_pipeline(
 ):
     """
     Configures gstreamer string
-    :param capture_width: capture width of camera
+    :param capture_width: Capture width of camera
     :type capture_width: Int
-    :param capture_height: capture height of camera
+    :param capture_height: Capture height of camera
     :type capture_height: Int
-    :param display_width: display width of the captured image
+    :param display_width: Display width of the captured image
     :type display_width: Int
-    :param display_height: display height of the captured image
+    :param display_height: Display height of the captured image
     :type display_height: Int
-    :param framerate: frame
+    :param framerate: Frames per second
     :type framerate: Int
-    :param flip_method:
+    :param flip_method: Orientation of the image
     :type flip_method: Int
     :return: String 
     """
@@ -58,8 +58,8 @@ def gstreamer_pipeline(
 
 if __name__ == "__main__":
     # load calibration params
-    mtx = np.eye(3,3)#np.loadtxt('intrinsics/mtx_lowdist.txt')
-    dst = None#np.loadtxt('intrinsics/dist_lowdist.txt')
+    mtx = np.eye(3,3)#np.loadtxt('intrinsics/mtx1.txt')
+    dst = None#np.loadtxt('intrinsics/dist1.txt')
     w = 3280
     h = 2464
     # get calibration map
@@ -97,13 +97,10 @@ if __name__ == "__main__":
             t_ref = time.time()
             ret_val, img = cap.read()
             # Diffrent types to get the edge use one:
-            #out = get_edge_errosion_dilation(img, grad)
-            out = get_edge_erroded(img, kernel)
-            #out = get_edge_dilated(img, kernel)
-            #out = get_edge_grad(img, grad)
-
-            # undistort edges
-            edge = cv2.remap(out, map_x, map_y, cv2.INTER_LINEAR)
+            #edge = get_edge_errosion_dilation(img, grad)
+            edge = get_edge_erroded(img, kernel)
+            #edge = get_edge_dilated(img, kernel)
+            #edge = get_edge_grad(img, grad)
 
             # find geometry pattern (upper and lower)
             cnts_upper, _ = cv2.findContours(edge[0:sep, :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -115,12 +112,17 @@ if __name__ == "__main__":
 
             # reject frame if amount of contours is invalid
             if len(cnts_upper) != 2 or len(cnts_lower) != 2:
-                print('No calibration points detected')
+                print('No pattern detected')
                 continue
+
+            # undistort contours
+            cnts_upper = remap_contours(cnts_upper, map_x, map_y)
+            cnts_lower = remap_contours(cnts_lower, map_x, map_y)
 
             # collect image points (geometry pattern)
             imgp = np.zeros((4, 2))
             index = 0
+
             for c in cnts_upper:
                 box = cv2.minAreaRect(c)
                 box = cv2.boxPoints(box)
@@ -170,22 +172,25 @@ if __name__ == "__main__":
             # get transformation matrix
             T = cv2.getPerspectiveTransform(imgp, objp)
 
-            # warp edges
-            edge = cv2.warpPerspective(edge, T, (w, h))
-
             # find object-contours inside the separation
             cnts_m, _ = cv2.findContours(edge[sep:(h - sep), :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
+            # undistort contours
+            cnts_m = remap_contours(cnts_m, map_x, map_y)
+
             # reject frame if cnts_m is empty
             if not cnts_m:
-                print('No Object found')
+                print('No object found')
                 continue
 
             # combine found contours to one
-            cnts_m = combine_contours(cnts_m)
+            cnts_m = np.concatenate(cnts_m, axis=0).astype(np.float64)
+
+            # warp perspective of the contours
+            cnts_m = cv2.perspectiveTransform(cnts_m, T)
 
             # minimum area rectangle around cnts_m
-            box = cv2.minAreaRect(cnts_m)
+            box = cv2.minAreaRect(cnts_m.astype(np.float32))
             box = cv2.boxPoints(box)
             box[0][1] += sep
             box[1][1] += sep
@@ -219,8 +224,8 @@ if __name__ == "__main__":
 
             # Show the edges for visual control
             cv2.resizeWindow("CSI Camera", 820, 616)
-            cv2.putText(out, "FPS:{:.3f}".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-            cv2.imshow("CSI Camera", out)
+            cv2.putText(edge, "{:.2f} fps".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+            cv2.imshow("CSI Camera", edge)
 
             # This also acts as
             keyCode = cv2.waitKey(30) & 0xFF

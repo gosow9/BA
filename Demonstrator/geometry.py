@@ -66,22 +66,6 @@ def order_points(pts):
 
     return np.array([tl, tr, br, bl], dtype="float32")
 
-def combine_contours(cnts):
-    """
-    Combines a set of contours (points) into one single contour
-
-    :param cnts: Contours
-    :type cnts: InputArray
-    :return: Combined Contour
-    :return type: OutputArray
-    """
-    c = []
-    for i in range(len(cnts)):
-        for j in range(len(cnts[i])):
-            c.append([[cnts[i][j][0][0], cnts[i][j][0][1]]])
-
-    return np.array(c)
-
 def remove_contours(cnts, minArea, maxArea):
     """
     Removes contours outside the definded to areas
@@ -102,5 +86,27 @@ def remove_contours(cnts, minArea, maxArea):
 
     for i in r:
         cnts.pop(i)
+
+    return cnts
+
+def remap_contours(cnts, map_x, map_y):
+    """
+    Remaps the contours points
+
+    :param cnts: Contours
+    :type cnts: InputArray
+    :param map_x: Undistortion map in x
+    :type map_x: InputArray
+    :param map_y: Undistortion map in y
+    :type map_y: InputArray
+    :return: Remaped Contours
+    :return type: OutputArray
+    """
+    for c in cnts:
+        x_tmp = c[0][0][0]
+        y_tmp = c[0][0][1]
+
+        c[0][0][0] = map_x[y_tmp][x_tmp]
+        c[0][0][1] = map_y[y_tmp][x_tmp]
 
     return cnts
