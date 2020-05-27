@@ -45,27 +45,6 @@ def rect_center(tl, tr, br, bl):
 
     return (p[0], p[1])
 
-def order_points(pts):
-    """
-    Orders four points clockwise (top left first)
-    :param pts: Four points
-    :type pts: InputArray
-    :return: Ordered points
-    :return type: OutputArray
-    """
-    xSorted = pts[np.argsort(pts[:, 0]), :]
-
-    leftMost = xSorted[:2, :]
-    rightMost = xSorted[2:, :]
-
-    leftMost = leftMost[np.argsort(leftMost[:, 1]), :]
-    (tl, bl) = leftMost
-
-    D = dist.cdist(tl[np.newaxis], rightMost, "euclidean")[0]
-    (br, tr) = rightMost[np.argsort(D)[::-1], :]
-
-    return np.array([tl, tr, br, bl], dtype="float32")
-
 def remove_contours(cnts, minArea, maxArea):
     """
     Removes contours outside the definded to areas

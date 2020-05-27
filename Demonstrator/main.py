@@ -143,7 +143,7 @@ if __name__ == "__main__":
                 cnts_lower = remap_contours(cnts_lower, map_x, map_y)
 
                 # collect image points (geometry pattern)
-                imgp = np.zeros((4, 2))
+                imgp_upper = np.zeros((5, 2))
                 index = 0
 
                 for c in cnts_upper:
@@ -152,8 +152,11 @@ if __name__ == "__main__":
 
                     (tl, tr, br, bl) = box
                     p = rect_center(tl, tr, br, bl)
-                    imgp[index] = p
+                    imgp_upper[index] = p
                     index += 1
+
+                imgp_lower = np.zeros((5, 2))
+                index = 0
 
                 for c in cnts_lower:
                     box = cv2.minAreaRect(c)
@@ -165,36 +168,43 @@ if __name__ == "__main__":
                     br[1] += (h - sep)
                     bl[1] += (h - sep)
                     p = rect_center(tl, tr, br, bl)
-                    imgp[index] = p
+                    imgp_lower[index] = p
                     index += 1
 
-                # order image points
-                imgp = order_points(imgp)
+                # sort the points
+                imgp_upper.sort(axis=0)
+                imgp_lower.sort(axis=0)
+
+                # combine points into one array
+                imgp = np.concatenate([imgp_lower, imgp_upper])
 
                 # get pixels per metric unit
-                ppm = dist.euclidean(imgp[0], imgp[1]) / 200
-                fx = mtx[0][0]
-                fy = mtx[1][1]
+                ppm_array = [dist.euclidean(imgp[0], imgp[4]) / 240, dist.euclidean(imgp[5], imgp[9]) / 240,
+                             dist.euclidean(imgp[1], imgp[3]) / 160, dist.euclidean(imgp[6], imgp[8]) / 160]
+
+                for i in range(5):
+                    ppm_array.append(dist.euclidean(imgp[i], imgp[5 + i]) / 160)
+
+                ppm = np.mean(ppm_array)
+
+                # get the principal point
                 mx = mtx[0][2]
                 my = mtx[1][2]
-                world_x = -mx / fx
-                world_y = -my / fy
 
-                # points in world coordiantes, format: (px*ppm-mx)/fx, (py*ppm-my)/fy
-                world_p = np.array([[world_x, world_y, 0],
-                                    [(200 * ppm - mx) / fx, world_y, 0],
-                                    [(200 * ppm - mx) / fx, (140 * ppm - my) / fy, 0],
-                                    [world_x, (140 * ppm - my) / fy, 0]], dtype=np.float32)
-
-                # project to image-plane
-                world_p, _ = cv2.projectPoints(world_p, (0, 0, 0), (0, 0, 0), mtx, dst)
-
-                # get objectpoints, top left point (imgp[0]) is reference
-                objp = np.concatenate(
-                    [world_p[0] + imgp[0], world_p[1] + imgp[0], world_p[2] + imgp[0], world_p[3] + imgp[0]])
+                # generate array with objectpoints
+                objp = np.array([[-120 * ppm + mx, -80 * ppm + my],
+                                 [-60 * ppm + mx, -80 * ppm + my],
+                                 [mx, -80 * ppm + my],
+                                 [60 * ppm + mx, -80 * ppm + my],
+                                 [120 * ppm + mx, -80 * ppm + my],
+                                 [-120 * ppm + mx, 80 * ppm + my],
+                                 [-60 * ppm + mx, 80 * ppm + my],
+                                 [mx, 80 * ppm + my],
+                                 [60 * ppm + mx, 80 * ppm + my],
+                                 [120 * ppm + mx, 80 * ppm + my]], dtype=np.float32)
 
                 # get transformation matrix
-                T = cv2.getPerspectiveTransform(imgp, objp)
+                T, _ = cv2.findHomography(imgp, objp, method=0)
 
                 # find object-contours inside the separation
                 cnts_m, _ = cv2.findContours(edge[sep:(h - sep), :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
