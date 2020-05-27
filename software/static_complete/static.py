@@ -136,7 +136,7 @@ if cap.isOpened():
             cnts_lower.pop(i)
 
         # reject frame if amount of points is invalid
-        if len(cnts_upper) != 2 or len(cnts_lower) != 2:
+        if len(cnts_upper) != 5 or len(cnts_lower) != 5:
             print('No calibration points detected')
             continue
 
@@ -157,7 +157,7 @@ if cap.isOpened():
         #     c[0][0][1] = map_y[y_tmp][x_tmp]
 
         # collect calibration points
-        imgp = np.zeros((4, 2))
+        imgp_upper = np.zeros((5,2))
         index = 0
         for c in cnts_upper:
             box = cv2.minAreaRect(c)
@@ -166,10 +166,12 @@ if cap.isOpened():
             (tl, tr, br, bl) = box
             p = rect_center(tl, tr, br, bl)
 
-            imgp[index] = p
+            imgp_upper[index] = p
 
             index += 1
 
+        imgp_lower = np.zeros((5,2))
+        index = 0
         for c in cnts_lower:
             box = cv2.minAreaRect(c)
             box = cv2.boxPoints(box)
@@ -181,38 +183,44 @@ if cap.isOpened():
             bl[1] += (h - sep)
             p = rect_center(tl, tr, br, bl)
 
-            imgp[index] = p
+            imgp_lower[index] = p
 
             index += 1
 
-        # order image points
-        imgp = order_points(imgp)
+        # Sort the points
+        imgp_upper.sort(axis=0)
+        imgp_lower.sort(axis=0)
+
+        # combine points into one array
+        imgp = np.concatenate([imgp_lower, imgp_upper])
 
         # pixels/metric
-        ppm = dist.euclidean(imgp[0], imgp[1])/200
-        fx = mtx[0][0]
-        fy = mtx[1][1]
+        ppm_array = [dist.euclidean(imgp[0], imgp[4])/240, dist.euclidean(imgp[5], imgp[9])/240, dist.euclidean(imgp[1], imgp[3])/160, dist.euclidean(imgp[6], imgp[8])/160]
+
+        for i in range(5):
+            ppm_array.append(dist.euclidean(imgp[i], imgp[5+i])/160)
+
+        ppm = np.mean(ppm_array)
+
         mx = mtx[0][2]
         my = mtx[1][2]
-        world_x = -mx/fx
-        world_y = -my/fy
 
         # world coorinates: (px*ppm-mx)/fx, (py*ppm-my)/fy
         # float32 for projectPoints (float64 ok) and getperspectiveTransform (float32 required)
-        world_p = np.array([[world_x,             world_y,             0],
-                            [(200*ppm - mx) / fx, world_y,             0],
-                            [(200*ppm - mx) / fx, (140*ppm - my) / fy, 0],
-                            [world_x,             (140*ppm - my) / fy, 0]], dtype=np.float32)
-
-        world_p, _ = cv2.projectPoints(world_p, (0, 0, 0), (0, 0, 0), mtx, dst)
-
-        # top left point (imgp[0]) is reference
-        objp = np.concatenate([world_p[0]+imgp[0], world_p[1]+imgp[0], world_p[2]+imgp[0], world_p[3]+imgp[0]])
+        objp = np.array([[-120*ppm+mx, -80*ppm+my],
+                         [ -60*ppm+mx, -80*ppm+my],
+                         [         mx, -80*ppm+my],
+                         [  60*ppm+mx, -80*ppm+my],
+                         [ 120*ppm+mx, -80*ppm+my],
+                         [-120*ppm+mx,  80*ppm+my],
+                         [ -60*ppm+mx,  80*ppm+my],
+                         [         mx,  80*ppm+my],
+                         [  60*ppm+mx,  80*ppm+my],
+                         [ 120*ppm+mx,  80*ppm+my]], dtype=np.float32)
 
         # get transformation matrix
-        T = cv2.getPerspectiveTransform(imgp, objp)
+        T, _ = cv2.findHomography(imgp, objp, method=0)
         edge = cv2.warpPerspective(edge, T, (w, h))
-
 
         # find object
         edge = cv2.erode(edge, None, iterations=1)
@@ -265,6 +273,8 @@ if cap.isOpened():
         for p in objp:
             cv2.circle(img, (int(p[0]), int(p[1])), 7, (0, 255, 255), -1)
 
+        for p in imgp:
+            cv2.circle(img, (int(p[0]), int(p[1])), 7, (0, 0, 255), -1)
 
         box = cv2.minAreaRect(cnts_m)
         box = cv2.boxPoints(box)
