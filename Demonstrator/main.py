@@ -154,7 +154,7 @@ if __name__ == "__main__":
                 break
         mask = np.zeros((h-40, w-80))
         mask = cv2.copyMakeBorder(mask, 20, 20, 40, 40, cv2.BORDER_CONSTANT, value=1)
-        back = cv2.bitwise_and(	mask, background)
+        #back = cv2.bitwise_and(mask, background)
 
         # background = background * thresh_value - im
         print("Entering measurment mode")
@@ -170,8 +170,8 @@ if __name__ == "__main__":
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             #test zum ecken besser machen
             #----------------------------------
-            imgray = np.uint8(imgray + back)
-            print(np.min(imgray), np.max(imgray))
+            #imgray = np.uint8(imgray + back)
+            #print(np.min(imgray), np.max(imgray))
             # ----------------------------------
             if trigger(imgray):
                 # Diffrent types to get the edge use one:
@@ -188,7 +188,7 @@ if __name__ == "__main__":
                 cnts_upper = remove_contours(cnts_upper, 2800, 3400)
                 cnts_lower = remove_contours(cnts_lower, 2800, 3400)
 
-                # test funktion um Boxen auf bild anzuzeigen
+                # test funktion um Boxen auf bild anzuzeigen ohne die etwa 14FPS
                 # ----------------------------------
                 if show_box(cnts_upper, cnts_lower):
                     break
