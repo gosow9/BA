@@ -10,15 +10,15 @@ from morph import *
 from geometry import *
 
 #Global variable
-w = 3264
-h = 1848
+w = 3280#3264
+h = 2464#1848
 
 def gstreamer_pipeline(
         capture_width=w,
         capture_height=h,
         display_width=w,
         display_height=h,
-        framerate=28,
+        framerate=21,
         flip_method=0,
 ):
     """
@@ -87,26 +87,26 @@ def show_box(cnts_upper, cnts_lower):
     cv2.resizeWindow("Contours", 820, 616)
     for i in reversed(range(len(cnts_upper))):
         area = cv2.contourArea(cnts_upper[i])
-        print(area)
+        #print(area)
     for i in reversed(range(len(cnts_lower))):
         area = cv2.contourArea(cnts_lower[i])
-        print(area)
+        #print(area)
     for c in cnts_upper:
         box = cv2.minAreaRect(c)
         box = cv2.boxPoints(box)
         box = box + [vec, 0]
-        cv2.drawContours(img, [box.astype("int")], -1, (0, 0, 255), 10)
+        cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
     for c in cnts_lower:
         box = cv2.minAreaRect(c)
         box = cv2.boxPoints(box)
         box = box + [vec, h - sep]
-        cv2.drawContours(img, [box.astype("int")], -1, (0, 0, 255), 10)
-    cv2.line(img, (int(3263 / 3), 0), (int(3263 / 3), 1848), (0, 0, 255), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (3263, 0), (3263, 1848), (0, 0, 255), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (0, 0), (0, 1848), (0, 0, 255), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (int(3263 / 3 * 2), 0), (int(3263 / 3 * 2), 1848), (0, 0, 255), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (vec, 0), (vec, 1848), (0, 255, 0), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (3263-vec, 0), (3263-vec, 1848), (0, 255, 0), thickness=5, lineType=8, shift=0)
+        cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
+    cv2.line(img, (int((w-1) / 3), 0), (int((w-1) / 3), h), (0, 0, 255), thickness=5, lineType=8, shift=0)
+    #cv2.line(img, (w-1, 0), (w-1, h), (0, 0, 255), thickness=5, lineType=8, shift=0)
+    #cv2.line(img, (0, 0), (0, h), (0, 0, 255), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (int((w-1) / 3 * 2), 0), (int((w-1) / 3 * 2), h), (0, 0, 255), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (vec, 0), (vec, h), (0, 255, 0), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (w-1-vec, 0), (w-1-vec, h), (0, 255, 0), thickness=5, lineType=8, shift=0)
     cv2.line(img, (vec, sep), (w-vec, sep), (255, 0, 0), thickness=5, lineType=8, shift=0)
     cv2.line(img, (vec, h-sep), (w-vec, h-sep), (255, 0, 0), thickness=5, lineType=8, shift=0)
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
 
     # separation from edge
-    sep = 200
+    sep = 700
     vec = 300
 
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
@@ -174,7 +174,7 @@ if __name__ == "__main__":
             #print(np.min(imgray), np.max(imgray))
             # ----------------------------------
             if trigger(imgray):
-                # Diffrent types to get the edge use one:
+                # Different types to get the edge use one:
                 # edge = get_edge_errosion_dilation(imgray, grad)
                 edge = get_edge_erroded(imgray, kernel)
                 # edge = get_edge_dilated(imgray, kernel)
@@ -211,6 +211,7 @@ if __name__ == "__main__":
                     box = cv2.boxPoints(box)
 
                     (tl, tr, br, bl) = box
+                    box += [vec, 0]
                     p = rect_center(tl, tr, br, bl)
                     imgp_upper[index] = p
                     index += 1
@@ -223,10 +224,7 @@ if __name__ == "__main__":
                     box = cv2.boxPoints(box)
 
                     (tl, tr, br, bl) = box
-                    tl[1] += (h - sep)
-                    tr[1] += (h - sep)
-                    br[1] += (h - sep)
-                    bl[1] += (h - sep)
+                    box += [vec, (h - sep)]
                     p = rect_center(tl, tr, br, bl)
                     imgp_lower[index] = p
                     index += 1
@@ -277,7 +275,7 @@ if __name__ == "__main__":
                     print('No object found')
                     continue
 
-                # combine found contours to one
+                # combine contours to one
                 cnts_m = np.concatenate(cnts_m, axis=0).astype(np.float64)
 
                 # warp perspective of the contours
@@ -290,6 +288,9 @@ if __name__ == "__main__":
                 box[1][1] += sep
                 box[2][1] += sep
                 box[3][1] += sep
+
+                cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
+                cv2.imshow("Contours", img)
 
                 # get the midpoints of the rectangle
                 (tl, tr, br, bl) = box
