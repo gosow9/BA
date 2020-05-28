@@ -9,13 +9,16 @@ from scipy.spatial import distance as dist
 from morph import *
 from geometry import *
 
+#Global variable
+w = 3264
+h = 1848
 
 def gstreamer_pipeline(
-        capture_width=3280,
-        capture_height=1848,
-        display_width=3280,
-        display_height=1848,
-        framerate=21,
+        capture_width=w,
+        capture_height=h,
+        display_width=w,
+        display_height=h,
+        framerate=28,
         flip_method=0,
 ):
     """
@@ -54,12 +57,13 @@ def gstreamer_pipeline(
     )
 
 
-def image_found(img):
+def trigger(img):
     return True
     width, height = img.shape
     var1 = np.mean(img[:, 0])
     var2 = np.mean(img[:, width - 1])
-    _, cross1 = cv2.threshold(img[:, int(width/2)], var1 / 2, 1, cv2.THRESH_BINARY)
+    # _, cross1 = cv2.threshold(img[:, int(width / 2)], var1 / 2, 1, cv2.THRESH_BINARY)
+    _, cross1 = cv2.threshold(img[:, int(width / 3)], 0, 1, cv2.THRESH_BINARY + cv2.THRESH_TRIANGLE)
     val = np.sum(cross1)
     val1 = np.sum(cross1)
     if width - val > 10:
@@ -77,17 +81,55 @@ def image_found(img):
         print("is empty")
         return False
 
+
+def show_box(cnts_upper, cnts_lower):
+    cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
+    cv2.resizeWindow("Contours", 820, 616)
+    for i in reversed(range(len(cnts_upper))):
+        area = cv2.contourArea(cnts_upper[i])
+        print(area)
+    for i in reversed(range(len(cnts_lower))):
+        area = cv2.contourArea(cnts_lower[i])
+        print(area)
+    for c in cnts_upper:
+        box = cv2.minAreaRect(c)
+        box = cv2.boxPoints(box)
+        box = box + [vec, 0]
+        cv2.drawContours(img, [box.astype("int")], -1, (0, 0, 255), 10)
+    for c in cnts_lower:
+        box = cv2.minAreaRect(c)
+        box = cv2.boxPoints(box)
+        box = box + [vec, h - sep]
+        cv2.drawContours(img, [box.astype("int")], -1, (0, 0, 255), 10)
+    cv2.line(img, (int(3263 / 3), 0), (int(3263 / 3), 1848), (0, 0, 255), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (3263, 0), (3263, 1848), (0, 0, 255), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (0, 0), (0, 1848), (0, 0, 255), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (int(3263 / 3 * 2), 0), (int(3263 / 3 * 2), 1848), (0, 0, 255), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (vec, 0), (vec, 1848), (0, 255, 0), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (3263-vec, 0), (3263-vec, 1848), (0, 255, 0), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (vec, sep), (w-vec, sep), (255, 0, 0), thickness=5, lineType=8, shift=0)
+    cv2.line(img, (vec, h-sep), (w-vec, h-sep), (255, 0, 0), thickness=5, lineType=8, shift=0)
+
+    cv2.imshow("Contours", img)
+    keyCode = cv2.waitKey(30) & 0xFF
+    if keyCode == 27:
+        return True
+    else:
+        return False
+    # Stop the program on the ESC key
+    print(len(cnts_upper), len(cnts_lower))
+
 if __name__ == "__main__":
     # load calibration params
     mtx = np.eye(3, 3)  # np.loadtxt('intrinsics/mtx1.txt')
     dst = None  # np.loadtxt('intrinsics/dist1.txt')
-    w = 3280
-    h = 1848
+
     # get calibration map
     map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
 
     # separation from edge
-    sep = 700
+    sep = 200
+    vec = 300
 
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
     print(gstreamer_pipeline(flip_method=0))
@@ -98,7 +140,7 @@ if __name__ == "__main__":
         t = time.time()
         background = np.ones((2464, 3280), np.uint8)
         im = np.ones((2464, 3280), np.uint8)
-        while time.time() - t < 5 and cv2.getWindowProperty("CSI Camera", 0) >= 0:
+        while time.time() - t < 8 and cv2.getWindowProperty("CSI Camera", 0) >= 0:
             ret_val, img = cap.read()
             im = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             print("Init mode")
@@ -106,37 +148,55 @@ if __name__ == "__main__":
             print(thresh_value)
             cv2.imshow("CSI Camera", im)
             keyCode = cv2.waitKey(30) & 0xFF
+
             # Stop the program on the ESC key
             if keyCode == 27:
                 break
-        #background = background * thresh_value - im
+        mask = np.zeros((h-40, w-80))
+        mask = cv2.copyMakeBorder(mask, 20, 20, 40, 40, cv2.BORDER_CONSTANT, value=1)
+        back = cv2.bitwise_and(	mask, background)
+
+        # background = background * thresh_value - im
         print("Entering measurment mode")
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         grad = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
+        back = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (w, h))
+        back = np.logical_not(back) * 20
+        print(np.shape(back), np.min(back), np.max(back))
         fps = 0
         while cv2.getWindowProperty("CSI Camera", 0) >= 0:
             t_ref = time.time()
             ret_val, img = cap.read()
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            if image_found(imgray):
+            #test zum ecken besser machen
+            #----------------------------------
+            imgray = np.uint8(imgray + back)
+            print(np.min(imgray), np.max(imgray))
+            # ----------------------------------
+            if trigger(imgray):
                 # Diffrent types to get the edge use one:
-                #edge = get_edge_errosion_dilation(imgray, grad)
+                # edge = get_edge_errosion_dilation(imgray, grad)
                 edge = get_edge_erroded(imgray, kernel)
-                #edge = get_edge_dilated(imgray, kernel)
-                #edge = get_edge_grad(imgray, grad)
+                # edge = get_edge_dilated(imgray, kernel)
+                # edge = get_edge_grad(imgray, grad)
 
                 # find geometry pattern (upper and lower)
-                cnts_upper, _ = cv2.findContours(edge[0:sep, :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-                cnts_lower, _ = cv2.findContours(edge[h - sep:h, :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+                cnts_upper, _ = cv2.findContours(edge[0:sep, vec:w-vec], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+                cnts_lower, _ = cv2.findContours(edge[h - sep:h, vec:w-vec], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
                 # only keep valid contours
-                cnts_upper = remove_contours(cnts_upper, 2000, 3000)
-                cnts_lower = remove_contours(cnts_lower, 2000, 3000)
+                cnts_upper = remove_contours(cnts_upper, 2800, 3400)
+                cnts_lower = remove_contours(cnts_lower, 2800, 3400)
 
+                # test funktion um Boxen auf bild anzuzeigen
+                # ----------------------------------
+                if show_box(cnts_upper, cnts_lower):
+                    break
                 # reject frame if amount of contours is invalid
-                if len(cnts_upper) != 2 or len(cnts_lower) != 2:
+                if len(cnts_upper) != 5 or len(cnts_lower) != 5:
+                    print(len(cnts_upper), len(cnts_lower))
                     print('No pattern detected')
-                    #continue
+                    continue
 
                 # undistort contours
                 cnts_upper = remap_contours(cnts_upper, map_x, map_y)
@@ -180,7 +240,7 @@ if __name__ == "__main__":
 
                 # get pixels per metric unit
                 ppm_array = [dist.euclidean(imgp[0], imgp[4]) / 240, dist.euclidean(imgp[5], imgp[9]) / 240,
-                             dist.euclidean(imgp[1], imgp[3]) / 160, dist.euclidean(imgp[6], imgp[8]) / 160]
+                             dist.euclidean(imgp[1], imgp[3]) / 120, dist.euclidean(imgp[6], imgp[8]) / 120]
 
                 for i in range(5):
                     ppm_array.append(dist.euclidean(imgp[i], imgp[5 + i]) / 160)
@@ -215,7 +275,7 @@ if __name__ == "__main__":
                 # reject frame if cnts_m is empty
                 if not cnts_m:
                     print('No object found')
-                    #continue
+                    continue
 
                 # combine found contours to one
                 cnts_m = np.concatenate(cnts_m, axis=0).astype(np.float64)
@@ -242,8 +302,6 @@ if __name__ == "__main__":
                 dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
                 dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
 
-                # Test ppm
-                ppm = 1
                 # compute the size of the object
                 dimA = dA / ppm
                 dimB = dB / ppm

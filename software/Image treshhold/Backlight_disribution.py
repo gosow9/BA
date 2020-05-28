@@ -35,19 +35,41 @@ plt.figure()
 plt.imshow(img,cmap="gray")
 
 
-img = scipy.misc.imresize(img, 0.1, interp='nearest')
+
+kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE,(20,20))
+tophat = cv.morphologyEx(img, cv.MORPH_TOPHAT, kernel)
+top = tophat
+tophat = tophat[::100,::100]
+#img = scipy.misc.imresize(img, 0.1, interp='nearest')
+
+plt.figure()
+plt.imshow(top,cmap="gray")
+
+img = img[::100,::100]
+background = np.ones(np.shape(img))
+background = (background * np.max(img)) - img
+imgnew = img + tophat*3
+
 xx, yy = np.mgrid[0:img.shape[0], 0:img.shape[1]]
 xx = xx*10
 yy = yy*10
 # create the figure
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-ax.plot_surface(xx, yy, img ,rstride=1, cstride=1, cmap=plt.cm.coolwarm, linewidth=0)
-plt.figure()
-plt.contour(xx, yy, img , cmap=plt.cm.coolwarm, linewidth=0)
 
-# show it
-plt.show()
+# fig = plt.figure()
+# ax = fig.gca(projection='3d')
+# ax.plot_surface(xx, yy, imgnew ,rstride=1, cstride=1, cmap=plt.cm.coolwarm, linewidth=0)
+# plt.figure()
+# plt.contour(xx, yy, imgnew , cmap=plt.cm.coolwarm, linewidth=0)
+
+
+# fig = plt.figure()
+# ax = fig.gca(projection='3d')
+# ax.plot_surface(xx, yy, tophat ,rstride=1, cstride=1, cmap=plt.cm.coolwarm, linewidth=0)
+# plt.figure()
+# plt.contour(xx, yy, tophat , cmap=plt.cm.coolwarm, linewidth=0)
+
+# # show it
+# plt.show()
 #plt.hist(imag.ravel(),256,[0,256])
 #plt.subplot(212)
 #plt.hist(imag[50].ravel(), bins=256, range=(0, 256), fc='k', ec='k')
