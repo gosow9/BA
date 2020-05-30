@@ -117,45 +117,6 @@ def trigger(img):
 #        print("Image Saved")
 #        return True
 
-
-def show_box(cnts_upper, cnts_lower):
-    cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
-    cv2.resizeWindow("Contours", 820, 616)
-    for i in reversed(range(len(cnts_upper))):
-        area = cv2.contourArea(cnts_upper[i])
-        # print(area)
-    for i in reversed(range(len(cnts_lower))):
-        area = cv2.contourArea(cnts_lower[i])
-        # print(area)
-    for c in cnts_upper:
-        box = cv2.minAreaRect(c)
-        box = cv2.boxPoints(box)
-        box = box + [vec, 0]
-        cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
-    for c in cnts_lower:
-        box = cv2.minAreaRect(c)
-        box = cv2.boxPoints(box)
-        box = box + [vec, h - sep]
-        cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
-    cv2.line(img, (int((w - 1) / 3), 0), (int((w - 1) / 3), h), (0, 0, 255), thickness=5, lineType=8, shift=0)
-    # cv2.line(img, (w-1, 0), (w-1, h), (0, 0, 255), thickness=5, lineType=8, shift=0)
-    # cv2.line(img, (0, 0), (0, h), (0, 0, 255), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (int((w - 1) / 3 * 2), 0), (int((w - 1) / 3 * 2), h), (0, 0, 255), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (vec, 0), (vec, h), (0, 255, 0), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (w - 1 - vec, 0), (w - 1 - vec, h), (0, 255, 0), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (vec, sep), (w - vec, sep), (255, 0, 0), thickness=5, lineType=8, shift=0)
-    cv2.line(img, (vec, h - sep), (w - vec, h - sep), (255, 0, 0), thickness=5, lineType=8, shift=0)
-
-    cv2.imshow("Contours", img)
-    keyCode = cv2.waitKey(30) & 0xFF
-    if keyCode == 27:
-        return True
-    else:
-        return False
-    # Stop the program on the ESC key
-    print(len(cnts_upper), len(cnts_lower))
-
-
 def show_objects(cnts):
     cv2.namedWindow("Objects", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("Objects", 820, 616)
@@ -246,10 +207,6 @@ if __name__ == "__main__":
                 cnts_upper = remove_contours(cnts_upper, 2700, 3400)
                 cnts_lower = remove_contours(cnts_lower, 2800, 3400)
 
-                # test funktion um Boxen auf bild anzuzeigen ohne die etwa 14FPS
-                # ----------------------------------
-                if show_box(cnts_upper, cnts_lower):
-                    break
                 # reject frame if amount of contours is invalid
                 if len(cnts_upper) != 5 or len(cnts_lower) != 5:
                     print(len(cnts_upper), len(cnts_lower))

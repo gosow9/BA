@@ -2,11 +2,11 @@ import cv2
 import numpy as np
 
 def gstreamer_pipeline(
-    capture_width=3280,
-    capture_height=2464,
-    display_width=3280,
-    display_height=2464,
-    framerate=20,
+    capture_width=3264,
+    capture_height=1848,
+    display_width=3264,
+    display_height=1848,
+    framerate=21,
     flip_method=2,
 ):
     return (
@@ -43,7 +43,7 @@ if cap.isOpened():
         #gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         cv2.namedWindow('snapshot', cv2.WINDOW_NORMAL)
-        cv2.resizeWindow('snapshot', 2*820, 2*616)
+        cv2.resizeWindow('snapshot', 1632, 924)
         cv2.imshow('snapshot', img)
 
         keyCode = cv2.waitKey(30) & 0xFF

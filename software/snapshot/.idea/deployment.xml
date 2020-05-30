@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData">
+  <component name="PublishConfigData" autoUpload="Always" serverName="crenda@192.168.178.56:22">
     <serverData>
-      <paths name="jetson1@152.96.24.21:22">
+      <paths name="crenda@192.168.178.56:22">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/jetson1/pycharm" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/crenda/pycharm" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
@@ -17,5 +17,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
