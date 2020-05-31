@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="crenda@192.168.0.92:22">
+  <component name="PublishConfigData">
     <serverData>
-      <paths name="crenda@192.168.0.92:22">
+      <paths name="crenda@192.168.178.56:22">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/crenda/Documents/BA/Demonstrator" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/crenda/pycharm" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

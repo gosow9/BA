@@ -1,15 +1,16 @@
-# -*- coding: utf-8 -*-
 """
-main module
+Main module, used for measuring
 """
+
 import cv2
 import numpy as np
 import time
 from scipy.spatial import distance as dist
 from morph import *
 from geometry import *
+import collections
 
-# Global variable
+# Global variables
 w = 3264  # 3264
 h = 1848  # 2464
 line_time = 1 / 28 / h
@@ -61,9 +62,9 @@ def gstreamer_pipeline(
 
 
 def trigger(img):
-    mean2, var2 = cv2.meanStdDev(img[200:h - 200:10, 0])
+    mean2, std2 = cv2.meanStdDev(img[200:h - 200:10, 0])
 
-    if var2 ** 2 > 60:
+    if std2 ** 2 > 60:
         imsave = [img]
         imtime = []
         place = 1
@@ -138,15 +139,18 @@ def show_objects(cnts):
 
 if __name__ == "__main__":
     # load calibration params
-    mtx = np.eye(3, 3)  # np.loadtxt('intrinsics/mtx1.txt')
-    dst = None  # np.loadtxt('intrinsics/dist1.txt')
+    mtx = np.loadtxt('mtx_normal.txt')
+    dst = np.loadtxt('dist_normal.txt')
 
     # get calibration map
     map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
 
     # separation from edge
-    sep = 200
-    vec = 250
+    sep = 250
+    vec = 400
+
+    # ringbuffer for geometry pattern
+    buf = collections.deque(maxlen=10)
 
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
     print(gstreamer_pipeline(flip_method=0))
@@ -161,7 +165,7 @@ if __name__ == "__main__":
             ret_val, img = cap.read()
             im = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             thresh_value = np.max(im)
-            print("Init mode, Threshvalue = {}".format(thresh_value), end="\r", flush=True)
+            print("Init mode, threshhold value = {:.0f}".format(thresh_value), end="\r", flush=True)
             cv2.imshow("CSI Camera", im)
             keyCode = cv2.waitKey(30) & 0xFF
 
@@ -191,7 +195,7 @@ if __name__ == "__main__":
             # imgray = np.uint8(imgray + back)
             # print(np.min(imgray), np.max(imgray))
             # ----------------------------------
-            if trigger(imgray):
+            if True:#trigger(imgray):
                 # Different types to get the edge use one:
                 # edge = get_edge_errosion_dilation(imgray, grad)
                 edge = get_edge_erroded(imgray, kernel)
@@ -205,87 +209,93 @@ if __name__ == "__main__":
 
                 # only keep valid contours
                 cnts_upper = remove_contours(cnts_upper, 2700, 3400)
-                cnts_lower = remove_contours(cnts_lower, 2800, 3400)
+                cnts_lower = remove_contours(cnts_lower, 2700, 3400)
 
-                # reject frame if amount of contours is invalid
-                if len(cnts_upper) != 5 or len(cnts_lower) != 5:
-                    print(len(cnts_upper), len(cnts_lower))
+                if len(cnts_upper) == 5 and len(cnts_lower) == 5:
+                    # undistort contours
+                    cnts_upper = remap_contours(cnts_upper, map_x, map_y)
+                    cnts_lower = remap_contours(cnts_lower, map_x, map_y)
+
+                    # collect image points (geometry pattern)
+                    imgp_upper = np.zeros((5, 2))
+                    index = 0
+
+                    for c in cnts_upper:
+                        box = cv2.minAreaRect(c)
+                        box = cv2.boxPoints(box)
+
+                        (tl, tr, br, bl) = box
+                        tl[0] += vec
+                        tr[0] += vec
+                        br[0] += vec
+                        bl[0] += vec
+
+                        p = rect_center(tl, tr, br, bl)
+                        imgp_upper[index] = p
+                        index += 1
+
+                    imgp_lower = np.zeros((5, 2))
+                    index = 0
+
+                    for c in cnts_lower:
+                        box = cv2.minAreaRect(c)
+                        box = cv2.boxPoints(box)
+
+                        (tl, tr, br, bl) = box
+                        tl[0] += vec
+                        tr[0] += vec
+                        br[0] += vec
+                        bl[0] += vec
+                        tl[1] += (h - sep)
+                        tr[1] += (h - sep)
+                        br[1] += (h - sep)
+                        bl[1] += (h - sep)
+                        p = rect_center(tl, tr, br, bl)
+                        imgp_lower[index] = p
+                        index += 1
+
+                    # sort the points
+                    imgp_upper.sort(axis=0)
+                    imgp_lower.sort(axis=0)
+
+                    # append the buffer with a combined array
+                    buf.append(np.concatenate([imgp_upper, imgp_lower]))
+
+                else:
                     print('No pattern detected')
+
+                # reject frame if buffer is empty
+                if len(buf) == 0:
+                    print('No image points in buffer')
                     continue
 
-                # undistort contours
-                cnts_upper = remap_contours(cnts_upper, map_x, map_y)
-                cnts_lower = remap_contours(cnts_lower, map_x, map_y)
-
-                # collect image points (geometry pattern)
-                imgp_upper = np.zeros((5, 2))
-                index = 0
-
-                for c in cnts_upper:
-                    box = cv2.minAreaRect(c)
-                    box = cv2.boxPoints(box)
-
-                    (tl, tr, br, bl) = box
-                    tl[0] += vec
-                    tr[0] += vec
-                    br[0] += vec
-                    bl[0] += vec
-
-                    p = rect_center(tl, tr, br, bl)
-                    imgp_upper[index] = p
-                    index += 1
-
-                imgp_lower = np.zeros((5, 2))
-                index = 0
-
-                for c in cnts_lower:
-                    box = cv2.minAreaRect(c)
-                    box = cv2.boxPoints(box)
-
-                    (tl, tr, br, bl) = box
-                    tl[0] += vec
-                    tr[0] += vec
-                    br[0] += vec
-                    bl[0] += vec
-                    tl[1] += (h - sep)
-                    tr[1] += (h - sep)
-                    br[1] += (h - sep)
-                    bl[1] += (h - sep)
-                    p = rect_center(tl, tr, br, bl)
-                    imgp_lower[index] = p
-                    index += 1
-
-                # sort the points
-                imgp_upper.sort(axis=0)
-                imgp_lower.sort(axis=0)
-
-                # combine points into one array
-                imgp = np.concatenate([imgp_upper, imgp_lower])
+                # use the mean of the buffer as image points
+                imgp = np.mean(buf, axis=0)
 
                 # get pixels per metric unit
-                ppm_array = [dist.euclidean(imgp[0], imgp[4]) / 240, dist.euclidean(imgp[5], imgp[9]) / 240,
-                             dist.euclidean(imgp[1], imgp[3]) / 120, dist.euclidean(imgp[6], imgp[8]) / 120]
+                ppm_array = [dist.euclidean(imgp[0], imgp[4]) / 220, dist.euclidean(imgp[5], imgp[9]) / 220,
+                             dist.euclidean(imgp[1], imgp[3]) / 110, dist.euclidean(imgp[6], imgp[8]) / 110]
 
                 for i in range(5):
-                    ppm_array.append(dist.euclidean(imgp[i], imgp[5 + i]) / 160)
+                    ppm_array.append(dist.euclidean(imgp[i], imgp[5 + i]) / 150)
 
                 ppm = np.mean(ppm_array)
 
                 # get the principal point
-                mx = w / 2
-                my = h / 2
+                mx = mtx[0][2]
+                my = mtx[1][2]
 
                 # generate array with objectpoints
-                objp = np.array([[-120 * ppm + mx, -80 * ppm + my],
-                                 [-60 * ppm + mx, -80 * ppm + my],
-                                 [mx, -80 * ppm + my],
-                                 [60 * ppm + mx, -80 * ppm + my],
-                                 [120 * ppm + mx, -80 * ppm + my],
-                                 [-120 * ppm + mx, 80 * ppm + my],
-                                 [-60 * ppm + mx, 80 * ppm + my],
-                                 [mx, 80 * ppm + my],
-                                 [60 * ppm + mx, 80 * ppm + my],
-                                 [120 * ppm + mx, 80 * ppm + my]], dtype=np.float32)
+                objp = np.array([[-110 * ppm + mx, -75 * ppm + my],
+                                 [-55 * ppm + mx, -75 * ppm + my],
+                                 [mx, -75 * ppm + my],
+                                 [55 * ppm + mx, -75 * ppm + my],
+                                 [110 * ppm + mx, -75 * ppm + my],
+                                 [-110 * ppm + mx, 75 * ppm + my],
+                                 [-55 * ppm + mx, 75 * ppm + my],
+                                 [mx, 75 * ppm + my],
+                                 [55 * ppm + mx, 75  * ppm + my],
+                                 [110 * ppm + mx, 75 * ppm + my]], dtype=np.float32)
 
                 # get transformation matrix
                 T, _ = cv2.findHomography(imgp, objp, method=0)
@@ -293,7 +303,9 @@ if __name__ == "__main__":
                 # find object-contours inside the separation
                 cnts_m, _ = cv2.findContours(edge[sep:(h - sep), :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
-                cnts_m = remove_contours(cnts_m, 2000, 8000000000)
+                # remove invalid contours
+                cnts_m = remove_contours(cnts_m, 10000, 2000000)
+
                 # undistort contours
                 cnts_m = remap_contours(cnts_m, map_x, map_y)
 
@@ -318,8 +330,10 @@ if __name__ == "__main__":
                 box[2][1] += sep
                 box[3][1] += sep
 
-                # cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
-                # cv2.imshow("Contours", img)
+                cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
+                cv2.resizeWindow("Contours", 1632, 924)
+                cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
+                cv2.imshow("Contours", img)
 
                 # get the midpoints of the rectangle
                 (tl, tr, br, bl) = box
@@ -350,7 +364,7 @@ if __name__ == "__main__":
                     print('l = {:.2f}, w = {:.2f}'.format(dimB, dimA))
 
                 # Show the edges for visual control
-                cv2.resizeWindow("CSI Camera", 820, 616)
+                cv2.resizeWindow("CSI Camera", 1632, 924)
                 cv2.putText(edge, "{:.2f} fps".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
                 cv2.imshow("CSI Camera", edge)
 

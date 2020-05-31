@@ -9,10 +9,10 @@ from scipy.spatial import distance as dist
 # display_width and display_height determine the size of the window on the screen
 
 def gstreamer_pipeline(
-    capture_width=3280,
-    capture_height=2464,
-    display_width=3280,
-    display_height=2464,
+    capture_width=3264,
+    capture_height=1848,
+    display_width=3264,
+    display_height=1848,
     framerate=20,
     flip_method=0,
 ):
@@ -77,12 +77,12 @@ def getContours(cnts):
     return np.array(c)
 
 # load camera intrinsics
-mtx = np.loadtxt('intrinsics/mtx_lowdist.txt')
-dst = np.loadtxt('intrinsics/dist_lowdist.txt')
+mtx = np.loadtxt('mtx_normal.txt')
+dst = np.loadtxt('dist_normal.txt')
 
 # define resolution
-w = 3280
-h = 2464
+w = 3264
+h = 1848
 
 map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
 
@@ -97,7 +97,7 @@ cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0, capture_width=w, captur
                                           display_width=w, display_height=h), cv2.CAP_GSTREAMER)
 if cap.isOpened():
     window_handle = cv2.namedWindow('Camera', cv2.WINDOW_NORMAL)
-    cv2.resizeWindow('Camera', 2 * 820, 2 * 616)
+    cv2.resizeWindow('Camera', 1632, 924)
     # Window
     while cv2.getWindowProperty('Camera', 0) >= 0:
         t_ref = time.time()
@@ -312,8 +312,8 @@ if cap.isOpened():
         cv2.putText(img, '{:.3f} fps'.format(fps), (100,150) ,cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
 
         # draw section into img
-        img = cv2.line(img, (0, sep), (3280, sep), (255, 0, 0), 4)
-        img = cv2.line(img, (0, h - sep), (3280, h - sep), (255, 0, 0), 4)
+        img = cv2.line(img, (0, sep), (w, sep), (255, 0, 0), 4)
+        img = cv2.line(img, (0, h - sep), (w, h - sep), (255, 0, 0), 4)
 
         cv2.imshow('Camera', img)
 
