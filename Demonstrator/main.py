@@ -11,11 +11,12 @@ from geometry import *
 import collections
 
 # Global variables
-w = 3264  # 3264
-h = 1848  # 2464
-line_time = 1 / 28 / h
-v_corr = 1.5
+w = 3264
+h = 1848
 
+# separation from edge
+sep = 250
+vec = 400
 
 def gstreamer_pipeline(
         capture_width=w,
@@ -39,7 +40,8 @@ def gstreamer_pipeline(
     :type framerate: Int
     :param flip_method: Orientation of the image
     :type flip_method: Int
-    :return: String 
+    :return: The gstreamer pipeline
+    :return type: String
     """
     return (
             "nvarguscamerasrc ! "
@@ -61,83 +63,71 @@ def gstreamer_pipeline(
     )
 
 
-def trigger(img):
-    mean2, std2 = cv2.meanStdDev(img[200:h - 200:10, 0])
+def trigger(imgray, var_r):
+    """
+    Checks for an object in the frames, and returns the image in which the object doesn't touch the edges.
 
-    if std2 ** 2 > 60:
-        imsave = [img]
-        imtime = []
+    :param imgray: Images to check
+    :type imgray: InputArray
+    :param var_r: Reference variance
+    :type var_r: Float
+    :return: frame with object
+    :return type: OutputArray
+    """
+
+    var = np.var(imgray[sep:h - sep:10, 0])
+
+    if var > 3*var_r:
         place = 1
-        it = 0
-        for i in range(0, 4):
-            imtime.append(time.time())
+        imsave = []
+        iter = 0
+        ret = False
+
+        for i in range(4):
             _, imgs = cap.read()
             imsave.append(imgs)
-            imtime[i] = time.time() - imtime[i]
-        for i in range(0, 4):
-            cv2.imwrite("saved{}.png".format(i), imsave[i])
-            np.savetxt("times.txt", imtime)
-        global imgray
-        while it < 4:
-            print(place)
-            if place < 0 or place > 3:
-                it = False
-                break
-            if place != 0:
-                imgray = cv2.cvtColor(imsave[place], cv2.COLOR_BGR2GRAY)
-            else:
-                imgray = img
-            var1 = np.var(imgray[::4, 0])
-            var2 = np.var(imgray[::4, int(w / 3)])
-            var3 = np.var(imgray[::4, int(w / 3 * 2)])
-            var4 = np.var(imgray[::4, w - 1])
 
-            if var1 < 60 and var4 < 60 and var2 > 60 and var3 > 60:
-                it = True
+        # for i in range(len(imsave)):
+        #     cv2.imwrite('im{:}.png'.format(i), imsave[i])
+
+        while iter < len(imsave):
+
+            if place < 0 or place > len(imsave)-1:
+                return False, None
+
+            imgray = cv2.cvtColor(imsave[place], cv2.COLOR_BGR2GRAY)
+
+            var1 = np.var(imgray[sep:h-sep:4, 0])
+            var2 = np.var(imgray[sep:h-sep:4, int(w / 3)])
+            var3 = np.var(imgray[sep:h-sep:4, int(w / 3 * 2)])
+            var4 = np.var(imgray[sep:h-sep:4, w - 1])
+
+            if var1 < 3*var_r and var4 < 3*var_r and var2 > 3*var_r and var3 > 3*var_r:
+                ret = True
                 break
+
             if var1 > 60:
                 place += 1
-                it += 1
+                iter += 1
+
             if var4 > 60:
                 place -= 1
-                it += 1
+                iter += 1
 
-        # for i in range(0, 4):
-        # cv2.imwrite("saved{}.png".format(i), imsave[i])
-        # np.savetxt("times.txt", imtime)
-        if it:
-            return True
-        else:
-            return False
+
+        print('iter = {:}'.format(iter))
+        print('place = {:}'.format(place))
+        return ret, imgray
+
     else:
-        return False
-
-
-#    if var1 < 60 and var4 < 60 and var2 > 60 and var3 > 60:
-#        cv2.imwrite("saved.png", img)
-#        print("Image Saved")
-#        return True
-
-def show_objects(cnts):
-    cv2.namedWindow("Objects", cv2.WINDOW_NORMAL)
-    cv2.resizeWindow("Objects", 820, 616)
-
-    box = cv2.minAreaRect(cnts.astype(np.float32))
-    box = cv2.boxPoints(box)
-    box[0][1] += sep
-    box[1][1] += sep
-    box[2][1] += sep
-    box[3][1] += sep
-    cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
-    cv2.imshow("Objects", img)
-    keyCode = cv2.waitKey(30) & 0xFF
-    if keyCode == 27:
-        return True
-    else:
-        return False
+        return False, None
 
 
 if __name__ == "__main__":
+    # camera parameters
+    focal_lenght = 3.04
+    pixel_size = 1.12/1000
+
     # load calibration params
     mtx = np.loadtxt('mtx_normal.txt')
     dst = np.loadtxt('dist_normal.txt')
@@ -145,62 +135,56 @@ if __name__ == "__main__":
     # get calibration map
     map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
 
-    # separation from edge
-    sep = 250
-    vec = 400
-
     # ringbuffer for geometry pattern
     buf = collections.deque(maxlen=10)
 
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
-    print(gstreamer_pipeline(flip_method=0))
     cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
     if cap.isOpened():
         window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_NORMAL)
         # Window
-        t = time.time()
-        background = np.ones((2464, 3280), np.uint8)
-        im = np.ones((2464, 3280), np.uint8)
-        while time.time() - t < 8 and cv2.getWindowProperty("CSI Camera", 0) >= 0:
+        t_ref = time.time()
+
+        # wait for exposure control
+        while time.time() - t_ref < 8 and cv2.getWindowProperty("CSI Camera", 0) >= 0:
             ret_val, img = cap.read()
             im = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             thresh_value = np.max(im)
-            print("Init mode, threshhold value = {:.0f}".format(thresh_value), end="\r", flush=True)
-            cv2.imshow("CSI Camera", im)
-            keyCode = cv2.waitKey(30) & 0xFF
+            print("Init mode, max value = {:.0f}".format(thresh_value), end="\r", flush=True)
 
-            # Stop the program on the ESC key
-            if keyCode == 27:
-                break
-        mask = np.zeros((h - 40, w - 80))
-        mask = cv2.copyMakeBorder(mask, 20, 20, 40, 40, cv2.BORDER_CONSTANT, value=1)
-        # back = cv2.bitwise_and(mask, background)
+        print("\nEntering measurment mode")
 
-        # background = background * thresh_value - im
-        print("Entering measurment mode")
+        # kernel for edge-detection
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        grad = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
-        back = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (w, h))
-        back = np.logical_not(back) * 20
-        print(np.shape(back), np.min(back), np.max(back))
-        fps = 0
+
+        # get image
+        ret_val, img = cap.read()
+        imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # compute a reference variance
+        var = []
+        var.append(np.var(imgray[sep:h - sep:4, 0]))
+        var.append(np.var(imgray[sep:h - sep:4, int(w / 3)]))
+        var.append(np.var(imgray[sep:h - sep:4, int(w / 3 * 2)]))
+        var.append(np.var(imgray[sep:h - sep:4, w - 1]))
+
+        fps_trigger = 0
+        fps_process = 0
+
         time_old = time.time()
         while cv2.getWindowProperty("CSI Camera", 0) >= 0:
             time_old = time.time() - time_old
             t_ref = time.time()
             ret_val, img = cap.read()
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            # test zum ecken besser machen
-            # ----------------------------------
-            # imgray = np.uint8(imgray + back)
-            # print(np.min(imgray), np.max(imgray))
-            # ----------------------------------
-            if True:#trigger(imgray):
-                # Different types to get the edge use one:
-                # edge = get_edge_errosion_dilation(imgray, grad)
+
+            # check trigger
+            ret, imgray = trigger(imgray, np.mean(var))
+
+            t_process = time.time()
+            if ret:
+                # edge detection
                 edge = get_edge_erroded(imgray, kernel)
-                # edge = get_edge_dilated(imgray, kernel)
-                # edge = get_edge_grad(imgray, grad)
 
                 # find geometry pattern (upper and lower)
                 cnts_upper, _ = cv2.findContours(edge[0:sep, vec:(w - vec)], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -320,8 +304,6 @@ if __name__ == "__main__":
                 # warp perspective of the contours
                 cnts_m = cv2.perspectiveTransform(cnts_m, T)
 
-                # if show_objects(cnts_m):
-                #   break
                 # minimum area rectangle around cnts_m
                 box = cv2.minAreaRect(cnts_m.astype(np.float32))
                 box = cv2.boxPoints(box)
@@ -330,10 +312,10 @@ if __name__ == "__main__":
                 box[2][1] += sep
                 box[3][1] += sep
 
-                cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
-                cv2.resizeWindow("Contours", 1632, 924)
-                cv2.drawContours(img, [box.astype("int")], -1, (255, 255, 0), 10)
-                cv2.imshow("Contours", img)
+                # cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
+                # cv2.resizeWindow("Contours", 1632, 924)
+                # cv2.drawContours(imgray, [box.astype("int")], -1, (255, 255, 0), 10)
+                # cv2.imshow("Contours", imgray)
 
                 # get the midpoints of the rectangle
                 (tl, tr, br, bl) = box
@@ -341,6 +323,9 @@ if __name__ == "__main__":
                 (blbrX, blbrY) = midpoint(bl, br)
                 (tlblX, tlblY) = midpoint(tl, bl)
                 (trbrX, trbrY) = midpoint(tr, br)
+
+                # compute camera-plane distance (in mm)
+                height = focal_lenght+(1/(ppm*pixel_size)-1)
 
                 # compute the euclidean distance between the midpoints
                 dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
@@ -350,12 +335,6 @@ if __name__ == "__main__":
                 dimA = dA / ppm
                 dimB = dB / ppm
 
-                if fps == 0:
-                    fps = 1 / (time.time() - t_ref + time_old)
-                    time_old = time.time()
-                else:
-                    fps = 0.9 * fps + 0.1 / (time.time() - t_ref + time_old)
-                    time_old = time.time()
                 # the larger is the lenght
                 if dimA > dimB:
                     print('l = {:.2f}, w = {:.2f}'.format(dimA, dimB))
@@ -363,10 +342,19 @@ if __name__ == "__main__":
                 else:
                     print('l = {:.2f}, w = {:.2f}'.format(dimB, dimA))
 
+                if fps_process == 0:
+                    fps_process = 1 / (time.time() - t_process)
+                    time_old = time.time()
+                else:
+                    fps_process = 0.9 * fps_process + 0.1 / (time.time() - t_process)
+                    time_old = time.time()
+
+                print('fps = {:.1f}'.format(fps_process))
+
                 # Show the edges for visual control
-                cv2.resizeWindow("CSI Camera", 1632, 924)
-                cv2.putText(edge, "{:.2f} fps".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-                cv2.imshow("CSI Camera", edge)
+                # cv2.resizeWindow("CSI Camera", 1632, 924)
+                # cv2.putText(edge, "{:.2f} fps".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+                # cv2.imshow("CSI Camera", edge)
 
                 # This also acts as
                 keyCode = cv2.waitKey(30) & 0xFF
@@ -374,18 +362,10 @@ if __name__ == "__main__":
                 if keyCode == 27:
                     break
             else:
-                fps = 0.9 * fps + 0.1 / (time.time() - t_ref + time_old)
+                fps_trigger = 0.9 * fps_trigger + 0.1 / (time.time() - t_ref + time_old)
                 time_old = time.time()
-                print(fps, end="\r", flush=True)
-                # cv2.resizeWindow("CSI Camera", 820, 616)
-                # cv2.putText(imgray, "{:.2f} fps".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-                # cv2.imshow("CSI Camera", imgray)
+                print('{:.1f}'.format(fps_trigger), end="\r", flush=True)
 
-                # This also acts as
-                keyCode = cv2.waitKey(30) & 0xFF
-                # Stop the program on the ESC key
-                if keyCode == 27:
-                    break
         cap.release()
         cv2.destroyAllWindows()
     else:
