@@ -87,8 +87,8 @@ def trigger(imgray, var_r):
             _, imgs = cap.read()
             imsave.append(imgs)
 
-        # for i in range(len(imsave)):
-        #     cv2.imwrite('im{:}.png'.format(i), imsave[i])
+        for i in range(len(imsave)):
+            cv2.imwrite('im{:}.png'.format(i), imsave[i])
 
         while iter < len(imsave):
 
@@ -124,11 +124,17 @@ def trigger(imgray, var_r):
 
 
 if __name__ == "__main__":
-    # camera parameters
+    # camera parameters (mm)
     focal_lenght = 3.04
     pixel_size = 1.12/1000
 
-    # load calibration params
+    # estimated diameter of the object (mm)
+    D_est = 50
+
+    # estimated velocity of the object (m/s)
+    v_est = 0
+
+    # load calibration parameters
     mtx = np.loadtxt('mtx_normal.txt')
     dst = np.loadtxt('dist_normal.txt')
 
@@ -179,10 +185,10 @@ if __name__ == "__main__":
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             # check trigger
-            ret, imgray = trigger(imgray, np.mean(var))
+            #ret, imgray = trigger(imgray, np.mean(var))
 
             t_process = time.time()
-            if ret:
+            if True:
                 # edge detection
                 edge = get_edge_erroded(imgray, kernel)
 
@@ -192,8 +198,8 @@ if __name__ == "__main__":
                                                  cv2.CHAIN_APPROX_NONE)
 
                 # only keep valid contours
-                cnts_upper = remove_contours(cnts_upper, 2700, 3400)
-                cnts_lower = remove_contours(cnts_lower, 2700, 3400)
+                cnts_upper = remove_contours(cnts_upper, 2700, 3200)
+                cnts_lower = remove_contours(cnts_lower, 2700, 3200)
 
                 if len(cnts_upper) == 5 and len(cnts_lower) == 5:
                     # undistort contours
@@ -239,8 +245,8 @@ if __name__ == "__main__":
                         index += 1
 
                     # sort the points
-                    imgp_upper.sort(axis=0)
-                    imgp_lower.sort(axis=0)
+                    imgp_upper = sorted(imgp_upper, key=lambda p: p[0])
+                    imgp_lower = sorted(imgp_lower, key=lambda p: p[0])
 
                     # append the buffer with a combined array
                     buf.append(np.concatenate([imgp_upper, imgp_lower]))
@@ -312,20 +318,53 @@ if __name__ == "__main__":
                 box[2][1] += sep
                 box[3][1] += sep
 
-                # cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
-                # cv2.resizeWindow("Contours", 1632, 924)
-                # cv2.drawContours(imgray, [box.astype("int")], -1, (255, 255, 0), 10)
-                # cv2.imshow("Contours", imgray)
+                # sort the points clockwise
+                (tl, bl, tr, br) = sort_points(box)
+
+                # compute the center of the rectangle
+                c = rect_center(tl, tr, br, bl)
+
+                # compute the rotation matrix
+                phi = np.arctan((tr[1]-tl[1]) / (tl[0] - tr[0]))
+                D = np.array([[np.cos(phi), -np.sin(phi)],
+                              [np.sin(phi),  np.cos(phi)]])
+
+                # rotate the points
+                tl = D @ (tl-c)
+                tr = D @ (tr-c)
+                br = D @ (br-c)
+                bl = D @ (bl-c)
+
+                # compute camera-plane distance (in mm)
+                height = focal_lenght*(1/(ppm*pixel_size)-1)
+
+                # correction factors (theorem of intersecting lines)
+                x_cor = 1 - (height - D_est) / height
+                y_cor = 1 - (height - D_est /2 ) / height
+
+                # readjust x values
+                tl[0] = tl[0] + (mx - tl[0]) * x_cor
+                tr[0] = tr[0] + (mx - tr[0]) * x_cor
+                br[0] = br[0] + (mx - br[0]) * x_cor
+                bl[0] = bl[0] + (mx - bl[0]) * x_cor
+
+                # readjust y values
+                tl[1] = tl[1] + (my - tl[1]) * y_cor
+                tr[1] = tr[1] + (my - tr[1]) * y_cor
+                br[1] = br[1] + (my - br[1]) * y_cor
+                bl[1] = bl[1] + (my - bl[1]) * y_cor
+
+                # add the center back
+                tl += c
+                tr += c
+                br += c
+                bl += c
 
                 # get the midpoints of the rectangle
-                (tl, tr, br, bl) = box
                 (tltrX, tltrY) = midpoint(tl, tr)
                 (blbrX, blbrY) = midpoint(bl, br)
                 (tlblX, tlblY) = midpoint(tl, bl)
                 (trbrX, trbrY) = midpoint(tr, br)
-
-                # compute camera-plane distance (in mm)
-                height = focal_lenght+(1/(ppm*pixel_size)-1)
 
                 # compute the euclidean distance between the midpoints
                 dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
@@ -335,11 +374,21 @@ if __name__ == "__main__":
                 dimA = dA / ppm
                 dimB = dB / ppm
 
+                # compute amount of rows
+                n_rows = (bl[1] - tl[1] + br[1] - tr[1]) / 2
+
+                # get the time delay between the rows
+                t_delay = 1 / 28 / h * n_rows
+
                 # the larger is the lenght
                 if dimA > dimB:
+                    # correct the rolling shutter
+                    dimA -= t_delay * v_est * 1000 / ppm
                     print('l = {:.2f}, w = {:.2f}'.format(dimA, dimB))
 
                 else:
+                    # correct the rolling shutter
+                    dimB -= t_delay * v_est * 1000 / ppm
                     print('l = {:.2f}, w = {:.2f}'.format(dimB, dimA))
 
                 if fps_process == 0:
@@ -350,6 +399,11 @@ if __name__ == "__main__":
                     time_old = time.time()
 
                 print('fps = {:.1f}'.format(fps_process))
+
+                cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
+                cv2.resizeWindow("Contours", 1632, 924)
+                cv2.drawContours(imgray, [np.array([tl, tr, br, bl]).astype("int")], -1, (255, 255, 0), 10)
+                cv2.imshow("Contours", imgray)
 
                 # Show the edges for visual control
                 # cv2.resizeWindow("CSI Camera", 1632, 924)

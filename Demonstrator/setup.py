@@ -79,8 +79,8 @@ if __name__ == "__main__":
             cnts_lower, _ = cv2.findContours(edge[(h - sep):h, vec:(w - vec)], cv2.RETR_EXTERNAL,
                                              cv2.CHAIN_APPROX_NONE)
             # only keep valid contours
-            cnts_upper = remove_contours(cnts_upper, 2700, 3400)
-            cnts_lower = remove_contours(cnts_lower, 2700, 3400)
+            cnts_upper = remove_contours(cnts_upper, 2700, 3200)
+            cnts_lower = remove_contours(cnts_lower, 2700, 3200)
 
             # pattern area
             area = []
@@ -106,8 +106,9 @@ if __name__ == "__main__":
                 box = box + [vec, h - sep]
                 cv2.drawContours(img, [box.astype("int")], -1, (0, 255, 255), 5)
 
-            # print out the mean pattern area
-            print('Mean pattern area: {:.0f}'.format(np.mean(area)))
+            # print out the pattern area
+            if area:
+                print('size: {:.0f} - {:.0f}, mean: {:.0f}'.format(np.min(area), np.max(area), np.mean(area)), end="\r", flush=True)
 
             # draw lines to postion pattern
             cv2.line(img, (vec, 0), (vec, sep), (0, 0, 255), thickness=5, lineType=8, shift=0)

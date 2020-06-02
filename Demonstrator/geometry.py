@@ -89,3 +89,26 @@ def remap_contours(cnts, map_x, map_y):
         c[0][0][1] = map_y[y_tmp][x_tmp]
 
     return cnts
+
+def sort_points(p):
+    """
+    Sorts a set of for points in clockwise direction, beginning with the point in the top left
+
+    :param p: set of four points
+    :type p: InputArray
+    :return: Sorted set of points
+    :return type: OutputArray
+    """
+
+    # sort with respect to x
+    xsort = sorted(p, key=lambda a: a[0])
+
+    # get left and right points
+    l = xsort[:2]
+    r = xsort[2:]
+
+    # sort with respect to y
+    tl, bl = sorted(l, key=lambda a: a[1])
+    tr, br = sorted(r, key=lambda a: a[1])
+
+    return [tl, bl, tr, br]
