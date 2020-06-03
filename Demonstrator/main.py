@@ -14,10 +14,6 @@ import collections
 w = 3264
 h = 1848
 
-# separation from edge
-sep = 250
-vec = 400
-
 def gstreamer_pipeline(
         capture_width=w,
         capture_height=h,
@@ -75,14 +71,17 @@ def trigger(imgray, var_r):
     :return type: OutputArray
     """
 
+    # variance of the first column
     var = np.var(imgray[sep:h - sep:10, 0])
 
+    # check frames if the object is in the first column
     if var > 3*var_r:
         place = 1
         imsave = []
         iter = 0
         ret = False
 
+        # save the next 4 frames
         for i in range(4):
             _, imgs = cap.read()
             imsave.append(imgs)
@@ -90,13 +89,14 @@ def trigger(imgray, var_r):
         for i in range(len(imsave)):
             cv2.imwrite('im{:}.png'.format(i), imsave[i])
 
+        # search through the next frames for the object
         while iter < len(imsave):
-
             if place < 0 or place > len(imsave)-1:
                 return False, None
 
             imgray = cv2.cvtColor(imsave[place], cv2.COLOR_BGR2GRAY)
 
+            # compute variances of different columns
             var1 = np.var(imgray[sep:h-sep:4, 0])
             var2 = np.var(imgray[sep:h-sep:4, int(w / 3)])
             var3 = np.var(imgray[sep:h-sep:4, int(w / 3 * 2)])
@@ -106,10 +106,12 @@ def trigger(imgray, var_r):
                 ret = True
                 break
 
+            # go to next frame
             if var1 > 60:
                 place += 1
                 iter += 1
 
+            # go to previous frame
             if var4 > 60:
                 place -= 1
                 iter += 1
@@ -134,6 +136,10 @@ if __name__ == "__main__":
 
     # get calibration map
     map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx, (w, h), cv2.CV_32FC1)
+
+    # separation from edge
+    sep = 250
+    vec = 400
 
     # ringbuffer for geometry pattern
     buf = collections.deque(maxlen=10)

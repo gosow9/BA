@@ -78,7 +78,7 @@ def remap_contours(cnts, map_x, map_y):
 
 def sort_points(p):
     """
-    Sorts a set of for points in clockwise direction, beginning with the point in the top left
+    Sorts a set of four points
 
     :param p: set of four points
     :type p: InputArray
