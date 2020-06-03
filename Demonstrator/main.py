@@ -114,9 +114,6 @@ def trigger(imgray, var_r):
                 place -= 1
                 iter += 1
 
-
-        print('iter = {:}'.format(iter))
-        print('place = {:}'.format(place))
         return ret, imgray
 
     else:
@@ -125,11 +122,8 @@ def trigger(imgray, var_r):
 
 if __name__ == "__main__":
     # camera parameters (mm)
-    focal_lenght = 3.04
+    focal_length = 3.04
     pixel_size = 1.12/1000
-
-    # estimated diameter of the object (mm)
-    D_est = 50
 
     # estimated velocity of the object (m/s)
     v_est = 0
@@ -329,18 +323,34 @@ if __name__ == "__main__":
                 D = np.array([[np.cos(phi), -np.sin(phi)],
                               [np.sin(phi),  np.cos(phi)]])
 
-                # rotate the points
+                # rotate the rectangle
                 tl = D @ (tl-c)
                 tr = D @ (tr-c)
                 br = D @ (br-c)
                 bl = D @ (bl-c)
 
                 # compute camera-plane distance (in mm)
-                height = focal_lenght*(1/(ppm*pixel_size)-1)
+                height = focal_length*(1/(ppm*pixel_size)-1)
+
+                # compute the triangle
+                a_l = np.sqrt(h ** 2 + tl[1] ** 2)
+                b_l = np.sqrt(h ** 2 + bl[1] ** 2)
+                c_l = (bl[1] - tl[1]) / ppm
+                a_r = np.sqrt(h ** 2 + tr[1] ** 2)
+                b_r = np.sqrt(h ** 2 + br[1] ** 2)
+                c_r = (br[1] - tr[1]) / ppm
+
+                # compute the radius with incircles
+                s_l = (a_l + b_l + c_l) / 2
+                r_l = np.sqrt(((s_l - a_l) * (s_l - b_l) * (s_l - c_l)) / s_l)
+                s_r = (a_r + b_r + c_r) / 2
+                r_r = np.sqrt(((s_r - a_r) * (s_r - b_r) * (s_r - c_r)) / s_r)
+
+                # Compute Diameter
+                D = r_r + r_l
 
                 # correction factors (theorem of intersecting lines)
-                x_cor = 1 - (height - D_est) / height
-                y_cor = 1 - (height - D_est /2 ) / height
+                x_cor = 1 - (height - D) / height
 
                 # readjust x values
                 tl[0] = tl[0] + (mx - tl[0]) * x_cor
@@ -348,31 +358,8 @@ if __name__ == "__main__":
                 br[0] = br[0] + (mx - br[0]) * x_cor
                 bl[0] = bl[0] + (mx - bl[0]) * x_cor
 
-                # readjust y values
-                tl[1] = tl[1] + (my - tl[1]) * y_cor
-                tr[1] = tr[1] + (my - tr[1]) * y_cor
-                br[1] = br[1] + (my - br[1]) * y_cor
-                bl[1] = bl[1] + (my - bl[1]) * y_cor
-
-                # add the center back
-                tl += c
-                tr += c
-                br += c
-                bl += c
-
-                # get the midpoints of the rectangle
-                (tltrX, tltrY) = midpoint(tl, tr)
-                (blbrX, blbrY) = midpoint(bl, br)
-                (tlblX, tlblY) = midpoint(tl, bl)
-                (trbrX, trbrY) = midpoint(tr, br)
-
-                # compute the euclidean distance between the midpoints
-                dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
-                dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
-
-                # compute the size of the object
-                dimA = dA / ppm
-                dimB = dB / ppm
+                # compute length
+                L = (tr[0] - tl[0] + br[0] - bl[0]) / 2 / ppm
 
                 # compute amount of rows
                 n_rows = (bl[1] - tl[1] + br[1] - tr[1]) / 2
@@ -380,16 +367,11 @@ if __name__ == "__main__":
                 # get the time delay between the rows
                 t_delay = 1 / 28 / h * n_rows
 
-                # the larger is the lenght
-                if dimA > dimB:
-                    # correct the rolling shutter
-                    dimA -= t_delay * v_est * 1000 / ppm
-                    print('l = {:.2f}, w = {:.2f}'.format(dimA, dimB))
+                # correct the rolling shutter
+                L -= t_delay * v_est * 1000 / ppm
 
-                else:
-                    # correct the rolling shutter
-                    dimB -= t_delay * v_est * 1000 / ppm
-                    print('l = {:.2f}, w = {:.2f}'.format(dimB, dimA))
+                # print the result
+                print('l = {:.2f}, w = {:.2f}'.format(L, D))
 
                 if fps_process == 0:
                     fps_process = 1 / (time.time() - t_process)
@@ -402,7 +384,8 @@ if __name__ == "__main__":
 
                 cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
                 cv2.resizeWindow("Contours", 1632, 924)
-                cv2.drawContours(imgray, [np.array([tl, tr, br, bl]).astype("int")], -1, (255, 255, 0), 10)
+                cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+                cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
                 cv2.imshow("Contours", imgray)
 
                 # Show the edges for visual control
@@ -415,6 +398,7 @@ if __name__ == "__main__":
                 # Stop the program on the ESC key
                 if keyCode == 27:
                     break
+
             else:
                 fps_trigger = 0.9 * fps_trigger + 0.1 / (time.time() - t_ref + time_old)
                 time_old = time.time()

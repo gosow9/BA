@@ -6,20 +6,6 @@ import cv2
 import numpy as np
 from scipy.spatial import distance as dist
 
-def midpoint(ptA, ptB):
-    """
-    Computes the midpoint of to points
-
-    :param ptA: First point
-    :type ptA: InputArray
-    :param ptB: Second Point
-    :type ptB: InputArray
-    :return: Midpoint
-    :return type: OutputArray
-    """
-    return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
-
-
 def rect_center(tl, tr, br, bl):
     """"
     Computes centerpoint of a rectangle given it's corners
