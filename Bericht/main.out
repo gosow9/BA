@@ -17,20 +17,21 @@
 \BOOKMARK [2][-]{subsection.3.1.1}{Calibration statistics}{section.3.1}% 17
 \BOOKMARK [2][-]{subsection.3.1.2}{Numpy-checkerboards}{section.3.1}% 18
 \BOOKMARK [2][-]{subsection.3.1.3}{Possible cause of errors}{section.3.1}% 19
-\BOOKMARK [1][-]{section.3.2}{Software}{chapter.3}% 20
-\BOOKMARK [1][-]{section.3.3}{Hardware}{chapter.3}% 21
-\BOOKMARK [2][-]{subsection.3.3.1}{Demonstrator}{section.3.3}% 22
-\BOOKMARK [2][-]{subsection.3.3.2}{Back-light}{section.3.3}% 23
-\BOOKMARK [2][-]{subsection.3.3.3}{Computer}{section.3.3}% 24
-\BOOKMARK [2][-]{subsection.3.3.4}{Camera}{section.3.3}% 25
-\BOOKMARK [2][-]{subsection.3.3.5}{Production cost}{section.3.3}% 26
-\BOOKMARK [0][-]{chapter.4}{Results}{}% 27
-\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 28
-\BOOKMARK [0][-]{chapter*.15}{References}{}% 29
-\BOOKMARK [0][-]{chapter*.15}{List of figures}{}% 30
-\BOOKMARK [0][-]{chapter*.16}{List of tables}{}% 31
-\BOOKMARK [0][-]{chapter*.17}{Statement of Plagiarisms}{}% 32
-\BOOKMARK [0][-]{appendix.A}{Partial derivatives of the distortion model}{}% 33
-\BOOKMARK [0][-]{appendix.B}{Requirements}{}% 34
-\BOOKMARK [1][-]{section.B.1}{Assignment}{appendix.B}% 35
-\BOOKMARK [1][-]{section.B.2}{Requirement Specification}{appendix.B}% 36
+\BOOKMARK [2][-]{subsection.3.1.4}{Fixed calibration}{section.3.1}% 20
+\BOOKMARK [1][-]{section.3.2}{Software}{chapter.3}% 21
+\BOOKMARK [1][-]{section.3.3}{Hardware}{chapter.3}% 22
+\BOOKMARK [2][-]{subsection.3.3.1}{Demonstrator}{section.3.3}% 23
+\BOOKMARK [2][-]{subsection.3.3.2}{Back-light}{section.3.3}% 24
+\BOOKMARK [2][-]{subsection.3.3.3}{Computer}{section.3.3}% 25
+\BOOKMARK [2][-]{subsection.3.3.4}{Camera}{section.3.3}% 26
+\BOOKMARK [2][-]{subsection.3.3.5}{Production cost}{section.3.3}% 27
+\BOOKMARK [0][-]{chapter.4}{Results}{}% 28
+\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 29
+\BOOKMARK [0][-]{chapter*.15}{References}{}% 30
+\BOOKMARK [0][-]{chapter*.15}{List of figures}{}% 31
+\BOOKMARK [0][-]{chapter*.16}{List of tables}{}% 32
+\BOOKMARK [0][-]{chapter*.17}{Statement of Plagiarisms}{}% 33
+\BOOKMARK [0][-]{appendix.A}{Partial derivatives of the distortion model}{}% 34
+\BOOKMARK [0][-]{appendix.B}{Requirements}{}% 35
+\BOOKMARK [1][-]{section.B.1}{Assignment}{appendix.B}% 36
+\BOOKMARK [1][-]{section.B.2}{Requirement Specification}{appendix.B}% 37
