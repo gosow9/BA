@@ -79,8 +79,8 @@ if __name__ == "__main__":
             cnts_lower, _ = cv2.findContours(edge[(h - sep):h, vec:(w - vec)], cv2.RETR_EXTERNAL,
                                              cv2.CHAIN_APPROX_NONE)
             # only keep valid contours
-            cnts_upper = remove_contours(cnts_upper, 2700, 3200)
-            cnts_lower = remove_contours(cnts_lower, 2700, 3200)
+            cnts_upper = remove_contours(cnts_upper, 2600, 3400)
+            cnts_lower = remove_contours(cnts_lower, 2600, 3400)
 
             # pattern area
             area = []
