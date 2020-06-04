@@ -14,6 +14,7 @@ import collections
 w = 3264
 h = 1848
 
+
 def gstreamer_pipeline(
         capture_width=w,
         capture_height=h,
@@ -75,7 +76,7 @@ def trigger(imgray, var_r):
     var = np.var(imgray[sep:h - sep:10, 0])
 
     # check frames if the object is in the first column
-    if var > 3*var_r:
+    if var > 3 * var_r:
         place = 1
         imsave = []
         iter = 0
@@ -91,18 +92,18 @@ def trigger(imgray, var_r):
 
         # search through the next frames for the object
         while iter < len(imsave):
-            if place < 0 or place > len(imsave)-1:
+            if place < 0 or place > len(imsave) - 1:
                 return False, None
 
             imgray = cv2.cvtColor(imsave[place], cv2.COLOR_BGR2GRAY)
 
             # compute variances of different columns
-            var1 = np.var(imgray[sep:h-sep:4, 0])
-            var2 = np.var(imgray[sep:h-sep:4, int(w / 3)])
-            var3 = np.var(imgray[sep:h-sep:4, int(w / 3 * 2)])
-            var4 = np.var(imgray[sep:h-sep:4, w - 1])
+            var1 = np.var(imgray[sep:h - sep:4, 0])
+            var2 = np.var(imgray[sep:h - sep:4, int(w / 3)])
+            var3 = np.var(imgray[sep:h - sep:4, int(w / 3 * 2)])
+            var4 = np.var(imgray[sep:h - sep:4, w - 1])
 
-            if var1 < 3*var_r and var4 < 3*var_r and var2 > 3*var_r and var3 > 3*var_r:
+            if var1 < 3 * var_r and var4 < 3 * var_r and var2 > 3 * var_r and var3 > 3 * var_r:
                 ret = True
                 break
 
@@ -125,7 +126,7 @@ def trigger(imgray, var_r):
 if __name__ == "__main__":
     # camera parameters (mm)
     focal_length = 3.04
-    pixel_size = 1.12/1000
+    pixel_size = 1.12 / 1000
 
     # estimated velocity of the object (m/s)
     v_est = 0
@@ -185,7 +186,7 @@ if __name__ == "__main__":
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             # check trigger
-            #ret, imgray = trigger(imgray, np.mean(var))
+            # ret, imgray = trigger(imgray, np.mean(var))
 
             t_process = time.time()
             if True:
@@ -284,7 +285,7 @@ if __name__ == "__main__":
                                  [-110 * ppm + mx, 75 * ppm + my],
                                  [-55 * ppm + mx, 75 * ppm + my],
                                  [mx, 75 * ppm + my],
-                                 [55 * ppm + mx, 75  * ppm + my],
+                                 [55 * ppm + mx, 75 * ppm + my],
                                  [110 * ppm + mx, 75 * ppm + my]], dtype=np.float32)
 
                 # get transformation matrix
@@ -325,18 +326,18 @@ if __name__ == "__main__":
                 c = rect_center(tl, tr, br, bl)
 
                 # compute the rotation matrix
-                phi = np.arctan((tr[1]-tl[1]) / (tl[0] - tr[0]))
+                phi = np.arctan((tr[1] - tl[1]) / (tl[0] - tr[0]))
                 D = np.array([[np.cos(phi), -np.sin(phi)],
-                              [np.sin(phi),  np.cos(phi)]])
+                              [np.sin(phi), np.cos(phi)]])
 
                 # rotate the rectangle
-                tl = D @ (tl-c)
-                tr = D @ (tr-c)
-                br = D @ (br-c)
-                bl = D @ (bl-c)
+                tl = D @ (tl - c)
+                tr = D @ (tr - c)
+                br = D @ (br - c)
+                bl = D @ (bl - c)
 
                 # compute camera-plane distance (in mm)
-                height = focal_length*(1/(ppm*pixel_size)-1)
+                height = focal_length * (1 / (ppm * pixel_size) - 1)
 
                 # compute the triangle
                 a_l = np.sqrt(h ** 2 + tl[1] ** 2)
@@ -390,8 +391,10 @@ if __name__ == "__main__":
 
                 cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
                 cv2.resizeWindow("Contours", 1632, 924)
-                cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-                cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
+                cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3,
+                            (255, 255, 255), 3)
+                cv2.drawContours(imgray, [np.array([tl + c, tr + c, br + c, bl + c]).astype("int")], -1, (255, 255, 0),
+                                 10)
                 cv2.imshow("Contours", imgray)
 
                 # Show the edges for visual control
