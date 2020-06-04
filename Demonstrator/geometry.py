@@ -6,20 +6,6 @@ import cv2
 import numpy as np
 from scipy.spatial import distance as dist
 
-def midpoint(ptA, ptB):
-    """
-    Computes the midpoint of to points
-
-    :param ptA: First point
-    :type ptA: InputArray
-    :param ptB: Second Point
-    :type ptB: InputArray
-    :return: Midpoint
-    :return type: OutputArray
-    """
-    return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
-
-
 def rect_center(tl, tr, br, bl):
     """"
     Computes centerpoint of a rectangle given it's corners
@@ -89,3 +75,26 @@ def remap_contours(cnts, map_x, map_y):
         c[0][0][1] = map_y[y_tmp][x_tmp]
 
     return cnts
+
+def sort_points(p):
+    """
+    Sorts a set of four points
+
+    :param p: set of four points
+    :type p: InputArray
+    :return: Sorted set of points
+    :return type: OutputArray
+    """
+
+    # sort with respect to x
+    xsort = sorted(p, key=lambda a: a[0])
+
+    # get left and right points
+    l = xsort[:2]
+    r = xsort[2:]
+
+    # sort with respect to y
+    tl, bl = sorted(l, key=lambda a: a[1])
+    tr, br = sorted(r, key=lambda a: a[1])
+
+    return [tl, bl, tr, br]

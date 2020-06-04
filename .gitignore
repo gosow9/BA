@@ -9,5 +9,6 @@
 *.gz
 *.toc
 Bericht/main.pdf
+Bericht/main.out
 Results/noise/6k2p4s/np_images/*
 Results/noise/LensFun/np_images/*

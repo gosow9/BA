@@ -56,8 +56,8 @@ def gstreamer_pipeline(
 
 if __name__ == "__main__":
     # separation from edge
-    sep = 200
-    vec = 250
+    sep = 250
+    vec = 400
 
     # kernel for edge detection
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
@@ -79,8 +79,8 @@ if __name__ == "__main__":
             cnts_lower, _ = cv2.findContours(edge[(h - sep):h, vec:(w - vec)], cv2.RETR_EXTERNAL,
                                              cv2.CHAIN_APPROX_NONE)
             # only keep valid contours
-            cnts_upper = remove_contours(cnts_upper, 2700, 3400)
-            cnts_lower = remove_contours(cnts_lower, 2800, 3400)
+            cnts_upper = remove_contours(cnts_upper, 2700, 3200)
+            cnts_lower = remove_contours(cnts_lower, 2700, 3200)
 
             # pattern area
             area = []
@@ -106,20 +106,27 @@ if __name__ == "__main__":
                 box = box + [vec, h - sep]
                 cv2.drawContours(img, [box.astype("int")], -1, (0, 255, 255), 5)
 
-            # print out the mean pattern area
-            print('Mean pattern area: {:.0f}'.format(np.mean(area)))
+            # print out the pattern area
+            if area:
+                print('size: {:.0f} - {:.0f}, mean: {:.0f}'.format(np.min(area), np.max(area), np.mean(area)), end="\r", flush=True)
 
             # draw lines to postion pattern
-            cv2.line(img, (int((w/3), 0), (int(w/3), h)), (0, 0, 255), thickness=5, lineType=8, shift=0)
-            cv2.line(img, (int(w/3*2), 0), (int(w/3*2), h), (0, 0, 255), thickness=5, lineType=8, shift=0)
-            cv2.line(img, (vec, 0), (vec, h), (0, 255, 0), thickness=5, lineType=8, shift=0)
-            cv2.line(img, (w-vec, 0), (w-vec, h), (0, 255, 0), thickness=5, lineType=8, shift=0)
-            cv2.line(img, (vec, sep), (w-vec, sep), (255, 0, 0), thickness=5, lineType=8, shift=0)
-            cv2.line(img, (vec, h-sep), (w-vec, h-sep), (255, 0, 0), thickness=5, lineType=8, shift=0)
+            cv2.line(img, (vec, 0), (vec, sep), (0, 0, 255), thickness=5, lineType=8, shift=0)
+            cv2.line(img, (vec, h-sep), (vec, h), (0, 0, 255), thickness=5, lineType=8, shift=0)
+            cv2.line(img, (w-vec, 0), (w-vec, sep), (0, 0, 255), thickness=5, lineType=8, shift=0)
+            cv2.line(img, (w - vec, h-sep), (w - vec, h), (0, 0, 255), thickness=5, lineType=8, shift=0)
+            cv2.line(img, (vec, sep), (w-vec, sep), (0, 0, 255), thickness=5, lineType=8, shift=0)
+            cv2.line(img, (vec, h-sep), (w-vec, h-sep), (0, 0, 255), thickness=5, lineType=8, shift=0)
 
-            cv2.resizeWindow("CSI-Camera", w/2, h72)
-            cv2.imshow("CSI-Camera", img)
+            cv2.resizeWindow("CSI Camera", 1632, 924)
+            cv2.imshow("CSI Camera", img)
 
             keyCode = cv2.waitKey(30) & 0xFF
             if keyCode == 27:
-                return True
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()
+
+    else:
+        print("Unable to open camera")
