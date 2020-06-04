@@ -14,7 +14,6 @@ import collections
 w = 3264
 h = 1848
 
-
 def gstreamer_pipeline(
         capture_width=w,
         capture_height=h,
@@ -76,7 +75,9 @@ def trigger(imgray, var_r):
     var = np.var(imgray[sep:h - sep:10, 0])
 
     # check frames if the object is in the first column
-    if var > 3 * var_r:
+    if var > 3*var_r:
+        print('get frames...')
+
         place = 1
         imsave = []
         iter = 0
@@ -87,23 +88,24 @@ def trigger(imgray, var_r):
             _, imgs = cap.read()
             imsave.append(imgs)
 
-        for i in range(len(imsave)):
-            cv2.imwrite('im{:}.png'.format(i), imsave[i])
+        # for i in range(len(imsave)):
+        #     cv2.imwrite('im{:}.png'.format(i), imsave[i])
 
         # search through the next frames for the object
         while iter < len(imsave):
-            if place < 0 or place > len(imsave) - 1:
+            if place < 0 or place > len(imsave)-1 or iter > len(imsave):
+                print('Object not in frame')
                 return False, None
 
             imgray = cv2.cvtColor(imsave[place], cv2.COLOR_BGR2GRAY)
 
             # compute variances of different columns
-            var1 = np.var(imgray[sep:h - sep:4, 0])
-            var2 = np.var(imgray[sep:h - sep:4, int(w / 3)])
-            var3 = np.var(imgray[sep:h - sep:4, int(w / 3 * 2)])
-            var4 = np.var(imgray[sep:h - sep:4, w - 1])
+            var1 = np.var(imgray[sep:h-sep:4, 0])
+            var2 = np.var(imgray[sep:h-sep:4, int(w / 3)])
+            var3 = np.var(imgray[sep:h-sep:4, int(w / 3 * 2)])
+            var4 = np.var(imgray[sep:h-sep:4, w - 1])
 
-            if var1 < 3 * var_r and var4 < 3 * var_r and var2 > 3 * var_r and var3 > 3 * var_r:
+            if var1 < 3*var_r and var4 < 3*var_r and var2 > 3*var_r and var3 > 3*var_r:
                 ret = True
                 break
 
@@ -126,10 +128,10 @@ def trigger(imgray, var_r):
 if __name__ == "__main__":
     # camera parameters (mm)
     focal_length = 3.04
-    pixel_size = 1.12 / 1000
+    pixel_size = 1.12/1000
 
     # estimated velocity of the object (m/s)
-    v_est = 0
+    v_est = 2
 
     # load calibration parameters
     mtx = np.loadtxt('mtx_normal.txt')
@@ -147,6 +149,7 @@ if __name__ == "__main__":
 
     # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
     cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
+
     if cap.isOpened():
         window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_NORMAL)
         # Window
@@ -159,7 +162,7 @@ if __name__ == "__main__":
             thresh_value = np.max(im)
             print("Init mode, max value = {:.0f}".format(thresh_value), end="\r", flush=True)
 
-        print("\nEntering measurment mode")
+        print("\nEntering measurement mode")
 
         # kernel for edge-detection
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
@@ -182,11 +185,13 @@ if __name__ == "__main__":
         while cv2.getWindowProperty("CSI Camera", 0) >= 0:
             time_old = time.time() - time_old
             t_ref = time.time()
+
+            # get the image
             ret_val, img = cap.read()
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-            # check trigger
-            # ret, imgray = trigger(imgray, np.mean(var))
+            # get an image from the trigger
+            #ret, imgray = trigger(np.mean(var))
 
             t_process = time.time()
             if True:
@@ -199,8 +204,8 @@ if __name__ == "__main__":
                                                  cv2.CHAIN_APPROX_NONE)
 
                 # only keep valid contours
-                cnts_upper = remove_contours(cnts_upper, 2700, 3200)
-                cnts_lower = remove_contours(cnts_lower, 2700, 3200)
+                cnts_upper = remove_contours(cnts_upper, 2600, 3400)
+                cnts_lower = remove_contours(cnts_lower, 2600, 3400)
 
                 if len(cnts_upper) == 5 and len(cnts_lower) == 5:
                     # undistort contours
@@ -285,7 +290,7 @@ if __name__ == "__main__":
                                  [-110 * ppm + mx, 75 * ppm + my],
                                  [-55 * ppm + mx, 75 * ppm + my],
                                  [mx, 75 * ppm + my],
-                                 [55 * ppm + mx, 75 * ppm + my],
+                                 [55 * ppm + mx, 75  * ppm + my],
                                  [110 * ppm + mx, 75 * ppm + my]], dtype=np.float32)
 
                 # get transformation matrix
@@ -326,34 +331,34 @@ if __name__ == "__main__":
                 c = rect_center(tl, tr, br, bl)
 
                 # compute the rotation matrix
-                phi = np.arctan((tr[1] - tl[1]) / (tl[0] - tr[0]))
+                phi = np.arctan((tr[1]-tl[1]) / (tl[0] - tr[0]))
                 D = np.array([[np.cos(phi), -np.sin(phi)],
-                              [np.sin(phi), np.cos(phi)]])
+                              [np.sin(phi),  np.cos(phi)]])
 
                 # rotate the rectangle
-                tl = D @ (tl - c)
-                tr = D @ (tr - c)
-                br = D @ (br - c)
-                bl = D @ (bl - c)
+                tl = D @ (tl-c)
+                tr = D @ (tr-c)
+                br = D @ (br-c)
+                bl = D @ (bl-c)
 
                 # compute camera-plane distance (in mm)
-                height = focal_length * (1 / (ppm * pixel_size) - 1)
+                height = focal_length*(1/(ppm*pixel_size)-1)
 
-                # compute the triangle
-                a_l = np.sqrt(h ** 2 + tl[1] ** 2)
-                b_l = np.sqrt(h ** 2 + bl[1] ** 2)
+                # compute the triangle around object
+                a_l = np.sqrt(height ** 2 + tl[1] ** 2)
+                b_l = np.sqrt(height ** 2 + bl[1] ** 2)
                 c_l = (bl[1] - tl[1]) / ppm
-                a_r = np.sqrt(h ** 2 + tr[1] ** 2)
-                b_r = np.sqrt(h ** 2 + br[1] ** 2)
+                a_r = np.sqrt(height ** 2 + tr[1] ** 2)
+                b_r = np.sqrt(height ** 2 + br[1] ** 2)
                 c_r = (br[1] - tr[1]) / ppm
 
-                # compute the radius with incircles
+                # compute the radius (incircles)
                 s_l = (a_l + b_l + c_l) / 2
                 r_l = np.sqrt(((s_l - a_l) * (s_l - b_l) * (s_l - c_l)) / s_l)
                 s_r = (a_r + b_r + c_r) / 2
                 r_r = np.sqrt(((s_r - a_r) * (s_r - b_r) * (s_r - c_r)) / s_r)
 
-                # Compute Diameter
+                # compute Diameter
                 D = r_r + r_l
 
                 # correction factors (theorem of intersecting lines)
@@ -391,11 +396,10 @@ if __name__ == "__main__":
 
                 cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
                 cv2.resizeWindow("Contours", 1632, 924)
-                cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3,
-                            (255, 255, 255), 3)
-                cv2.drawContours(imgray, [np.array([tl + c, tr + c, br + c, bl + c]).astype("int")], -1, (255, 255, 0),
-                                 10)
+                cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+                cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
                 cv2.imshow("Contours", imgray)
+                cv2.waitKey(500)
 
                 # Show the edges for visual control
                 # cv2.resizeWindow("CSI Camera", 1632, 924)
@@ -407,11 +411,6 @@ if __name__ == "__main__":
                 # Stop the program on the ESC key
                 if keyCode == 27:
                     break
-
-            else:
-                fps_trigger = 0.9 * fps_trigger + 0.1 / (time.time() - t_ref + time_old)
-                time_old = time.time()
-                print('{:.1f}'.format(fps_trigger), end="\r", flush=True)
 
         cap.release()
         cv2.destroyAllWindows()

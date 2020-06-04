@@ -70,9 +70,8 @@ if __name__ == "__main__":
     if cap.isOpened():
         window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_NORMAL)
         while cv2.getWindowProperty("CSI Camera", 0) >= 0:
-            t_ref = time.time()
+            # get the image
             ret_val, img = cap.read()
-
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             # variance of the first column
@@ -87,41 +86,12 @@ if __name__ == "__main__":
                 print("search...")
 
                 # save the next 4 frames
-                for i in range(4):
+                for i in range(6):
                     timestamp.append(time.time())
                     _, imgs = cap.read()
                     imsave.append(imgs)
 
-                for i in range(len(imsave)):
-                    cv2.imwrite('im{:}.png'.format(i), imsave[i])
-
-                # edge detection
-                edge_ref = get_edge_erroded(imgray, kernel)
-
-                # find object-contours inside the separation
-                cnts_ref, _ = cv2.findContours(edge_ref[sep:(h - sep), :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-
-                # remove invalid contours
-                cnts_ref = remove_contours(cnts_ref, 4000, 2000000)
-
-                # reject frame if cnts_m is empty
-                if not cnts_ref:
-                    print('No reference object found')
-                    continue
-
-                cnts_ref = np.concatenate(cnts_ref, axis=0).astype(np.float64)
-
-                # minimum area rectangle around cnts_m
-                box = cv2.minAreaRect(cnts_ref.astype(np.float32))
-                box = cv2.boxPoints(box)
-
-                box[0][1] += sep
-                box[1][1] += sep
-                box[2][1] += sep
-                box[3][1] += sep
-
-                # sort the points clockwise
-                (tl_ref, bl_ref, tr_ref, br_ref) = sort_points(box)
+                measurment = []
 
                 # search through the next frames for the object
                 for i in range(len(imsave)):
@@ -135,10 +105,10 @@ if __name__ == "__main__":
                         edge = get_edge_erroded(gray, kernel)
 
                         # find object-contours inside the separation
-                        cnts, _ = cv2.findContours(edge, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+                        cnts, _ = cv2.findContours(edge[sep:(h - sep), :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
                         # remove invalid contours
-                        cnts = remove_contours(cnts, 10000, 2000000)
+                        cnts = remove_contours(cnts, 500, 2000000)
 
                         # reject frame if cnts_m is empty
                         if not cnts:
@@ -147,22 +117,28 @@ if __name__ == "__main__":
 
                         cnts = np.concatenate(cnts, axis=0).astype(np.float64)
 
-                        # minimum area rectangle around cnts_m
-                        box = cv2.minAreaRect(cnts.astype(np.float32))
-                        box = cv2.boxPoints(box)
+                        # sort from left to right
+                        cnts_sort = sorted(cnts, key=lambda a: a[0][0])
 
-                        # sort the points clockwise
-                        (tl, bl, tr, br) = sort_points(box)
+                        # get the right most point
+                        p = cnts_sort[-1][0]
+                        p[1] += sep
 
-                        dist_t = tr[0] - tr_ref[0]
-                        dist_b = br[0] - br_ref[0]
+                        cv2.drawMarker(imsave[i], (int(p[0]), int(p[1])), (255, 255, 255), markerSize=20)
 
-                        v_t = dist_t / (timestamp[i] - t_ref)
-                        v_b = dist_b / (timestamp[i] - t_ref)
+                        measurment.append([p, timestamp[i]])
 
-                        velocity.append((v_t + v_b) / 2)
+
+                for i in range(1, len(measurment)):
+                    s = dist.euclidean(measurment[i][0], measurment[i-1][0])
+                    t = measurment[i][1] - measurment[i-1][1]
+
+                    velocity.append(s / t)
 
                 print(velocity)
+
+                for i in range(len(imsave)):
+                    cv2.imwrite('im{:}.png'.format(i), imsave[i])
 
         cap.release()
         cv2.destroyAllWindows()

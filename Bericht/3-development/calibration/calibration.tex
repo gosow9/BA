@@ -186,16 +186,41 @@ By taking these points into account, it should be possible to obtain the optimal
 
 
 \subsection{Fixed calibration}
-Considering all these insights, it should be possible to obtain a better calibration.
-Following table contains the parameters with the optimal
-
-
+Following table displays the best possible set of coefficients with their corresponding standard deviation obtained before taking all the learned points into account, denoted with the superscript $(1)$.
 \begin{center}
 	\begin{tabular}{lll}
-		$k_1 = 4.1$   &$k_2 = 36$     &$k_3 = 38$\\
-		$k_4 = 4$     &$k_5 = 34$     &$k_6 = 40$\\
-		$p_1 = 0.002$ &$p_2 = 0.0019$ &$s_1 = -0.0014$\\
-		$s_2 = -0.001$&$s_3 = -0.0022$&$s_4 = 0.00013$	
+		$k_1^{(1)}=3.0\pm 5.1$&$k_2^{(1)}=44.3\pm 7.5$&$k_3^{(1)}=-17.0\pm 77.6$\\
+		$k_4^{(1)}=3.0\pm 5.2$&$k_5^{(1)}=42.5\pm 8.0$&$k_6^{(1)}=-14.2\pm 77.8$\\
+		$p_1^{(1)}=0.0017\pm 0.0006$&$p_2^{(1)}=0.0037\pm 0.0006$&$s_1^{(1)}=-0.0032\pm 0.005$\\
+		$s_2^{(1)}=-0.0032\pm 0.0013$&$s_2^{(1)}=-0.0022\pm 0.0005$&$s_4^{(1)}=0.0014\pm 0.0010$
 	\end{tabular} 
 \end{center}
+The reprojection error is $e_{\text{rp}}^{(1)}=0.324$.
+The problem with this calibration is visible when looking at the standard deviations, which are way to high, especially by the radial distortion coefficients.
+But again these coefficients will dominate the whole calibration.
 
+The next table then shows the best possible calibration coefficients when considering all new insights, denoted with the superscript $(2)$.
+\begin{center}
+	\begin{tabular}{lll}
+		$k_1^{(2)}=18.2\pm1.2$&$k_2^{(2)}=15.7\pm5.2$&$k_3^{(2)}=234.7\pm0.2$\\
+		$k_4^{(2)}=18.2\pm1.2$&$k_5^{(2)}=12.1\pm4.9$&$k_6^{(2)}=236.9\pm0.5$\\
+		$p_1^{(2)}=-0.0031\pm0.0004$&$p_2^{(2)}=0.000013\pm0.00028$&$s_1^{(2)}=0.00064\pm0.00024$\\
+		$s_2^{(2)}=-0.0018\pm0.0006$&$s_3^{(2)}=0.0047\pm0.0004$&$s_4^{(2)}=-0.0013\pm 0.0006$
+	\end{tabular}		
+\end{center}
+With this calibration we get a reprojection error $e_{\text{rp}}^{(2)}$ of 0.287.
+The standard deviations are (excluding $p_2$ and $s_1$) at least on order of magnitude smaller than the coefficient itself.
+This is seems something better than before, but since this error is a training error, we can not tell if this really performs better.
+
+We now use the method suggested in section \ref{theory:error_propagation} to combine all these standard deviations into one value in dependence of the radius.
+This will give us an additional value on which base we can asses the quality of the calibration. 
+With the resolution set to $3280\times 2464$\,pixels, we get at the maximum radius a standard deviation of $\Delta r^{(1)}(2051)=2464\,$pixels ind the first case, and $\Delta r^{(2)}(2051)=72\,$pixels in the fixed calibration.
+
+If we applied this calibration, our standard deviation in the image corners would (especially in the first case) be much lower than these value.
+But the propagation of error is a linearization of the non-linear calibration model in equation \ref{theory:dist} and adds up all errors.
+Despite all of this, when looking at the to uncertainties ($\Delta r^{(1)}(r)$ and $\Delta r^{(2)}(r)$) that the second, fixed calibration seems to perform much better.
+How much is hard to say, again because we are working with linearization.
+the only thing we can safely say is, that the second calibration does a better job than the first, but we have no quantity to estimate how much better.
+
+Nevertheless, it is reasonable to use this second calibration, since we included all our gained knowledge into it.
+It may be possible to obtain a better results by detecting the checkerboard differently (without OpneCV), but this is not in the scope of this thesis. 
