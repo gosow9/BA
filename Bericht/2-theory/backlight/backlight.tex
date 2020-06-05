@@ -3,28 +3,36 @@ To measure the size and form of an object there are multiple ways. A popular way
 \subsection{Short introduction to photometry}
 Photometry is the science concerned with the electromagnetic radiation visible to the human eye. In this section some important basics used further in this paper are explained. The theories of the following sections were taken from the textbook Physik 2 \cite{ruh}
 \subsubsection{Photometric quantities}
-In principle the normal physical quantities and units such as watts and joules could be used for the measurements of light radiation. However, in order to take into account the spectral sensitivity of the human eye, special photometric quantities and units are introduced. 
+In principle the normal physical quantities and units such as watts and joules could be used for the measurements of light radiation. However, in order to take into account the spectral sensitivity of the human eye, special photometric quantities and units are introduced.\\
+
 \begin{table}[ht]
 \centering
-\begin{tabular}{ |p{5cm} p{2cm}|p{5cm} p{2cm}|  }
+\begin{tabular}{ |p{5cm} p{2cm}|p{5cm} p{2cm} p{2cm}|  }
 	\hline
-	\multicolumn{2}{|c}{Quantity}&\multicolumn{2}{|c|}{Unit} \\
+	\multicolumn{2}{|c}{Quantity}&\multicolumn{3}{|c|}{Unit} \\
 	\hline\hline
-	\multicolumn{1}{|c}{Name}			& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{c}{Name}	& \multicolumn{1}{|c|}{Symbol}\\
+	\multicolumn{1}{|c}{Name}			& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{c}{Name}	& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{|c|}{SI-unit}\\
 
 	\hline
-	Luminous flux		& \multicolumn{1}{|c|}{$\phi_v$}	& lumen		& \multicolumn{1}{|c|}{lm}\\
-	Luminous intensity 	& \multicolumn{1}{|c|}{$I_v$} 		& candela	& \multicolumn{1}{|c|}{cd}\\
-	Luminance			& \multicolumn{1}{|c|}{$L_v$}		& candela/$\text{m}^2$	& \multicolumn{1}{|c|}{cd/$m^2$}\\
-	Illuminace 			& \multicolumn{1}{|c|}{$E_v$} 		& lux (=lumen/$\text{m}^2$) 	& \multicolumn{1}{|c|}{lx}\\
+	Luminous flux		& \multicolumn{1}{|c|}{$\phi_v$}	& lumen		& \multicolumn{1}{|c|}{lm}& \multicolumn{1}{|c|}{W}\\
+	Luminous intensity 	& \multicolumn{1}{|c|}{$I_v$} 		& candela	& \multicolumn{1}{|c|}{cd}& \multicolumn{1}{|c|}{W/sr}\\
+	Luminance			& \multicolumn{1}{|c|}{$L_v$}		& candela/$\text{m}^2$	& \multicolumn{1}{|c|}{cd/$m^2$}& \multicolumn{1}{|c|}{W/$\text{m}^2$sr}\\
+	Illuminace 			& \multicolumn{1}{|c|}{$E_v$} 		& lux (=lumen/$\text{m}^2$) 	& \multicolumn{1}{|c|}{lx}& \multicolumn{1}{|c|}{W/$\text{m}^2$}\\
 
 	\hline
 \end{tabular}
 \end{table}
 
 
+Luminous intensity or candela is the Luminous flux per unit solid angle. It describes the perceived power per unit solid angle. As example we assume to have a light with a 10 lumen strong light source. If the light beam is now focused into 1 steradian light beam, the beam would be 10 candela.\\
+Luminace is used 
+\begin{align*}
+L_{\mathrm{v}}=\frac{\mathrm{d}^{2} \Phi_{\mathrm{v}}}{\mathrm{d} \Sigma \mathrm{d} \Omega_{\Sigma} \cos \theta_{\Sigma}}
+\end{align*}
+
+
 \subsubsection{Light source}
-To model a light source it is assumed that the source is a very small point which emits the light rays in all directions. The density of the light rays is reduced with the factor $\frac{1}{r^2}$ with $r$ being the distance. Intensity of the light is proportional to the density of the rays. This behavior has to do with the fact that the surface area $A$ of a sphere
+To model a light source it is assumed that the source is a very small point which emits the light rays in all directions and is measured in luminous flux. The density of the light rays is reduced with the factor $\frac{1}{r^2}$ with $r$ being the distance. Luminous intensity of the light is proportional to the density of the rays. This behavior has to do with the fact that the surface area $A$ of a sphere
 \begin{align*}
 A=\int_{0}^{2 \pi} \int_{0}^{\pi} r^{2} \sin \theta d \theta d \varphi=4 \pi r^{2}
 \end{align*}
@@ -32,21 +40,35 @@ grows squared with the distance from the center $r$.
 \begin{align*}
 A = 4\pi r^2
 \end{align*}
-The intensity of light in photometry 
+In photometry the usage of solid angle is very common.  
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.6\textwidth]{2-theory/backlight/light.pdf}
 	\caption{Light source in 3d\label{theory:light}}
 \end{figure} 
+\\
 
-
-\subsubsection{Light ray distribution}
-\begin{figure}[ht]
+\subsubsection{Luminous flux}
+Luminous flux or lumen is Luminous flux per unit time and has the unit candela steradians ($cd\cdot sr$). It is used to describe the total amount of light a lamp puts out. The 
+\begin{table}[ht]
 	\centering
-	\includegraphics[width=1\textwidth]{2-theory/backlight/lightsource.pdf}
-	\caption{Light distribution\label{theory:lightdistribution}}
-\end{figure} 
-\subsubsection{Light properties}
-\subsection{Measurement precision changes}
-\subsection{Image sensor properties}
+	\begin{tabular}{ |p{5cm} p{2cm}|p{5cm} p{2cm} p{2cm}|  }
+		\hline
+		\multicolumn{2}{|c}{Quantity}&\multicolumn{3}{|c|}{Unit} \\
+		\hline\hline
+		\multicolumn{1}{|c}{Name}			& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{c}{Name}	& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{|c|}{SI-unit}\\
+		
+		\hline
+		Luminous flux		& \multicolumn{1}{|c|}{$\phi_v$}	& lumen		& \multicolumn{1}{|c|}{lm}& \multicolumn{1}{|c|}{W}\\
+		Luminous intensity 	& \multicolumn{1}{|c|}{$I_v$} 		& candela	& \multicolumn{1}{|c|}{cd}& \multicolumn{1}{|c|}{W/sr}\\
+		Luminance			& \multicolumn{1}{|c|}{$L_v$}		& candela/$\text{m}^2$	& \multicolumn{1}{|c|}{cd/$m^2$}& \multicolumn{1}{|c|}{W/$\text{m}^2$sr}\\
+		Illuminace 			& \multicolumn{1}{|c|}{$E_v$} 		& lux (=lumen/$\text{m}^2$) 	& \multicolumn{1}{|c|}{lx}& \multicolumn{1}{|c|}{W/$\text{m}^2$}\\
+		
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\lipsum[4]\\
+
 
