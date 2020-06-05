@@ -112,12 +112,12 @@ def trigger(imgray, var_r):
             # go to next frame
             if var1 > 60:
                 place += 1
-                iter += 1
 
             # go to previous frame
             if var4 > 60:
                 place -= 1
-                iter += 1
+
+            iter += 1
 
         return ret, imgray
 
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     pixel_size = 1.12/1000
 
     # estimated velocity of the object (m/s)
-    v_est = 2
+    v_est = 0
 
     # load calibration parameters
     mtx = np.loadtxt('mtx_normal.txt')
@@ -191,7 +191,7 @@ if __name__ == "__main__":
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             # get an image from the trigger
-            #ret, imgray = trigger(np.mean(var))
+            #ret, imgray = trigger(imgray, np.mean(var))
 
             t_process = time.time()
             if True:
@@ -300,7 +300,7 @@ if __name__ == "__main__":
                 cnts_m, _ = cv2.findContours(edge[sep:(h - sep), :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
                 # remove invalid contours
-                cnts_m = remove_contours(cnts_m, 10000, 2000000)
+                cnts_m = remove_contours(cnts_m, 10000, 900000)
 
                 # undistort contours
                 cnts_m = remap_contours(cnts_m, map_x, map_y)
@@ -394,23 +394,28 @@ if __name__ == "__main__":
 
                 print('fps = {:.1f}'.format(fps_process))
 
+                # show the measured contour (remove for full fps)
                 cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
                 cv2.resizeWindow("Contours", 1632, 924)
                 cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
                 cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
                 cv2.imshow("Contours", imgray)
-                cv2.waitKey(500)
 
-                # Show the edges for visual control
+                # Show the edges for visual control (remove for full fps)
                 # cv2.resizeWindow("CSI Camera", 1632, 924)
-                # cv2.putText(edge, "{:.2f} fps".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+                # cv2.putText(edge, "{:.2f} fps".format(fps_process), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
                 # cv2.imshow("CSI Camera", edge)
+                # cv2.waitKey(100)
 
                 # This also acts as
                 keyCode = cv2.waitKey(30) & 0xFF
                 # Stop the program on the ESC key
                 if keyCode == 27:
                     break
+
+                if keyCode == 115:
+                    with open('static4_full.txt', 'a') as f:
+                        f.write('{:.3f};{:.3f}\n'.format(L, D))
 
         cap.release()
         cv2.destroyAllWindows()
