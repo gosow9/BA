@@ -147,12 +147,12 @@ if __name__ == "__main__":
     # ringbuffer for geometry pattern
     buf = collections.deque(maxlen=10)
 
-    # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
+    # to flip the image, modify the flip_method parameter (0 and 2 are the most common)
     cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
 
     if cap.isOpened():
         window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_NORMAL)
-        # Window
+
         t_ref = time.time()
 
         # wait for exposure control
@@ -162,9 +162,9 @@ if __name__ == "__main__":
             thresh_value = np.max(im)
             print("Init mode, max value = {:.0f}".format(thresh_value), end="\r", flush=True)
 
-        print("\nEntering measurement mode")
+        print("\nEntering measurement mode...")
 
-        # kernel for edge-detection
+        # kernel for edge detection
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
 
         # get image
@@ -191,10 +191,10 @@ if __name__ == "__main__":
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             # get an image from the trigger
-            #ret, imgray = trigger(imgray, np.mean(var))
+            ret, imgray = trigger(imgray, np.mean(var))
 
             t_process = time.time()
-            if True:
+            if ret:
                 # edge detection
                 edge = get_edge_erroded(imgray, kernel)
 
@@ -395,27 +395,21 @@ if __name__ == "__main__":
                 print('fps = {:.1f}'.format(fps_process))
 
                 # show the measured contour (remove for full fps)
-                cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
-                cv2.resizeWindow("Contours", 1632, 924)
-                cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-                cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
-                cv2.imshow("Contours", imgray)
+                # cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
+                # cv2.resizeWindow("Contours", 1632, 924)
+                # cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+                # cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
+                # cv2.imshow("Contours", imgray)
 
                 # Show the edges for visual control (remove for full fps)
                 # cv2.resizeWindow("CSI Camera", 1632, 924)
                 # cv2.putText(edge, "{:.2f} fps".format(fps_process), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
                 # cv2.imshow("CSI Camera", edge)
-                # cv2.waitKey(100)
 
-                # This also acts as
                 keyCode = cv2.waitKey(30) & 0xFF
-                # Stop the program on the ESC key
+                # stop the program on the ESC key
                 if keyCode == 27:
                     break
-
-                if keyCode == 115:
-                    with open('static4_full.txt', 'a') as f:
-                        f.write('{:.3f};{:.3f}\n'.format(L, D))
 
         cap.release()
         cv2.destroyAllWindows()

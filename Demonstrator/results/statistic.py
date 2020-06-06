@@ -80,9 +80,9 @@ plt.rcParams.update({'font.size': 12})
 
 # L
 fig1, ax1 = plt.subplots(1,1)
-ax1.hist(L_sf, bins=22, density=True, color='tab:orange', alpha=0.3, edgecolor='tab:orange')
+ax1.hist(L_sf, bins=30, density=True, color='tab:orange', alpha=0.3, edgecolor='tab:orange')
 ax1.plot(x_L, p_Ls, color='tab:orange', label=r'$\mu = ${:.2f}, $\sigma = ${:.2f}'.format(np.mean(L_sf), np.std(L_sf)))
-ax1.hist(L_df, bins=22, density=True, color='tab:blue', alpha=0.4, edgecolor='tab:blue')
+ax1.hist(L_df, bins=30, density=True, color='tab:blue', alpha=0.4, edgecolor='tab:blue')
 ax1.plot(x_L, p_Ld, color='tab:blue', label=r'$\mu = ${:.2f}, $\sigma = ${:.2f}'.format(np.mean(L_df), np.std(L_df)))
 
 ax1.set_xlim([205, 220])
@@ -97,9 +97,9 @@ ax1.legend()
 
 # D
 fig2, ax2 = plt.subplots(1,1)
-ax2.hist(D_sf, bins=22, density=True, color='tab:orange', alpha=0.3, edgecolor='tab:orange')
+ax2.hist(D_sf, bins=30, density=True, color='tab:orange', alpha=0.3, edgecolor='tab:orange')
 ax2.plot(x_D, p_Ds, color='tab:orange', label=r'$\mu = ${:.2f}, $\sigma = ${:.2f}'.format(np.mean(D_sf), np.std(D_sf)))
-ax2.hist(D_df, bins=22, density=True, color='tab:blue', alpha=0.4, edgecolor='tab:blue')
+ax2.hist(D_df, bins=30, density=True, color='tab:blue', alpha=0.4, edgecolor='tab:blue')
 ax2.plot(x_D, p_Dd, color='tab:blue', label=r'$\mu = ${:.2f}, $\sigma = ${:.2f}'.format(np.mean(D_df), np.std(D_df)))
 
 ax2.set_xlim([45, 60])
