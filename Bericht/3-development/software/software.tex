@@ -1,5 +1,16 @@
 \section{Software}
-vorgehen
+To measure an object with a camera, the software has to perform lots of different tasks in a certain period of time.
+First off, it needs to take the non linear distortions of the camera into account.
+After that, some sort of trigger is needed, to check the frames for objects and pass a frame on, if an object is within the frame.
+Now, the software needs to detect a known pattern on the plane where the object lies.
+With the known distances of the pattern, a pixel per metric unit can be calculated.
+This unit describes, how many pixels in this distance from the camera fit into one metric unit (in this case mm).
+This pattern can also be used to calculate a transformation matrix which compensates for slight angular errors resulting from an imprecise mounting of the camera.
+After all these steps, the object has to be recognized.
+Finally, the dimensions of the object have to be estimated.
+
+All these steps are described in more detail in the following sections.
+
 
 \subsection{Initialization}
 gobal variables, mapx mapy, init mode
