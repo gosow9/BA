@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 from scipy.spatial import distance as dist
 
+
 def rect_center(tl, tr, br, bl):
     """"
     Computes centerpoint of a rectangle given it's corners
@@ -21,15 +22,16 @@ def rect_center(tl, tr, br, bl):
     :return: Centerpoint
     :return type: Output Array
     """
-    A = np.array([[tl[0]-br[0], tr[0]-bl[0]],
-                  [tl[1]-br[1], tr[1]-bl[1]]])
-    b = np.array([[tr[0]-tl[0]],
-                  [tr[1]-tl[1]]])
-    s = np.linalg.inv(A)@b
+    A = np.array([[tl[0] - br[0], tr[0] - bl[0]],
+                  [tl[1] - br[1], tr[1] - bl[1]]])
+    b = np.array([[tr[0] - tl[0]],
+                  [tr[1] - tl[1]]])
+    s = np.linalg.inv(A) @ b
 
-    p = (tl-br)*s[0] + tl
+    p = (tl - br) * s[0] + tl
 
     return (p[0], p[1])
+
 
 def remove_contours(cnts, minArea, maxArea):
     """
@@ -54,6 +56,7 @@ def remove_contours(cnts, minArea, maxArea):
 
     return cnts
 
+
 def remap_contours(cnts, map_x, map_y):
     """
     Remaps the contours points
@@ -75,6 +78,7 @@ def remap_contours(cnts, map_x, map_y):
         c[0][0][1] = map_y[y_tmp][x_tmp]
 
     return cnts
+
 
 def sort_points(p):
     """
