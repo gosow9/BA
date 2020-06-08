@@ -131,7 +131,7 @@ if __name__ == "__main__":
     pixel_size = 1.12/1000
 
     # estimated velocity of the object (m/s)
-    v_est = 0
+    v_est = 2
 
     # load calibration parameters
     mtx = np.loadtxt('mtx_normal.txt')
@@ -191,10 +191,10 @@ if __name__ == "__main__":
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             # get an image from the trigger
-            #ret, imgray = trigger(imgray, np.mean(var))
+            ret, imgray = trigger(imgray, np.mean(var))
 
             t_process = time.time()
-            if True:
+            if ret:
                 # edge detection
                 edge = get_edge_erroded(imgray, kernel)
 
@@ -383,7 +383,7 @@ if __name__ == "__main__":
                 L -= t_delay * v_est * 1000 / ppm
 
                 # print the result
-                print('l = {:.2f}, w = {:.2f}'.format(L, D))
+                print('L = {:.2f}, D = {:.2f}'.format(L, D))
 
                 if fps_process == 0:
                     fps_process = 1 / (time.time() - t_process)
@@ -395,11 +395,11 @@ if __name__ == "__main__":
                 print('fps = {:.1f}'.format(fps_process))
 
                 # show the measured contour (remove for full fps)
-                cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
-                cv2.resizeWindow("Contours", 1632, 924)
-                cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-                cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
-                cv2.imshow("Contours", imgray)
+                # cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
+                # cv2.resizeWindow("Contours", 1632, 924)
+                # cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+                # cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
+                # cv2.imshow("Contours", imgray)
 
                 # Show the edges for visual control (remove for full fps)
                 # cv2.resizeWindow("CSI Camera", 1632, 924)
