@@ -133,7 +133,7 @@ The following code shows how this is achieved in addition with applying the rect
 where \texttt{cnts\_m} are the contours found previously.
 Since now a rectangle with its coordinates is know, everything is ready for the actual geometry estimation.
 
-because no telecentric objective is used, one has to consider, that the cemare looks at the edges of the object in a slight angle.
+Because no telecentric objective is used, one has to consider, that the camera looks at the edges of the object in a slight angle.
 For simplicity, it is at this point assumed that the steel spring as a cylinder, which is aligned horizontal in the image plane.
 A cut through the center of this cylinder along the $y$-axis (OpenCV coordinates) is show in figure \ref{development:diameter}.
 \begin{figure}[ht]
@@ -164,11 +164,49 @@ with
 
 A similar principle is applied to calculate the length of the object.
 Figure \ref{development:length} where again
-$y_{\text{obj}}$ denotes the center of the object (spring) while $yx$ is the $y-$coordinate of the calibrated principal point.
+$y_{\text{obj}}$ denotes the center of the object (spring) while $c_x$ is the $x-$coordinate of the calibrated principal point.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/software/images/length_estimation.pdf}
 	\caption{Steel spring cut through the center along $x$-axis\label{development:length}}
 \end{figure}
-The points which can be observed in the image are 
+Observed are the two points on the plane $(x_p^{(1)}, y_{\text{obj}})$ and $(x_p^{(2)}, y_{\text{obj}})$.
+But simply taking the difference of $x_p^{(1)}$ and $x_p^{(2)}$ result in to long length estimation.
+
+Since $h$ is know, and $D$ has been calculated previously ($D=2r$), the theorem of intersecting lines allows one now to make the correction from the coordinates on the plane ($x_p^{(k)}$) to the points on the edge ($x_c^{(k)}$).
+
+Mathematically expressed this results in
+\begin{align*}
+	\frac{c_x-x_c^{(k)}}{c_x-x_p^{(k)}}=\frac{h-D}{h}\quad\Leftrightarrow\quad
+	x_c^{(k)}=\frac{h-D}{h}(c_x-x_p^{(k)}).
+\end{align*}
+After this correction the length can be calculated as
+\begin{align*}
+	L=x_c^{(2)}-x_c^{(1)}.
+\end{align*}
+
+These calculations are only accurate, if the object is placed horizontal in the frame.
+In order to make accurate estimations even if the object is slightly rotated, the angle ($\theta$) between the minimum area rectangle found around the object and the horizontal has to be calculated.
+
+The object or respectively the rectangle (the four corner points) has to be moved to the coordinate origin by removing the center and then rotated.
+This transformation can be expressed as
+\begin{align*}
+	\begin{pmatrix}
+	x'\\
+	y'\\
+	\end{pmatrix}=
+	\begin{pmatrix}
+	\cos(\theta)&-\sin(\theta)\\
+	\sin(\theta)&\cos(\theta)
+	\end{pmatrix}
+	\begin{pmatrix}
+	x-x_{\text{obj}}\\
+	y-y_{\text{obj}}\\
+	\end{pmatrix},	
+\end{align*}
+where $(x, y)^T$ are coordinates of the points of the object, $(x', y')^T$ are transformed coordinates and $(x_{\text{obj}}, y_{\text{obj}})$ are again the coordinates of the center of the object, or respectively the min area rectangle.
+By applying this transformation beforehand, the geometry estimation is independent of the the angle the object has to the horizontal. 
+
+\subsection{Compensation of the rolling shutter}
+
 
