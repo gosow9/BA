@@ -1,0 +1,44 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{arrows}
+
+\begin{document}
+\begin{tikzpicture}[>=latex]
+	% breite workaround
+	\draw[white] (-3,0)--++(12,0);
+
+	% Ebene
+	\draw[black!30!white, thick] (0,0)--(7,0);
+
+	% Origin
+	\draw[->] (-1.5,0)--(-1.5,1) node[left] {$z$};
+	\draw[->] (-1.5,0)--(-0.5,0) node[below] {$y$};
+	
+	% intersecting lines
+	\draw[dashed, black!30!white] (3.5,5)--(3.5,0);
+	\draw[orange!50!white] (2.966,0)--(3.5,5);
+	\draw[orange!50!white] (4.763,0)--(3.5,5);
+		
+	% Object
+	\draw[blue!50!white] (3.8,0.75)circle (0.75);
+	
+	% Dimensions
+	\draw[black!60!white] (0.8,5)--(3.5,5);
+	\draw[<->,black!60!white] (0.85, 0)--node[rotate=90, above]{$h$} (0.85, 5);
+	%\draw[->,black!60!white] (3.8,0.75)--node[above]{$r$} (3.054,0.830);
+	\draw[->,black!60!white] (3.8,0.75)--node[rotate=14.2, above]{$r$} (4.527,0.934);
+	\draw[black!60!white, line width=0.04] (3.8, 0.8)--(3.8, 0.7);
+	\draw[black!60!white, line width=0.04] (3.75, 0.75)--(3.85, 0.75);
+		
+	% Coordinates
+	\filldraw (2.966,0) circle (0.03) node[below left] {\small$(x_{\text{obj}}, y_p^{(1)}, 0)$};
+	\filldraw (4.763,0) circle (0.03) node[below right] {\small$(x_{\text{obj}}, y_p^{(2)}, 0)$};
+	%\filldraw (3.054,0.830) circle (0.03) node[above left] {\small$(x_{\text{obj}}, y_c^{(1)}, 0)$};
+	%\filldraw (4.527,0.934) circle (0.03) node[above right] {\small$(x_{\text{obj}}, y_c^{(2)}, 0)$};
+		
+	% Camera	
+	\filldraw (3.5,5) circle (0.03) node[above] {\small$(x_{\text{obj}}, c_y, h)$};
+\end{tikzpicture}
+\end{document}

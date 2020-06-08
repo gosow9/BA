@@ -112,12 +112,12 @@ def trigger(imgray, var_r):
             # go to next frame
             if var1 > 60:
                 place += 1
-                iter += 1
 
             # go to previous frame
             if var4 > 60:
                 place -= 1
-                iter += 1
+
+            iter += 1
 
         return ret, imgray
 
@@ -147,12 +147,12 @@ if __name__ == "__main__":
     # ringbuffer for geometry pattern
     buf = collections.deque(maxlen=10)
 
-    # To flip the image, modify the flip_method parameter (0 and 2 are the most common)
+    # to flip the image, modify the flip_method parameter (0 and 2 are the most common)
     cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
 
     if cap.isOpened():
         window_handle = cv2.namedWindow("CSI Camera", cv2.WINDOW_NORMAL)
-        # Window
+
         t_ref = time.time()
 
         # wait for exposure control
@@ -162,9 +162,9 @@ if __name__ == "__main__":
             thresh_value = np.max(im)
             print("Init mode, max value = {:.0f}".format(thresh_value), end="\r", flush=True)
 
-        print("\nEntering measurement mode")
+        print("\nEntering measurement mode...")
 
-        # kernel for edge-detection
+        # kernel for edge detection
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
 
         # get image
@@ -191,10 +191,10 @@ if __name__ == "__main__":
             imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
             # get an image from the trigger
-            #ret, imgray = trigger(np.mean(var))
+            ret, imgray = trigger(imgray, np.mean(var))
 
             t_process = time.time()
-            if True:
+            if ret:
                 # edge detection
                 edge = get_edge_erroded(imgray, kernel)
 
@@ -278,20 +278,20 @@ if __name__ == "__main__":
                 ppm = np.mean(ppm_array)
 
                 # get the principal point
-                mx = mtx[0][2]
-                my = mtx[1][2]
+                cx = mtx[0][2]
+                cy = mtx[1][2]
 
                 # generate array with objectpoints
-                objp = np.array([[-110 * ppm + mx, -75 * ppm + my],
-                                 [-55 * ppm + mx, -75 * ppm + my],
-                                 [mx, -75 * ppm + my],
-                                 [55 * ppm + mx, -75 * ppm + my],
-                                 [110 * ppm + mx, -75 * ppm + my],
-                                 [-110 * ppm + mx, 75 * ppm + my],
-                                 [-55 * ppm + mx, 75 * ppm + my],
-                                 [mx, 75 * ppm + my],
-                                 [55 * ppm + mx, 75  * ppm + my],
-                                 [110 * ppm + mx, 75 * ppm + my]], dtype=np.float32)
+                objp = np.array([[-110 * ppm + cx, -75 * ppm + cy],
+                                 [-55 * ppm + cx, -75 * ppm + cy],
+                                 [cx, -75 * ppm + cy],
+                                 [55 * ppm + cx, -75 * ppm + cy],
+                                 [110 * ppm + cx, -75 * ppm + cy],
+                                 [-110 * ppm + cx, 75 * ppm + cy],
+                                 [-55 * ppm + cx, 75 * ppm + cy],
+                                 [cx, 75 * ppm + cy],
+                                 [55 * ppm + cx, 75  * ppm + cy],
+                                 [110 * ppm + cx, 75 * ppm + cy]], dtype=np.float32)
 
                 # get transformation matrix
                 T, _ = cv2.findHomography(imgp, objp, method=0)
@@ -300,7 +300,7 @@ if __name__ == "__main__":
                 cnts_m, _ = cv2.findContours(edge[sep:(h - sep), :], cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
                 # remove invalid contours
-                cnts_m = remove_contours(cnts_m, 10000, 2000000)
+                cnts_m = remove_contours(cnts_m, 10000, 900000)
 
                 # undistort contours
                 cnts_m = remap_contours(cnts_m, map_x, map_y)
@@ -345,11 +345,11 @@ if __name__ == "__main__":
                 height = focal_length*(1/(ppm*pixel_size)-1)
 
                 # compute the triangle around object
-                a_l = np.sqrt(height ** 2 + tl[1] ** 2)
-                b_l = np.sqrt(height ** 2 + bl[1] ** 2)
+                a_l = np.sqrt(height ** 2 + (tl[1]/ppm) ** 2)
+                b_l = np.sqrt(height ** 2 + (bl[1]/ppm) ** 2)
                 c_l = (bl[1] - tl[1]) / ppm
-                a_r = np.sqrt(height ** 2 + tr[1] ** 2)
-                b_r = np.sqrt(height ** 2 + br[1] ** 2)
+                a_r = np.sqrt(height ** 2 + (tr[1]/ppm) ** 2)
+                b_r = np.sqrt(height ** 2 + (br[1]/ppm) ** 2)
                 c_r = (br[1] - tr[1]) / ppm
 
                 # compute the radius (incircles)
@@ -365,10 +365,10 @@ if __name__ == "__main__":
                 x_cor = 1 - (height - D) / height
 
                 # readjust x values
-                tl[0] = tl[0] + (mx - tl[0]) * x_cor
-                tr[0] = tr[0] + (mx - tr[0]) * x_cor
-                br[0] = br[0] + (mx - br[0]) * x_cor
-                bl[0] = bl[0] + (mx - bl[0]) * x_cor
+                tl[0] = tl[0] + (cx - tl[0]) * x_cor
+                tr[0] = tr[0] + (cx - tr[0]) * x_cor
+                br[0] = br[0] + (cx - br[0]) * x_cor
+                bl[0] = bl[0] + (cx - bl[0]) * x_cor
 
                 # compute length
                 L = (tr[0] - tl[0] + br[0] - bl[0]) / 2 / ppm
@@ -383,7 +383,7 @@ if __name__ == "__main__":
                 L -= t_delay * v_est * 1000 / ppm
 
                 # print the result
-                print('l = {:.2f}, w = {:.2f}'.format(L, D))
+                print('L = {:.2f}, D = {:.2f}'.format(L, D))
 
                 if fps_process == 0:
                     fps_process = 1 / (time.time() - t_process)
@@ -394,21 +394,20 @@ if __name__ == "__main__":
 
                 print('fps = {:.1f}'.format(fps_process))
 
-                cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
-                cv2.resizeWindow("Contours", 1632, 924)
-                cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
-                cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
-                cv2.imshow("Contours", imgray)
-                cv2.waitKey(500)
+                # show the measured contour (remove for full fps)
+                # cv2.namedWindow("Contours", cv2.WINDOW_NORMAL)
+                # cv2.resizeWindow("Contours", 1632, 924)
+                # cv2.putText(imgray, "L = {:.3f}, D = {:.3f}".format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+                # cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype("int")], -1, (255, 255, 0), 10)
+                # cv2.imshow("Contours", imgray)
 
-                # Show the edges for visual control
+                # Show the edges for visual control (remove for full fps)
                 # cv2.resizeWindow("CSI Camera", 1632, 924)
-                # cv2.putText(edge, "{:.2f} fps".format(fps), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
+                # cv2.putText(edge, "{:.2f} fps".format(fps_process), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)
                 # cv2.imshow("CSI Camera", edge)
 
-                # This also acts as
                 keyCode = cv2.waitKey(30) & 0xFF
-                # Stop the program on the ESC key
+                # stop the program on the ESC key
                 if keyCode == 27:
                     break
 
