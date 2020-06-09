@@ -60,7 +60,10 @@ plt.plot([y,thresh],[f(y),h[thresh]], color= "magenta")
 plt.plot([thresh,thresh],[0,h[thresh]],'--', color= "magenta")
 plt.plot([thresh],[h[thresh]],'o', color= "magenta")
 plt.plot([y],[f(y)],'o', color= "magenta")
-plt.text(90,60000,"max. distance", color="magenta")
+plt.text(90,60000,"max. distance", color="magenta", size=12, bbox=dict(boxstyle="square",
+                   ec=(1., 1, 1),
+                   fc=(1, 1, 1),
+                   ))
 
 plt.title("thresh value = {}".format(thresh))
 plt.savefig("triangle.pdf")
