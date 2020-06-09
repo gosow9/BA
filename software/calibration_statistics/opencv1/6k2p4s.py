@@ -95,9 +95,9 @@ for i in range(n):
     ax.plot(r, dist_r-r, label=label)
     ax.legend()
     ax.grid(True)
-    ax.set_xlim([0, 2051])
+    ax.set_xlim([0, 2100])
     ax.set_ylim([0, 40])
-    ax.set_xticks([0, 500, 1000, 1500, 2000])
+    ax.set_xticks([0, 300, 600, 900, 1200, 1500, 1800, 2100])
     ax.set_yticks([0, 10, 20, 30, 40])
     
     # write to file f
@@ -116,7 +116,7 @@ for i in range(n):
     f.write('s4 = {:.2} +/- {:.2}\n\n'.format(s4, std_s4))
    
 f.close() 
-fig.savefig('6k2p4s.pdf')
+#fig.savefig('6k2p4s.pdf')
     
 # print elapsed time
 print((time.time()-t_ref)/60)

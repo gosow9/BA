@@ -1,1 +1,54 @@
 \chapter{Introduction}
+Production chains in the industry require a periodical measurement of the dimensions of the produced part.
+If the measured values deviate to much from the desired value, the production has to be adjusted in order to keep the quality of the part.
+In much cases this is done by a production worker who takes a random sample of produced parts and supervises this way the whole manufacturing process.
+
+This thesis focuses on the manufacturing of steel springs.
+Since the geometry of such a spring is rather complex, it is quit hard to make a good measurement with conventional methods (by hand).
+Additionally, the elasticity of the steel makes it even harder to make this measurements reproducible.
+
+Estimating the geometry of the spring from the images taken by a camera mounted in the production chain could solve this problem, but optics used for measurements are usually too expensive.
+Additionally, it would be very helpful to use multiple setups distributed over the whole production chain to determine in which production-step an error has been made.
+This pushes the cost for such a measurement device even higher.
+Since computing power is nowadays very cheap, this costs could be lowered dramatically by using a low-cost camera and compensating the cheap hardware in with the software.
+
+In this bachelor thesis, a device, called the demonstrator, has been developed to demonstrate the working principle of this setup.
+In the first chapter, the task analysis and approach will be evaluated.
+The second chapter focuses on the general theory applied in the development.
+The development itself will be described in mire detail in Chapter three.
+The fourth chapter discusses the results, followed by the conclusion in the sixth chapter. 
+
+\section{Task analysis}
+The primary goal of this bachelor thesis was to develop a working demonstrator in order to show, that it really is feasible to make this kind of measurements with a low-cost device.
+The demonstrator should be able to make measurements of length and diameter of the spring with a relative error (standard deviation/mean) of less than 1\%.
+Since it is expected, that the production manufactures 200 springs per minute, the software which makes the necessary corrections an estimates the dimensions has to make about four measurements per second to be on the safe side.
+
+\section{Approach}
+It is reasonable to split this task into a hardware and a software part.
+
+\subsection{Hardware}
+The hardware consists of the following parts:
+\begin{itemize}
+	\item Raspberry Pi Camera Module V2
+	\item Nvidia Jetson Nano developer kit
+	\item Backlight illumination
+	\item Mechanical construction
+\end{itemize}
+The Pi Camera Module delivers an image stream to the Jetson Nano where all the computing takes place.
+To make the handling of the image easier, the spring is lit from the back with a specially designed illumination.
+This makes it possible to threshold the incoming frames to a binary image, on which it is much easier (and faster) to operate on.
+A mechanical construction consisting mainly of aluminum profiles serves as a framwork on which all other components can be attached.
+
+\subsection{Software}
+To compensate lens imperfections, the camera has to be calibrated and this has to be done for every camera once before using it.
+The software later uses the results from the calibration to adjust the image.
+A software trigger checks all the frames for the a passing object.
+If it found such a frame it passes this image to the next section of the software which is responsible for following tasks:
+\begin{itemize}
+	\item Undistort the image using the results from the calibration
+	\item Find a known pattern on the plane as reference
+	\item Transform the image to correct a tilted view of the camera to the plane
+	\item find the Object (spring) in the frame
+	\item Estimate the geometry (length and diameter) of the object
+\end{itemize} 
+
