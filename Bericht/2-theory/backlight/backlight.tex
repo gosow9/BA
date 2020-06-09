@@ -1,5 +1,5 @@
 \section{Measurement with back-light illumination}
-To measure the size and form of an object there are multiple ways. A popular way to get the contour is to place a light source behind the object desired to measure, and aim on the object with an camera. With this method the optical sensors get the silhouette of the object. 
+To measure the size and form of an object there are multiple ways. A popular way to get the contour is to place a light source behind the object desired to measure, and aim on the object with an camera. With this method the optical sensors get the silhouette of the object. In this section a short introduction to photometry and the typical construction of backlighting systems is discussed.
 \subsection{Short introduction to photometry}
 Photometry is the science concerned with the electromagnetic radiation visible to the human eye. In this section some important basics used further in this paper are explained. The theories of the following sections were taken from the textbook Physik 2 \cite{ruh}
 \subsubsection{Photometric quantities}
@@ -14,7 +14,7 @@ In principle the normal physical quantities and units such as watts and joules c
 	\multicolumn{1}{|c}{Name}			& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{c}{Name}	& \multicolumn{1}{|c|}{Symbol}	\\
 
 	\hline
-	Luminous flux		& \multicolumn{1}{|c|}{$\phi_v$}	& lumen		& \multicolumn{1}{|c|}{lm}\\
+	Luminous flux		& \multicolumn{1}{|c|}{$\Phi_v$}	& lumen		& \multicolumn{1}{|c|}{lm}\\
 	Luminous intensity 	& \multicolumn{1}{|c|}{$I_v$} 		& candela	& \multicolumn{1}{|c|}{cd}\\
 	Luminance			& \multicolumn{1}{|c|}{$L_v$}		& candela/$\text{m}^2$	& \multicolumn{1}{|c|}{cd/$m^2$}\\
 	Illuminace 			& \multicolumn{1}{|c|}{$E_v$} 		& lux (=lumen/$\text{m}^2$) 	& \multicolumn{1}{|c|}{lx}\\
@@ -22,11 +22,6 @@ In principle the normal physical quantities and units such as watts and joules c
 	\hline
 \end{tabular}
 \end{table}
-
-
-
-
-
 
 \subsubsection{Light source}
 To model a light source it is assumed that the source is a very small point which emits the light rays in all directions and is measured in luminous flux. The density of the light rays is reduced with the factor $\frac{1}{r^2}$ with $r$ being the distance. Luminous intensity of the light is proportional to the density of the rays. This behavior has to do with the fact that the surface area $A$ of a sphere
@@ -44,24 +39,28 @@ A = 4\pi r^2
 \end{figure} 
 \\
 \subsubsection{Solid angle}
-In photometry the usage of solid angle is very common. Solid angle is equal to the area 
-\begin{align*}
-\Omega=\frac{A}{r^{2}}
-\end{align*}
+In photometry the usage of solid angle is very common. For the following the concept of solid angle must be defined. A beam of rays emanates from a point zero. The area that this beam illuminates on a sphere with center zero and radius 1 is called solid angle and is designated $\Omega$.
+If spherical coordinates $r$,$\theta$ and $\varphi$ are used, a differential solid angle element $d \Omega$ can be expressed as followed
 \begin{align*}
 d \Omega=\sin \theta d \theta d \varphi
 \end{align*}
+The differential solid angle element can now be integrated to obtain a surface with $\hat{r}$ being the unit vector of the radius.
 \begin{align*}
 \Omega=\iint_{S} \frac{\hat{r} \cdot \hat{n} d S}{r^{2}}=\iint_{S} \sin \theta d \theta d \varphi
 \end{align*}
-$\hat{r}$ is the unit vector
+When defining the solid angle, a sphere with any radius $r$ can be used instead of the unit sphere. The area A cut out by the beam of rays on the surface of the sphere must then be divided by $r^2$.
+\begin{align*}
+\Omega=\frac{A}{r^{2}}
+\end{align*}
+Solid angle is a dimensionless quantity.  
+
 \subsubsection{Luminous flux}
-Luminous flux or lumen is Luminous flux per unit time and has the unit candela steradians ($cd\cdot sr$). It is used to describe the total amount of light a lamp puts out. The 
-\begin{table}[ht]
-	\centering
-	\begin{tabular}{ |p{14cm} p{2cm}|  }
+Luminous flux or lumen is Luminous flux per unit time and has the unit candela steradians ($cd\cdot sr$). It is used to describe the total amount of light a lamp puts out and is named lumen (lm). To better understand how bright a lumen is there is a list with example values. \\
+
+
+\begin{tabular}{ |p{12cm} p{2cm}|  }
 		\hline
-		& $\phi_v$ in lm\\
+		& $\Phi_v$ in lm\\
 		
 		
 		\hline
@@ -72,8 +71,9 @@ Luminous flux or lumen is Luminous flux per unit time and has the unit candela s
 		Mercury vapor lamp, 220 V, 125W		& 5'400\\
 		Mercury vapor lamp, 220 V, 2000W		& 125'000\\
 		\hline
-	\end{tabular}
-\end{table}
+\end{tabular}
+
+
 
 \subsubsection{Luminous intensity}
 Luminous intensity or candela is the Luminous flux per unit solid angle. It describes the perceived power per unit solid angle. As example we assume to have a light with a 10 lumen strong light source. If the light beam is now focused into 1 steradian light beam, the beam would be 10 candela.\\
@@ -88,7 +88,7 @@ L_{\mathrm{v}}=\frac{\mathrm{d}^{2} \Phi_{\mathrm{v}}}{\mathrm{d} \Sigma \mathrm
 	\centering
 	\begin{tabular}{ |p{13cm} p{3cm}|  }
 		\hline
-		& $L_e$ in c/$\text{m}^2$\\
+		& $L_v$ in c/$\text{m}^2$\\
 		
 		
 		\hline
@@ -135,17 +135,16 @@ L_{\mathrm{v}}=\frac{\mathrm{d}^{2} \Phi_{\mathrm{v}}}{\mathrm{d} \Sigma \mathrm
 
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{ |p{5cm} p{2cm}|p{5cm} p{2cm} p{2cm}|  }
+	\begin{tabular}{ |p{4cm} p{2cm} p{2cm}|p{4cm} p{2cm} p{2cm}|  }
 		\hline
-		\multicolumn{2}{|c}{Quantity}&\multicolumn{3}{|c|}{Unit} \\
+		\multicolumn{3}{|c}{Radiometry}&\multicolumn{3}{|c|}{Photometry} \\
 		\hline\hline
-		\multicolumn{1}{|c}{Name}			& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{c}{Name}	& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{|c|}{SI-unit}\\
-		
+		\multicolumn{1}{|l}{Name}			& \multicolumn{1}{c}{Symbol}& \multicolumn{1}{c|}{Unit}	& \multicolumn{1}{c}{Name}	& \multicolumn{1}{c}{Symbol}	& \multicolumn{1}{c|}{Unit}\\
 		\hline
-		Luminous flux		& \multicolumn{1}{|c|}{$\phi_v$}	& lumen		& \multicolumn{1}{|c|}{lm}& \multicolumn{1}{|c|}{W}\\
-		Luminous intensity 	& \multicolumn{1}{|c|}{$I_v$} 		& candela	& \multicolumn{1}{|c|}{cd}& \multicolumn{1}{|c|}{W/sr}\\
-		Luminance			& \multicolumn{1}{|c|}{$L_v$}		& candela/$\text{m}^2$	& \multicolumn{1}{|c|}{cd/$m^2$}& \multicolumn{1}{|c|}{W/$\text{m}^2$sr}\\
-		Illuminace 			& \multicolumn{1}{|c|}{$E_v$} 		& lux (=lumen/$\text{m}^2$) 	& \multicolumn{1}{|c|}{lx}& \multicolumn{1}{|c|}{W/$\text{m}^2$}\\
+		Radiant flux			& \multicolumn{1}{|c|}{$\Phi_e$}&  \multicolumn{1}{|c|}{W}		& Luminous flux		& \multicolumn{1}{|c|}{$\Phi_v$}	&  \multicolumn{1}{|c|}{lm}\\
+		Radiant intensity		& \multicolumn{1}{|c|}{$I_e$}	&  \multicolumn{1}{|c|}{W/sr}	&Luminous intensity 	& \multicolumn{1}{|c|}{$I_v$} 		&  \multicolumn{1}{|c|}{cd}\\
+		Radiace					& \multicolumn{1}{|c|}{$L_e$}	&  \multicolumn{1}{|c|}{W/$m^2$sr}		&Luminance			& \multicolumn{1}{|c|}{$L_v$}		&  \multicolumn{1}{|c|}{cd/$m^2$}\\
+		Irradiance flux density	& \multicolumn{1}{|c|}{$E_e$}	&  \multicolumn{1}{|c|}{W/$m^2$}		&Illuminace 			& \multicolumn{1}{|c|}{$E_v$} 		&  \multicolumn{1}{|c|}{lx}\\
 		
 		\hline
 	\end{tabular}
