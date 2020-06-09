@@ -103,7 +103,7 @@ ax1.set_xticks([205, 210, 215, 220, 225])
 ax1.set_ylim([0, 1.2])
 ax1.set_yticks([0, 0.3, 0.6, 0.9, 1.2])
 
-ax1.set_xlabel('length (mm)')
+ax1.set_xlabel('Length (mm)')
 ax1.grid(True)
 ax1.legend()
 
@@ -120,7 +120,7 @@ ax2.set_xticks([45, 47.5, 50, 52.5, 55])
 ax2.set_ylim([0, 2])
 ax2.set_yticks([0, 0.5, 1.0, 1.5, 2.0])
 
-ax2.set_xlabel('diameter (mm)')
+ax2.set_xlabel('Diameter (mm)')
 ax2.grid(True)
 ax2.legend()
 
