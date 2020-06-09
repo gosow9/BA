@@ -7,28 +7,25 @@ In principle the normal physical quantities and units such as watts and joules c
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{ |p{5cm} p{2cm}|p{5cm} p{2cm} p{2cm}|  }
+\begin{tabular}{ |p{6cm} p{2cm}|p{6cm} p{2cm}|  }
 	\hline
-	\multicolumn{2}{|c}{Quantity}&\multicolumn{3}{|c|}{Unit} \\
+	\multicolumn{2}{|c}{Quantity}&\multicolumn{2}{|c|}{Unit} \\
 	\hline\hline
-	\multicolumn{1}{|c}{Name}			& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{c}{Name}	& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{|c|}{SI-unit}\\
+	\multicolumn{1}{|c}{Name}			& \multicolumn{1}{|c|}{Symbol}	& \multicolumn{1}{c}{Name}	& \multicolumn{1}{|c|}{Symbol}	\\
 
 	\hline
-	Luminous flux		& \multicolumn{1}{|c|}{$\phi_v$}	& lumen		& \multicolumn{1}{|c|}{lm}& \multicolumn{1}{|c|}{W}\\
-	Luminous intensity 	& \multicolumn{1}{|c|}{$I_v$} 		& candela	& \multicolumn{1}{|c|}{cd}& \multicolumn{1}{|c|}{W/sr}\\
-	Luminance			& \multicolumn{1}{|c|}{$L_v$}		& candela/$\text{m}^2$	& \multicolumn{1}{|c|}{cd/$m^2$}& \multicolumn{1}{|c|}{W/$\text{m}^2$sr}\\
-	Illuminace 			& \multicolumn{1}{|c|}{$E_v$} 		& lux (=lumen/$\text{m}^2$) 	& \multicolumn{1}{|c|}{lx}& \multicolumn{1}{|c|}{W/$\text{m}^2$}\\
+	Luminous flux		& \multicolumn{1}{|c|}{$\phi_v$}	& lumen		& \multicolumn{1}{|c|}{lm}\\
+	Luminous intensity 	& \multicolumn{1}{|c|}{$I_v$} 		& candela	& \multicolumn{1}{|c|}{cd}\\
+	Luminance			& \multicolumn{1}{|c|}{$L_v$}		& candela/$\text{m}^2$	& \multicolumn{1}{|c|}{cd/$m^2$}\\
+	Illuminace 			& \multicolumn{1}{|c|}{$E_v$} 		& lux (=lumen/$\text{m}^2$) 	& \multicolumn{1}{|c|}{lx}\\
 
 	\hline
 \end{tabular}
 \end{table}
 
 
-Luminous intensity or candela is the Luminous flux per unit solid angle. It describes the perceived power per unit solid angle. As example we assume to have a light with a 10 lumen strong light source. If the light beam is now focused into 1 steradian light beam, the beam would be 10 candela.\\
-Luminace is used 
-\begin{align*}
-L_{\mathrm{v}}=\frac{\mathrm{d}^{2} \Phi_{\mathrm{v}}}{\mathrm{d} \Sigma \mathrm{d} \Omega_{\Sigma} \cos \theta_{\Sigma}}
-\end{align*}
+
+
 
 
 \subsubsection{Light source}
@@ -40,16 +37,102 @@ grows squared with the distance from the center $r$.
 \begin{align*}
 A = 4\pi r^2
 \end{align*}
-In photometry the usage of solid angle is very common.  
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.6\textwidth]{2-theory/backlight/light.pdf}
 	\caption{Light source in 3d\label{theory:light}}
 \end{figure} 
 \\
-
+\subsubsection{Solid angle}
+In photometry the usage of solid angle is very common. Solid angle is equal to the area 
+\begin{align*}
+\Omega=\frac{A}{r^{2}}
+\end{align*}
+\begin{align*}
+d \Omega=\sin \theta d \theta d \varphi
+\end{align*}
+\begin{align*}
+\Omega=\iint_{S} \frac{\hat{r} \cdot \hat{n} d S}{r^{2}}=\iint_{S} \sin \theta d \theta d \varphi
+\end{align*}
+$\hat{r}$ is the unit vector
 \subsubsection{Luminous flux}
 Luminous flux or lumen is Luminous flux per unit time and has the unit candela steradians ($cd\cdot sr$). It is used to describe the total amount of light a lamp puts out. The 
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{ |p{14cm} p{2cm}|  }
+		\hline
+		& $\phi_v$ in lm\\
+		
+		
+		\hline
+		LED		& 500\\
+		Light bulb, 220 V, 60W		& 730\\
+		Light bulb, 220 V, 100W		& 1'380\\
+		Fluorescent tube, 220 V, 40W		& 2'300\\
+		Mercury vapor lamp, 220 V, 125W		& 5'400\\
+		Mercury vapor lamp, 220 V, 2000W		& 125'000\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Luminous intensity}
+Luminous intensity or candela is the Luminous flux per unit solid angle. It describes the perceived power per unit solid angle. As example we assume to have a light with a 10 lumen strong light source. If the light beam is now focused into 1 steradian light beam, the beam would be 10 candela.\\
+
+\subsubsection{Luminance}
+Luminace is the Luminous intensity per area of the luminous area
+\begin{align*}
+L_{\mathrm{v}}=\frac{\mathrm{d}^{2} \Phi_{\mathrm{v}}}{\mathrm{d} \Sigma \mathrm{d} \Omega_{\Sigma} \cos \theta_{\Sigma}}
+\end{align*}\\
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{ |p{13cm} p{3cm}|  }
+		\hline
+		& $L_e$ in c/$\text{m}^2$\\
+		
+		
+		\hline
+		Fluorescent tube					& $10^4$\\
+		Frosted light bulb					& $10^4...10^5$\\
+		Tungsten filament of a light bulb	& $10^7...2\cdot 10^7$\\
+		Arc lamp							& $1.5\cdot10^8...1.8\cdot10^8$\\
+		High pressure mercury lamp			& $2.5\cdot10^8...10^9$\\
+		Sun									& $1.2\cdot10^9$\\
+		Xenon high pressure lamp			& $10^9...10^10$\\
+		
+		\hline
+	\end{tabular}
+\end{table}
+
+
+
+\subsubsection{Illuminace }
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{ |p{12cm} p{3cm}|  }
+		\hline
+		& $E_v$ in lx\\
+		
+		
+		\hline
+		Sun light in summer					& 70'000\\
+		Sun light in winter					& 5'500\\
+		Day light with clouded sky			& 1'000-2'000\\
+		Full moon night						& 0.25\\
+		Stars without moon clear sky		& 0.001\\
+		Limit of color perception			& 3\\
+		Streetlight							& 1-30\\
+		Living room							& 40-150\\
+		Working room						& 40-300\\
+		Working place lightning				& 100-4000\\
+		
+		\hline
+	\end{tabular}
+\end{table}
+
+
+
+
 \begin{table}[ht]
 	\centering
 	\begin{tabular}{ |p{5cm} p{2cm}|p{5cm} p{2cm} p{2cm}|  }
@@ -67,8 +150,3 @@ Luminous flux or lumen is Luminous flux per unit time and has the unit candela s
 		\hline
 	\end{tabular}
 \end{table}
-
-
-\lipsum[4]\\
-
-

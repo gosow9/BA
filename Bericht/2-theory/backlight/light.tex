@@ -5,12 +5,12 @@
 \usetikzlibrary{calc}
 \tdplotsetmaincoords{60}{115}
 \pgfplotsset{compat=newest}
-
+\usetikzlibrary{arrows}
 
 \begin{document}
 	\def\rol{50}
 	\def\ror{80}
-	\begin{tikzpicture}[tdplot_main_coords, scale = 2.5]
+	\begin{tikzpicture}[tdplot_main_coords, scale = 2.5, >=latex]
 	
 
 	%coordinaten system
@@ -19,9 +19,9 @@
 	\draw[dashed, gray] (0,0,0) -- (-1,0,0);
 	\draw[dashed, gray] (0,0,0) -- (0,-1,0);
 	
-	\draw[-stealth] (0,0,0) -- (1.80,0,0);
-	\draw[-stealth] (0,0,0) -- (0,1.30,0);
-	\draw[-stealth] (0,0,0) -- (0,0,1.30);
+	\draw[->] (0,0,0) -- (1.80,0,0);
+	\draw[->] (0,0,0) -- (0,1.30,0);
+	\draw[->] (0,0,0) -- (0,0,1.30);
 
 	
 %	\draw[thin, dashed] (P) --++ (0,0,{-1/sqrt(3)});
@@ -86,11 +86,11 @@
 	%--plot ({4*sin(\x)*cos(90)}, {4*sin(\x)*sin(90)},{4* cos(\x)})
 	;
 	
-	\draw[thick, -stealth,red] (0,0,0) -- ({4*sin(75)*cos(65)},{4*sin(75)*sin(65)}, {4*cos(75)},0) node[midway,above]{$4r$};
-	\draw[thick, -stealth] (0,0,0) -- ({sin(75)*cos(65)},{sin(75)*sin(65)}, {cos(75)},0)node[midway,above]{$r$};
+	\draw[thick, ->,red] (0,0,0) -- ({4*sin(75)*cos(65)},{4*sin(75)*sin(65)}, {4*cos(75)},0) node[midway,above]{$4\cdot r$};
+	\draw[thick, ->] (0,0,0) -- ({sin(75)*cos(65)},{sin(75)*sin(65)}, {cos(75)},0)node[midway,above]{$r$};
 	
-	\node at ({sin(75)*cos(65)},{sin(75)*sin(65)}, {cos(68)},0){\textbf{$r^2$}};
-	\node at ({4*sin(75)*cos(65)},{4*sin(75)*sin(65)}, {4*cos(72)},0){\textbf{$16r^2$}};
+	\node at ({sin(75)*cos(65)},{sin(75)*sin(65)}, {cos(68)},0){\textbf{$A$}};
+	\node at ({4*sin(75)*cos(65)},{4*sin(75)*sin(65)}, {4*cos(72)},0){\textbf{$16A$}};
 	
 	\end{tikzpicture}
 \end{document}
