@@ -1,1 +1,24 @@
 \chapter{Conclusion}
+
+\section{Reflection}
+A device to demonstrate the measurement of an object with a low-cost optic has been developed.
+It could be shown, that with this setup, the relative errors in the measured dimensions can be kept inside a reasonable deviation (max. rel. error = 1.6\%).
+The software responsible for the computations is fast enough to deal with the expected 200 springs per minute and the errors caused by the rolling shutter can be compensated in a simple way assuming the object moves horizontal through the frame and has a constant speed which has to be estimated beforehand.
+
+The cost of the whole device could be kept below (999999999 yen).
+This lowers the expenditures of a company, using this technology in their production chains dramatically compared to similar optical measurement devices nowadays.
+
+Unfortunately, some problems where caused by the trigger.
+In many cases, the object moving with the estimated speed of 2\,m/s is not complete inside the image in the first frame, which activates the trigger.
+But in the next frame, to object has already partly moved outside the frame and none of the images can be used for measurements.
+
+\section{Further development}
+There are of course a lot of improvements to be made.
+
+In order the get a better absolute precision, the calibration process could be improved by detecting the checkerboard more precise or by using a different calibration pattern.
+it should also be possible, to take the complicated geometry of the spring into account, instead of just assuming a cylinder.
+
+Implementing the code in C++ should not only make all the processing faster, but also gives the ability to communicate with the driver of the camera reliably.
+This is necessary in order to develop a faster trigger which can work with the full 28\,fps instead of just 20\,fps.
+
+
