@@ -1,9 +1,9 @@
 \chapter*{Abstract}
 
 \section*{Introduction}
-Mass production in the industry requires a periodical check of quality and dimensions of parts in different stations of the production chain.
+Mass production in the industry requires a periodical check of quality and dimensions of each part in different stations of the production chain.
 In the special case of this thesis, the object to be measured is a steel spring.
-At this point, the spring has to be measured by hand by a production worker.
+Until today the spring has to be measured by hand by a production worker. In a production chain with a capacity of 200 springs per minute only some few springs actually get measured.
 With conventional methods it s hard to get an accurate measurement because of the geometry of the spring and even harder to make these measurements reproducible because of the elasticity of the used steel.
 
 This two difficulties can be solved by using cameras to estimate the geometry.
@@ -15,7 +15,7 @@ The software has to take into account and correct all the imperfections of the l
 Instead of making periodic measurements, it should this way be possible to estimate the geometry of every passing object.
 
 In the case of the steel spring, the setup should be able to make accurate measurements (relative error = standard deviation/mean > 1\%).
-200 springs per minute are expected to come from the production, the setup has therefore to handle about 4 geometry estimations per second to be on the safe side.
+With 200 springs per minute the setup has therefore to handle about 4 geometry estimations per second to be on the safe side.
 
 Over the course of this thesis, a demonstrator, using a Raspberry Pi Camera Module V2, has been developed.
 To demonstrate measurements performed on a moving object, the steel springs can be sidled over a tilted glass plate mounted in front of a backlight.
@@ -26,4 +26,4 @@ These tasks are performed on a Nvidia Jetson Nano developer kit.
 \section*{Conclusion}
 In the static case, it was possible to achieve a relative error in the length of 0.22\% and in the diameter of 0.55\%.
 With an object sliding with at an estimated speed of 2\,m/s over the glass plate, a relative error of 1.01\% in the length and 1.60\% in the diameter could be achieved.
-The trigger checks for object in image with 21\,fps and the calculations can be performed at a rate of 15\,fps.
+The trigger checks for object in image with 21\,fps and the calculations can be performed at a rate of 15\,fps. 

@@ -6,7 +6,7 @@
 \begin{document}
 \begin{tikzpicture}[x={(0.866cm,-0.5cm)}, y={(0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=1.0,
     %Option for nice arrows
-    >=stealth, %
+    >=latex, %
     inner sep=0pt, outer sep=2pt,%
     axis/.style={thick,->},
     wave/.style={thick,color=#1,smooth},
@@ -50,7 +50,7 @@
 	\draw[thick,<->,darkred,fill=white] (8,-2.1,-1.5) -- (12, -2.1, -1.5) node[midway,fill=white, left]{F};
 	\draw[thick,<->,darkred,fill=white] (4,-2.1,-1.5) -- (8, -2.1, -1.5) node[midway,fill=white, left]{F};
 	
-	\draw[gray] (4,-2,1.5)--(4,2,1.5) node[gray,fill=white, anchor=center, above] {virtual image plane};
+	\draw[gray] (4,-2,1.5)--(4,2,1.5) node[gray,fill=white, anchor=center, above] {Virtual image plane};
 		
 	
 	
@@ -69,7 +69,7 @@
 
     %Crystal thin section
     \begin{scope}[thick]
-        \draw (8,-2,-1.5) -- (8,-2,1.5) node [above, sloped, midway]{Camera Front}--(8, 2, 1.5);
+        \draw (8,-2,-1.5) -- (8,-2,1.5) node [above, sloped, midway]{Camera front}--(8, 2, 1.5);
         \draw[dashed] (8, 2, 1.5) -- (8, 2, -1.5)--(8,-2,-1.5)
         (8,   2, -1.5) -- (12,  2,-1.5); % First face
         \draw (8,  -2, -1.5) -- (12, -2,-1.5)

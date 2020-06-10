@@ -1,3 +1,4 @@
+\newpage
 \section{Software}
 To measure an object with a camera, the software has to perform lots of different tasks in a certain period of time.
 First off, it needs to take the non linear distortions of the camera into account.
@@ -45,9 +46,67 @@ gobal variables, mapx mapy, init mode
 
 \subsection{Trigger}
 
-\subsection{Edge detection}
-morphology
+\begin{lstlisting}
+ # variance of the first column
+var = np.var(imgray[sep:h - sep:10, 0])
 
+# check frames if the object is in the first column
+if var > 3*var_r:
+print('get frames...')
+
+place = 1
+imsave = []
+iter = 0
+ret = False
+
+# save the next 4 frames
+for i in range(4):
+_, imgs = cap.read()
+imsave.append(imgs)
+
+# for i in range(len(imsave)):
+#     cv2.imwrite('im{:}.png'.format(i), imsave[i])
+
+# search through the next frames for the object
+while iter < len(imsave):
+if place < 0 or place > len(imsave)-1 or iter > len(imsave):
+print('Object not in frame')
+return False, None
+
+imgray = cv2.cvtColor(imsave[place], cv2.COLOR_BGR2GRAY)
+
+# compute variances of different columns
+var1 = np.var(imgray[sep:h-sep:4, 0])
+var2 = np.var(imgray[sep:h-sep:4, int(w / 3)])
+var3 = np.var(imgray[sep:h-sep:4, int(w / 3 * 2)])
+var4 = np.var(imgray[sep:h-sep:4, w - 1])
+
+if var1 < 3*var_r and var4 < 3*var_r and var2 > 3*var_r and var3 > 3*var_r:
+ret = True
+break
+
+# go to next frame
+if var1 > 60:
+place += 1
+
+# go to previous frame
+if var4 > 60:
+place -= 1
+
+iter += 1
+
+return ret, imgray
+
+\end{lstlisting} 
+\subsection{Edge detection}
+The edge detection in the software got implemented after the examples done in the chapter \textbf{Kaptiel ref}. First the already gray image is threshed with the triangle algorithm and saved as \texttt{thresh}. The resulted binary image then is eroded with the square kernel of the size 3x3 and saved as \texttt{erode}. In the end the image returned is the difference between the two images \texttt{thresh} and \texttt{erode}. 
+\begin{lstlisting}
+ret3, thresh = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_TRIANGLE)
+erode = cv2.erode(thresh, kernel, iterations=1)
+return cv2.subtract(thresh, erode)
+\end{lstlisting} 
+\textbf{Caution!} This code only gives the wanted result if the image is converted into a gray image with the OpenCV function \texttt{cv.cvtColor(img, cv2.COLOR\_BGR2GRAY)}. If the image is loaded with the OpenCV function \texttt{cv.imread(file,0)}, with the value \texttt{0} the image is imported as gray image. For unknown reasons this two functions are converting the image different, resulting in different results. With the \texttt{cv.imread(file,0)} function resulting in more noise after the threshold.
+ 
 \subsection{Pattern recognition}
 The binary image containing the edges is now used to search for the contours of the pattern on the plane.
 The pattern consists of 10 rectangles printed on a transparent sheet.

@@ -27,7 +27,9 @@ var1 = np.var(img1)
 var2 = np.var(img2)
 mean2 = np.mean(img2)
 
-
+im = img1 - img2
+plt.figure()
+plt.imshow(im)
 
 #plt.figure(figsize=(7,4))
 #plt.yticks([])
@@ -51,8 +53,7 @@ im = cv.subtract(thresh, erode)
 #plt.imshow(thresh)
 cv.imwrite("threshold.png", thresh)
 cv.imwrite("edge.png", im)
-#plt.figure()
-#plt.imshow(im)
+
 ret2,th2 = cv.threshold(img1,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
 cv.imwrite("otsu.png", th2)
 print(ret3)

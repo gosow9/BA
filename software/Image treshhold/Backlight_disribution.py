@@ -55,11 +55,11 @@ xx = xx*10
 yy = yy*10
 # create the figure
 
-# fig = plt.figure()
-# ax = fig.gca(projection='3d')
-# ax.plot_surface(xx, yy, imgnew ,rstride=1, cstride=1, cmap=plt.cm.coolwarm, linewidth=0)
-# plt.figure()
-# plt.contour(xx, yy, imgnew , cmap=plt.cm.coolwarm, linewidth=0)
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+ax.plot_surface(xx, yy, imgnew ,rstride=1, cstride=1, cmap=plt.cm.coolwarm, linewidth=0)
+plt.figure()
+plt.contour(xx, yy, imgnew , cmap=plt.cm.coolwarm, linewidth=0)
 
 
 # fig = plt.figure()

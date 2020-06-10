@@ -1,6 +1,44 @@
+\newpage
 \section{Hardware}
+In this chapter we give a short oversight what hardware is used and how big the price tag of the demonstrator is. 
+
+\subsection{Back-light}
+The backlight consists of three glass panels of the size 2mm x 600mm x 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{3-development/images/Backlight.png}
+	\caption{3D-Model of the back-light PCB\label{development:pcb}}
+\end{figure} 
+
+\subsection{Computer}
+The computer used is the Jetson Nano Developer Kit. a short technical overview of the Jetson Nano taken from the official website:https://developer.nvidia.com/embedded/jetson-nano-developer-kit \textbf{Ref}\\
+
+\begin{tabular}{ |l c|  }
+	\hline
+	\multicolumn{2}{|c|}{Technical specifications of the Jetson Nano} \\
+	\hline
+	GPU			& 	128-core Maxwell\\
+	CPU			& 	Quad-core ARM A57 @ 1.43 GHz \\
+	Memory 		&	4 GB 64-bit LPDDR4 25.6 GB/s 				\\
+	Storage		&	microSD				\\
+	Video Encode&	4K @ 30 | 4x 1080p @ 30 | 9x 720p @ 30 (H.264/H.265) \\
+	Video Decode&	4K @ 60 | 2x 4K @ 30 | 8x 1080p @ 30 | 18x 720p @ 30 (H.264/H.265) \\
+	Camera 		&	2x MIPI CSI-2 DPHY lanes \\
+	Connectivity&	Gigabit Ethernet, M.2 Key E\\
+	Display 	&	HDMI and display port \\
+	USB 		&	4x USB 3.0, USB 2.0 Micro-B\\
+	Others 		&	GPIO, I2C, I2S, SPI, UART \\
+	Mechanical 	&	69 mm x 45 mm, 260-pin edge connector \\
+	
+	\hline
+\end{tabular}
+
+
+\input{3-development/hardware/camera.tex}
 
 \subsection{Demonstrator}
+The demonstrator consists of three essential components. The framework that holds everything together, the backlight that illuminates from bottom to top and the Jetson nano with a camera. The Jetson nano is mounted on a 3d printed mount together with the camera. The camera is pointed directly at the backlight.  \\
+The framework consists of 15 aluminum profiles which are all bolted together with angles. The framework is also by far the most expensive component of the entire prototype with xxx. 
 
 \begin{figure}[ht]
 	\centering
@@ -9,16 +47,23 @@
 \end{figure} 
 \newpage
 
-\subsection{Back-light}
-The back-light developed for this project had following 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.9\textwidth]{3-development/images/Backlight.png}
-	\caption{3D-Model of the back-light PCB\label{development:pcb}}
-\end{figure} 
-
-\subsection{Computer}
-
-
-\input{3-development/hardware/camera.tex}
 \subsection{Production cost}
+The cost of one demonstrator unit listed.\\
+
+\begin{tabular}{|l|c|c|c|}
+	\hline
+	Part & quantity & price each& total\\
+	\hline
+	Mineral glass & 3 & 10.95 & 32.85\\
+	\hline
+\end{tabular}
+
+The estimated material cost of 1000 units listed.\\
+
+\begin{tabular}{|l|c|c|c|}
+	\hline
+	Part & quantity & price each& total\\
+	\hline
+	Mineral glass & 3 & 10.95 & 32.85\\
+	\hline
+\end{tabular}
