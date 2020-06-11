@@ -1,6 +1,5 @@
 \chapter*{Abstract}
 
-\section*{Introduction}
 Mass production in the industry requires a periodical check of quality and dimensions of each part in different stations of the production chain.
 In the special case of this thesis, the object to be measured is a steel spring.
 Until today the spring has to be measured by hand by a production worker. In a production chain with a capacity of 200 springs per minute only some few springs actually get measured.
@@ -9,7 +8,6 @@ With conventional methods it s hard to get an accurate measurement because of th
 This two difficulties can be solved by using cameras to estimate the geometry.
 But such cameras and lenses suitable for such tasks are in many cases simply to expensive.
 
-\section*{Approach}
 It should be possible to compensate the flaws of a low-cost hardware by the software running on a platform with high computing power.
 The software has to take into account and correct all the imperfections of the lens while at the same time manage to execute these task fast enough so the whole setup can be placed in the production chain.
 Instead of making periodic measurements, it should this way be possible to estimate the geometry of every passing object.
@@ -23,7 +21,6 @@ The camera is mounted parallel to the glass plate.
 The software detects if a object moves through the field of view of the camera and measures the length and diameter.
 These tasks are performed on a Nvidia Jetson Nano developer kit.
 
-\section*{Conclusion}
 In the static case, it was possible to achieve a relative error in the length of 0.22\% and in the diameter of 0.55\%.
 With an object sliding with at an estimated speed of 2\,m/s over the glass plate, a relative error of 1.01\% in the length and 1.60\% in the diameter could be achieved.
 The trigger checks for object in image with 21\,fps and the calculations can be performed at a rate of 15\,fps. 

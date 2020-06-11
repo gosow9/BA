@@ -1,28 +1,29 @@
 \section{Camera Calibration in OpenCV\label{theory:calibration}}
-Camera calibration is needed to obtain camera parameters like focal length and center point.
-Further, it provides a method to correct distortions caused by the imperfect optics according to a certain distortion models.
+A camera has to be calibrated in order to obtain camera parameters like focal length and center-point.
+Further, it provides a method to correct distortions caused by the imperfect optics according to a certain distortion model.
 For that, images of a known pattern (usually a checkerboard) have to be taken from different view-points an angles.
 These points provide the training data which is needed to estimate all the coefficients.
 
 This section describes the theory behind the calibration process in OpenCV.
-Subsections \ref{theory:pinhole} and \ref{theory:distortion} adapt the parts of the theory and notation from the OpenCV 4.3.0 documentation \cite{cv_calib}, which is the latest version at the time of writing this thesis.
+The subsections \ref{theory:pinhole} and \ref{theory:distortion} adapt parts of theory and notation from the OpenCV 4.3.0 documentation \cite{cv_calib}, which is the latest version at the time of writing this thesis.
 
 \subsection{The pinhole camera model\label{theory:pinhole}}
 The functions OpenCV provides to calibrate the camera use the so-called pinhole camera model.
-This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane ($p$). After this step, the point is described as a 2D-point in pixel coordinates.  Figure \ref{theory:pin1} illustrates this setup.
+This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane ($p$). After this step, the point is described as a 2D-point in pixel coordinates. The pinhole-model is shown in Figure \ref{theory:pin1}.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\textwidth]{2-theory/cam/Camera2.pdf}
-	\caption{Pinhole-model whole camera.\label{theory:pin1}}
+	\caption{The pinhole camera model.\label{theory:pin1}}
 \end{figure} 
-
+This setup is simplified by mirroring the image plane at the pinhole, as shown in Figure \ref{theory:pin2}.
 \begin{figure}[ht]
 	\centering
 
 	\includegraphics[width=0.9\textwidth]{2-theory/cam/camera3.pdf}
-	\caption{Pinhole-model simple model.\label{theory:pin2}}
+	\caption{The simplified camera model.\label{theory:pin2}}
 \end{figure}
-The transition from the world-coordinates to the camera-coordiantes can be described as 
+
+The transition from the world-coordinates to the camera-coordinates can be described as 
 \begin{align*}
 \underbrace{\begin{pmatrix}
 X_c\\
@@ -45,7 +46,7 @@ t_y\\
 t_z\\
 \end{pmatrix}}_{t}.
 \end{align*}
-The vector $P_w$ is first rotated by $R$ and the translated by $t$. This can be written in one single matrix:
+The vector $P_w$ is first rotated by $R$ and the translated by $t$. This can be written as one single matrix:
 \begin{align}
 \begin{pmatrix}
 X_c\\
@@ -81,16 +82,16 @@ v
 \end{pmatrix}}_{p}=
 \begin{pmatrix}
 f_x\cdot X_c/Z_c\\
-f_y\cdot y_c/Z_c\\
+f_y\cdot Y_c/Z_c\\
 \end{pmatrix}+
 \begin{pmatrix}
 c_x\\
 c_y
 \end{pmatrix}.
 \end{align*}
-where $f_x$ and $f_y$ are the focal length $f$ (in world units) normalized by their respective pixel size (in world units). Thus $f_x$ and $f_y$ are the same, if the pixels are quadratic.
+where $f_x$ and $f_y$ are the focal length $F$ (in world units) normalized by their respective pixel size (in world units). Thus $f_x$ and $f_y$ are the same, if the pixels are quadratic.
 
-By adding the principal point $\begin{pmatrix}c_x&c_y\end{pmatrix}^T$, which is usually close to the image center, it is taken into account, that pixel-coordinates are specified with respect to the upper left corner of the image plane. .
+By adding the principal point $(c_x\quad c_y)^T$, which is usually close to the image center, it is taken into account, that the origin of the pixel-coordinates is placed in the upper left corner of the image plane.
 It is now simpler to write this in homogeneous coordinates:
 \begin{align}
 \begin{pmatrix}
@@ -162,7 +163,7 @@ The rotation and translation in $\begin{pmatrix}R&|&t\end{pmatrix}$ are called t
 
 \subsection{The distortion model in OpenCV\label{theory:distortion}}
 Non linear distortions, which appear before the projection in \ref{theory:camera-pixel} should be considered too.
-OpenCV takes the effects of radial, tangential and thin prism distortion into account.
+OpenCV compensates the effects of radial, tangential and thin prism distortion.
 \subsubsection{Radial Distortion}
 Radial distortion is caused by the flawed curvature of the lens \cite{weng}.
 It can be modeled with
@@ -186,21 +187,21 @@ y'
 X_c/Z_c\\
 Y_c/Z_c
 \end{pmatrix}
-\end{align*}from
-and r is the radius as taken with respect to the principal point $\begin{pmatrix}c_x&c_y\end{pmatrix}^T$
+\end{align*}
+and r is the radius as taken with respect to the principal point $(c_x\quad c_y)^T$
 \begin{align*}
 r^2 = x'^2 + y'^2.
 \end{align*}
-This type of distortion is symmetrical about the optical axis.
+This type of distortion is symmetrical with respect to the principal point.
 Figure \ref{theory:radial} illustrates the effect on a rectangle.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\textwidth]{2-theory/calibration/distortion/radial.png}
-	\caption{Different types of radial distortion. Black: no distortion, red: $k_1 = 10$, $k_2=11$, $k_3=12$, $k_4=5$, $k_5=6$, $k_6=7$, blue: $k_1 = -2.2$, $k_2=-1.2$, $k_3=-0.8$, $k_4=-0.4$, $k_5=-0.3$, $k_6=-0.2$\label{theory:radial}}
+	\caption{Different types of radial distortion. Black: no distortion, red: $k_1 = 10$, $k_2=11$, $k_3=12$, $k_4=5$, $k_5=6$, $k_6=7$, blue: $k_1 = -2.2$, $k_2=-1.2$, $k_3=-0.8$, $k_4=-0.4$, $k_5=-0.3$, $k_6=-0.2$.\label{theory:radial}}
 \end{figure} 
 
 \subsubsection{Tangential distortion}
-Real optical systems are also subject to tangential distortion. This type of distortion has a decentering effect and occurs, if the line through the optical center of the lens and the principal point is not col-linear with the optical axis \cite{weng}.
+Real optical systems are also modified by the effects of tangential distortion. This type of distortion has a decentering effect and occurs, if the line through the optical center of the lens and the principal point is not col-linear with the optical axis \cite{weng}.
 The model
 \begin{align}
 \begin{pmatrix}
@@ -218,7 +219,7 @@ Figure \ref{theory:tangential} shows the distortion this model introduces.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\textwidth]{2-theory/calibration/distortion/tangential.png}
-	\caption{Different types of tangential distortion (example adapted from \cite{weng}). Black: no distortion, red: $p_1 = -0.15$, $p_2=-0.4$, blue: $p_1 = 0.15$, $p2=-0.4$\label{theory:tangential}}
+	\caption{Different types of tangential distortion (example adapted from \cite{weng}), black: no distortion, red: $p_1 = -0.15$, $p_2=-0.4$, blue: $p_1 = 0.15$, $p2=-0.4$.\label{theory:tangential}}
 \end{figure} 
 
 \subsubsection{Thin prism distortion}
@@ -247,7 +248,7 @@ x'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{1+k_4 r^2+k_5r^4+k_6r^6}+2p_1 x' y'+p_2(r^2+2
 y'\frac{1+k_1 r^2+k_2 r^4+k_3 r^6}{1+k_4 r^2+k_5r^4+k_6r^6}+2p_2x'y'+p_1(r^2+2y'^2)+s_3 r^2+s_4 r^4
 \end{pmatrix}\label{theory:dist}.
 \end{align}
-In summary, a point in normalized camera-coordinates $\begin{pmatrix}x'&y'\end{pmatrix}^T$ is distorted as modeled in \ref{theory:dist}, which leads to the point $\begin{pmatrix}x''&y''\end{pmatrix}^T$. To get the distorted pixel-coordinates (subscript $d$), the projection has to be applied
+In summary, a point in normalized camera-coordinates $(x'\quad y')^T$ is distorted as modeled in \ref{theory:dist}, which leads to the point $(x'' \quad y'')^T$. To get the distorted pixel-coordinates (index $d$), the projection has to be applied
 \begin{align*}
 \begin{pmatrix}
 u_d\\
@@ -272,7 +273,7 @@ which completes the model so far.
 Keep in mind, that when correcting the distortion, equation \ref{theory:dist} has to be inverted.
 
 \subsection{Reprojection error}
-The reprojection error is a value to asses the quality of a calibration.
+The reprojection error is a value to assess the quality of a calibration.
 It is the error between the detected image point and the projection (using the obtained coefficients) of its corresponding world point onto the image plane.
 Since it only uses the points, which where previously used to obtain the calibration-parameters, it can be interpreted as a training error rate.
 
@@ -283,13 +284,13 @@ As argued before, the reprojection error is a training error rate.
 A low reprojection error is therefore not necessarily enough to estimate, how good the calibration really performs.
 
 OpenCV returns with its extended calibration functions not only the camera intrinsics, but also an estimated standard deviation of each coefficient \cite{cv_calib}.
-Under assumption that low standard deviations suggest a good calibration, it is valid to combine all standard deviations into one value using the propagation of uncertainty.
+Under assumption that low standard deviations suggest a good calibration, it is valid to combine all standard deviations into one value, using the propagation of uncertainty.
 
-The propagation of error states that influence of each error of the inputs $x_i$ on the output value $y$ of a function
+The propagation of error (theory taken from \cite{benno}) states that influence of each error of the inputs $x_i$ on the output value $y$ of a function
 \begin{align*}
-	y = f(x_1, x_2,..,x_n)
+	y = f(x_1, x_2,...,x_n)
 \end{align*}
-can be linearly approximated and summed up to \cite{benno}:
+can be linearly approximated and summed up to:
 \begin{align}
 	\Delta y = \sqrt{\sum_{i=1}^{n}\left(\frac{\partial y}{\partial x_i}\Delta x_i \right)^2} \label{theory:prop}.
 \end{align}
@@ -302,8 +303,8 @@ and
 \begin{align*}
 	\Delta y''=\sqrt{\sum_{i=1}^{6}\left(\frac{\partial y''}{\partial k_i}\Delta k_i \right)^2+\sum_{i=1}^{2}\left( \frac{\partial y''}{\partial p_i}\Delta p_i\right)^2+\sum_{i=1}^{4}\left( \frac{\partial y''}{\partial s_i}\Delta s_i\right)^2}.
 \end{align*}
-It is at this point not intended to go into further computations of the derivatives.
-If we look at pixel coordinates from the center of the image, respectively $c_x=0$ and $c_y=0$, the radius (distance from the centerpoint) can be expressed as
+The computed derivatives are listed in the appendix.
+If we look at pixel coordinates with respect to the center of the image, the radius (distance from the center-point) can be expressed as
 \begin{align*}
 	r = \sqrt{(f_x\cdot x'')^2+(f_y\cdot y'')^2}
 \end{align*}
@@ -311,4 +312,4 @@ and therefore, if errors in $f_x$ and $f_y$ are neglected, with the propagation 
 \begin{align}
 	\Delta r = \sqrt{\left(\frac{\partial r}{\partial x''} \Delta x''\right)^2+\left(\frac{\partial r}{\partial y''} \Delta y''\right)^2}\label{theory:delta_r}.
 \end{align}
-This value $\Delta r$ can now be plotted over half the diagonal of an image to compare calibration coefficients of different calibration approaches.
+The value $\Delta r$ can now be used to compare calibration coefficients of different calibration approaches.

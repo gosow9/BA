@@ -1,37 +1,37 @@
 \subsection{Camera}
 The camera used for this project had to following evaluation criteria to meet:
 \begin{itemize}
-	\item compatible with the Jetson Nano enviroment
-	\item a good developer community
-	\item open source drivers
-	\item low cost
-	\item minimum frame rate of 20$\text{[fps]}$
-	\item measurement accuracy of $\frac{1}{10}[\text{mm}]$
+	\item Compatible with the Jetson Nano enviroment
+	\item A good developer community
+	\item Open source drivers
+	\item Low cost
 \end{itemize}
 
-The following is a list of the cameras that have been studied and used in the project\\
+Table \ref{development:cameras} lists some of the cameras that have been evaluated for the project.
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{ |l||c|c|c|  }
+		\hline
+		\multicolumn{4}{|c|}{List of possible Cameras} \\
+		\hline\hline
+		Company				& Raspberry Pi 		& Raspberry Pi	& Arducam\\
+		Camera Name			& Camera Module V2 	& HQ Camera		& Arducam IMX219 \\
+		&					&				&Low Distortion M12 \\
+		&					&				&Mount Camera Module\\
+		\hline
+		Price				& \$25 				& \$50  		& \$39.99 \\
+		Camera Sensor   	& Sony IMX219 		& Sony IMX477	& Sony IMX219\\
+		
+		Still resolution	& 8M 				& 12M			& 12.3M\\
+		Sensor resolution 	& 3280 x 2464 		& 4056 x 3040 	& 3280 x 2464\\
+		Linux integration   & V4L2 driver 		& V4L2 driver	& V4L2 driver\\
+		Pixel size			& 1.12 x 1.12 $\mu\text{m}$	& 1.55 x 1.55$\mu\text{m}$ & 1.12 x 1.12 $\mu\text{m}$ \\
+		Focal length		& 3.04$[\text{mm}]$ & Depends on lens & 2.8$[\text{mm}]$\\
+		Focal ratio			& 2.0  				& Depends on lens & 2.8\\
+		View angle Horizontal & 62.2 deg.		& Depends on lens & 75 deg.\\
+		\hline
+	\end{tabular}
+\caption{List of suitable cameras.\label{development:cameras}}	
+\end{table}
 
-\begin{tabular}{ |l||c|c|c|  }
-	\hline
-	\multicolumn{4}{|c|}{List of possible Cameras} \\
-	\hline\hline
-	Company				& Raspberry Pi 		& Raspberry Pi	& Arducam\\
-	Camera Name			& Camera Module V2 	& HQ Camera		& Arducam IMX219 \\
-						&					&				&Low Distortion M12 \\
-						&					&				&Mount Camera Module\\
-	\hline
-	Price				& \$25 				& \$50  		& \$39.99 \\
-	Camera Sensor   	& Sony IMX219 		& Sony IMX477	& Sony IMX219\\
-	
-	Still resolution	& 8M 				& 12M			& 12.3M\\
-	Sensor resolution 	& 3280 x 2464 		& 4056 x 3040 	& 3280 x 2464\\
-	Linux integration   & V4L2 driver 		& V4L2 driver	& V4L2 driver\\
-	Pixel size			& 1.12 x 1.12 $\mu\text{m}$	& 1.55 x 1.55$\mu\text{m}$ & 1.12 x 1.12 $\mu\text{m}$ \\
-	Focal length		& 3.04$[\text{mm}]$ & Depends on lens & 2.8$[\text{mm}]$\\
-	Focal ratio			& 2.0  				& Depends on lens & 2.8\\
-	View angle Horizontal & 62.2 deg.		& Depends on lens & 75 deg.\\
-	\hline
-\end{tabular}
-\\
-
-In the end all results were measured with the standard Raspberry Pi Camera Module V2 since it was the cheapest one in the list. 
+In the end all results were measured with the standard Raspberry Pi Camera Module V2 since it was the cheapest one in the list and seems to deliver the desired results.

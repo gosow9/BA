@@ -38,7 +38,10 @@ plt.yticks([])
 plt.hist(img1.ravel(), bins=256, range=(0, 256),color="tab:blue")
 plt.plot([22,h.argmax()],[0,h.max()], color="tab:red")
 plt.savefig("hist_feder2.pdf",bbox_inches="tight")
-
+plt.text(95,65000,"max. distance", color="magenta", size=12, bbox=dict(boxstyle="square",
+                   ec=(1., 1, 1),
+                   fc=(1, 1, 1),
+                   ))
 dist = 0
 a = h.max()
 b = 22 - h.argmax()
@@ -56,16 +59,14 @@ def f(x):
     x=x-22
     return 297181/122*x
 y = 62
+
 plt.plot([y,thresh],[f(y),h[thresh]], color= "magenta")
 plt.plot([thresh,thresh],[0,h[thresh]],'--', color= "magenta")
 plt.plot([thresh],[h[thresh]],'o', color= "magenta")
 plt.plot([y],[f(y)],'o', color= "magenta")
-plt.text(90,60000,"max. distance", color="magenta", size=12, bbox=dict(boxstyle="square",
-                   ec=(1., 1, 1),
-                   fc=(1, 1, 1),
-                   ))
 
-plt.title("thresh value = {}".format(thresh))
+
+plt.title("Thresh value = {}".format(thresh))
 plt.savefig("triangle.pdf")
 
 

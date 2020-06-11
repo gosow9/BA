@@ -36,7 +36,7 @@ for i,nr in zip(imag, range(len(imag))):
     ax.contour(xx, yy, img , cmap=plt.cm.coolwarm)
     fig.colorbar(surf, shrink=1, aspect=10)
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-    plt.suptitle("Max value = {}, Min value = {}, Variance = {:2f}, Mean = {:2f}".format(val_max, val_min, val_var, val_mean))
+    plt.suptitle("Max value = {}, Min value = {}, Variance = {:2f}, Mean = {:2f}".format(val_max, val_min, val_var, val_mean)) 
     plt.savefig("3d{}.png".format(nr),dpi=150)
 
     

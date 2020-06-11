@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.1 $
+% $ biblatex bbl format version 2.9 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -21,18 +21,18 @@
   \datalist[entry]{none/global//global/global}
     \entry{cv_calib}{online}{}
       \name{author}{1}{}{%
-        {{hash=72da2b7de9e27d5dfcf80c748b73e6c0}{%
+        {{hash=3446eda2453cb329003a55ba37a9f304}{%
            family={{Bradski, G.}},
            familyi={B\bibinitperiod}}}%
       }
-      \strng{namehash}{72da2b7de9e27d5dfcf80c748b73e6c0}
-      \strng{fullhash}{72da2b7de9e27d5dfcf80c748b73e6c0}
-      \strng{bibnamehash}{72da2b7de9e27d5dfcf80c748b73e6c0}
-      \strng{authorbibnamehash}{72da2b7de9e27d5dfcf80c748b73e6c0}
-      \strng{authornamehash}{72da2b7de9e27d5dfcf80c748b73e6c0}
-      \strng{authorfullhash}{72da2b7de9e27d5dfcf80c748b73e6c0}
+      \strng{namehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{fullhash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{bibnamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authorbibnamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authornamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authorfullhash}{3446eda2453cb329003a55ba37a9f304}
       \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{month}{4}
@@ -49,30 +49,30 @@
     \endentry
     \entry{weng}{article}{}
       \name{author}{3}{}{%
-        {{hash=79f9660a4616bc43a166e9329086be33}{%
+        {{hash=1eeeda988b65fcca4d95b17d604119b9}{%
            family={{Weng}},
            familyi={W\bibinitperiod},
            given={J.},
            giveni={J\bibinitperiod}}}%
-        {{hash=916d3a027b84e50541df203c243cc949}{%
+        {{hash=8b9f796dee36f667d14da89f7a3a2ad5}{%
            family={{Cohen}},
            familyi={C\bibinitperiod},
            given={P.},
            giveni={P\bibinitperiod}}}%
-        {{hash=852ff8e36bd33c1d8406dcaafaeae143}{%
+        {{hash=a4a66b4b784833632c46e81098dd2857}{%
            family={{Herniou}},
            familyi={H\bibinitperiod},
            given={M.},
            giveni={M\bibinitperiod}}}%
       }
-      \strng{namehash}{f2dc796ce2735287804bca6a03c486dc}
-      \strng{fullhash}{f2dc796ce2735287804bca6a03c486dc}
-      \strng{bibnamehash}{f2dc796ce2735287804bca6a03c486dc}
-      \strng{authorbibnamehash}{f2dc796ce2735287804bca6a03c486dc}
-      \strng{authornamehash}{f2dc796ce2735287804bca6a03c486dc}
-      \strng{authorfullhash}{f2dc796ce2735287804bca6a03c486dc}
+      \strng{namehash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{fullhash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{bibnamehash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{authorbibnamehash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{authornamehash}{b9324e4fca6ad09a4e6e3a09cd453151}
+      \strng{authorfullhash}{b9324e4fca6ad09a4e6e3a09cd453151}
       \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Transactions on Pattern Analysis and Machine Intelligence}
@@ -85,20 +85,20 @@
     \endentry
     \entry{benno}{article}{}
       \name{author}{1}{}{%
-        {{hash=046376589f5e3d8a5d6af8580c49fc70}{%
+        {{hash=4bf640b2169c9d1210354074ac0eb592}{%
            family={Bucher},
            familyi={B\bibinitperiod},
            given={B.},
            giveni={B\bibinitperiod}}}%
       }
-      \strng{namehash}{046376589f5e3d8a5d6af8580c49fc70}
-      \strng{fullhash}{046376589f5e3d8a5d6af8580c49fc70}
-      \strng{bibnamehash}{046376589f5e3d8a5d6af8580c49fc70}
-      \strng{authorbibnamehash}{046376589f5e3d8a5d6af8580c49fc70}
-      \strng{authornamehash}{046376589f5e3d8a5d6af8580c49fc70}
-      \strng{authorfullhash}{046376589f5e3d8a5d6af8580c49fc70}
+      \strng{namehash}{4bf640b2169c9d1210354074ac0eb592}
+      \strng{fullhash}{4bf640b2169c9d1210354074ac0eb592}
+      \strng{bibnamehash}{4bf640b2169c9d1210354074ac0eb592}
+      \strng{authorbibnamehash}{4bf640b2169c9d1210354074ac0eb592}
+      \strng{authornamehash}{4bf640b2169c9d1210354074ac0eb592}
+      \strng{authorfullhash}{4bf640b2169c9d1210354074ac0eb592}
       \field{sortinit}{9}
-      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{sortinithash}{1dd72ab054147731c9d824b49aba0534}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{month}{4}
@@ -107,25 +107,25 @@
     \endentry
     \entry{ruh}{article}{}
       \name{author}{2}{}{%
-        {{hash=aab2b771c09ab85954d762fb7fdc13f6}{%
+        {{hash=d45c89e3280f559717ab4496e3c285c2}{%
            family={{Ruh}},
            familyi={R\bibinitperiod},
            given={A.},
            giveni={A\bibinitperiod}}}%
-        {{hash=046376589f5e3d8a5d6af8580c49fc70}{%
+        {{hash=4bf640b2169c9d1210354074ac0eb592}{%
            family={{Bucher}},
            familyi={B\bibinitperiod},
            given={B.},
            giveni={B\bibinitperiod}}}%
       }
-      \strng{namehash}{8350b0f7ba82a9face3d9fbcc09805d2}
-      \strng{fullhash}{8350b0f7ba82a9face3d9fbcc09805d2}
-      \strng{bibnamehash}{8350b0f7ba82a9face3d9fbcc09805d2}
-      \strng{authorbibnamehash}{8350b0f7ba82a9face3d9fbcc09805d2}
-      \strng{authornamehash}{8350b0f7ba82a9face3d9fbcc09805d2}
-      \strng{authorfullhash}{8350b0f7ba82a9face3d9fbcc09805d2}
+      \strng{namehash}{e2c836934e95fa770df6dd8d58ef3ab2}
+      \strng{fullhash}{e2c836934e95fa770df6dd8d58ef3ab2}
+      \strng{bibnamehash}{e2c836934e95fa770df6dd8d58ef3ab2}
+      \strng{authorbibnamehash}{e2c836934e95fa770df6dd8d58ef3ab2}
+      \strng{authornamehash}{e2c836934e95fa770df6dd8d58ef3ab2}
+      \strng{authorfullhash}{e2c836934e95fa770df6dd8d58ef3ab2}
       \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{month}{8}
@@ -134,9 +134,243 @@
       \field{pages}{789\bibrangedash 925}
       \range{pages}{137}
     \endentry
-    \entry{incircles}{online}{}
+    \entry{backlight}{online}{}
       \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labeltitlesource}{title}
+      \field{title}{{Backlight}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.vision-doctor.com/en/illumination-techniques/backlight-illumination.html
+      \endverb
+      \verb{url}
+      \verb https://www.vision-doctor.com/en/illumination-techniques/backlight-illumination.html
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{screw1}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labeltitlesource}{title}
+      \field{title}{{Screw 1}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.vision-doctor.com/images/stories/beleuchtung/durchlicht/Schraube_durchlicht_direkt_aufgelegt640x480.jpg
+      \endverb
+      \verb{url}
+      \verb https://www.vision-doctor.com/images/stories/beleuchtung/durchlicht/Schraube_durchlicht_direkt_aufgelegt640x480.jpg
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{screw2}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labeltitlesource}{title}
+      \field{title}{{Screw 2}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.vision-doctor.com/images/stories/beleuchtung/durchlicht/Schraube_durchlicht_weit_entfernt_640x480.jpg
+      \endverb
+      \verb{url}
+      \verb https://www.vision-doctor.com/images/stories/beleuchtung/durchlicht/Schraube_durchlicht_weit_entfernt_640x480.jpg
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{filter}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labeltitlesource}{title}
+      \field{title}{{Filter}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.vision-doctor.com/images/stories/filter/lightcontrol/Light_Control_Film_Prinzip.png
+      \endverb
+      \verb{url}
+      \verb https://www.vision-doctor.com/images/stories/filter/lightcontrol/Light_Control_Film_Prinzip.png
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{filter1}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labeltitlesource}{title}
+      \field{title}{{Objects 1}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.vision-doctor.com/images/stories/filter/lightcontrol/Durchlicht_ohne_LightControl_Filter.jpg
+      \endverb
+      \verb{url}
+      \verb https://www.vision-doctor.com/images/stories/filter/lightcontrol/Durchlicht_ohne_LightControl_Filter.jpg
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{filter2}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labeltitlesource}{title}
+      \field{title}{{Objects 2}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.vision-doctor.com/images/stories/filter/lightcontrol/Durchlicht_mit_LightControl_Filter.jpg
+      \endverb
+      \verb{url}
+      \verb https://www.vision-doctor.com/images/stories/filter/lightcontrol/Durchlicht_mit_LightControl_Filter.jpg
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{cv_thresh}{online}{}
+      \name{author}{1}{}{%
+        {{hash=3446eda2453cb329003a55ba37a9f304}{%
+           family={{Bradski, G.}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{fullhash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{bibnamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authorbibnamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authornamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authorfullhash}{3446eda2453cb329003a55ba37a9f304}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{4}
+      \field{title}{{Miscellaneous Image Transformations}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.opencv.org/4.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
+      \endverb
+      \verb{url}
+      \verb https://docs.opencv.org/4.3.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{cv_code}{online}{}
+      \name{author}{1}{}{%
+        {{hash=3446eda2453cb329003a55ba37a9f304}{%
+           family={{Bradski, G.}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{fullhash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{bibnamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authorbibnamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authornamehash}{3446eda2453cb329003a55ba37a9f304}
+      \strng{authorfullhash}{3446eda2453cb329003a55ba37a9f304}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{4}
+      \field{title}{{thresh.cpp}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/opencv/opencv/blob/master/modules/imgproc/src/thresh.cpp
+      \endverb
+      \verb{url}
+      \verb https://github.com/opencv/opencv/blob/master/modules/imgproc/src/thresh.cpp
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{jetson}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labeltitlesource}{title}
+      \field{title}{{Jetson Nano developer kit}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://developer.nvidia.com/embedded/jetson-nano-developer-kit
+      \endverb
+      \verb{url}
+      \verb https://developer.nvidia.com/embedded/jetson-nano-developer-kit
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{led}{manual}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labeltitlesource}{title}
+      \field{title}{{J Series 2835 3-V LEDs}}
+      \field{year}{2019}
+      \keyw{manual}
+    \endentry
+    \entry{vignetting}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labeltitlesource}{title}
+      \field{month}{8}
+      \field{title}{{Vignetting}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Vignetting
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Vignetting
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{exposure}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{title}{{Exposure (photography)}}
+      \field{urlday}{6}
+      \field{urlmonth}{11}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Exposure_(photography)#Automatic_exposure
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Exposure_(photography)#Automatic_exposure
+      \endverb
+      \keyw{online}
+    \endentry
+    \entry{incircles}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
       \field{labeltitlesource}{title}
       \field{month}{5}
       \field{title}{{Inkreis}}

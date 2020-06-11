@@ -1,20 +1,17 @@
-[0] Config.pm:304> INFO - This is Biber 2.14
-[0] Config.pm:307> INFO - Logfile is 'main.blg'
-[51] biber:322> INFO - === Mi Jun 10, 2020, 18:34:50
-[60] Biber.pm:415> INFO - Reading 'main.bcf'
-[112] Biber.pm:943> INFO - Found 5 citekeys in bib section 0
-[121] Biber.pm:4256> INFO - Processing section 0
-[121] Utils.pm:75> INFO - Globbing data source 'references.bib'
-[121] Utils.pm:91> INFO - Globbed data source 'references.bib' to references.bib
-[128] Biber.pm:4455> INFO - Looking for bibtex format file 'references.bib' for section 0
-[128] bibtex.pm:1653> INFO - LaTeX decoding ...
-[134] bibtex.pm:1471> INFO - Found BibTeX data source 'references.bib'
-[135] Utils.pm:304> WARN - Duplicate entry key: 'incircles' in file 'references.bib', skipping ...
-[145] Utils.pm:304> WARN - Entry 'cv_calib' (references.bib): Invalid format '2020-14-05' of date field 'urldate' - ignoring
-[161] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[161] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[161] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[161] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
-[165] bbl.pm:652> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[167] bbl.pm:755> INFO - Output to main.bbl
-[167] Biber.pm:128> INFO - WARNINGS: 2
+[0] Config.pm:302> INFO - This is Biber 2.9
+[0] Config.pm:305> INFO - Logfile is 'main.blg'
+[14] biber:313> INFO - === Do Jun 11, 2020, 21:02:19
+[25] Biber.pm:371> INFO - Reading 'main.bcf'
+[59] Biber.pm:857> INFO - Found 17 citekeys in bib section 0
+[66] Biber.pm:3981> INFO - Processing section 0
+[71] Biber.pm:4154> INFO - Looking for bibtex format file 'references.bib' for section 0
+[72] bibtex.pm:1468> INFO - LaTeX decoding ...
+[84] bibtex.pm:1294> INFO - Found BibTeX data source 'references.bib'
+[87] Utils.pm:169> WARN - Entry 'cv_calib' (references.bib): Invalid format '2020-14-05' of date field 'urldate' - ignoring
+[110] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[111] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[111] Biber.pm:3809> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[111] Biber.pm:3815> INFO - No sort tailoring available for locale 'en-US'
+[118] bbl.pm:617> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[120] bbl.pm:720> INFO - Output to main.bbl
+[121] Biber.pm:110> INFO - WARNINGS: 1
