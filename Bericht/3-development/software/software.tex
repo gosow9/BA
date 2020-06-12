@@ -68,16 +68,49 @@ Figure \ref{development:sep} visualizes these two variables.
 The red section is the part of the image, in which the geometry pattern is searched and the blue stripe in the middle defines the section where the object has to be.
 
 \subsection{Trigger}
-The trigger is implemented as a function which reads frames continuously and computes the variance of the first column.
-If this variance is low, the whole column is uniform and therefore no spring is entering the frame (the springs are moving from left to right).
-If the variance is higher than a certain threshold, it is assumed that an object is entering the frame and the trigger searches in the next 5 frames for an image in which contains the whole object.
-This is done again by calculating the variances of three more columns, two around the center and the last column of the image.
-If a frame contains the whole object, it is returned to the main loop to make further calculations.
-This way it is possible to run the trigger at a max of 22\,fps.
+The trigger is implemented as a function with the intention to be called by the main loop, which can only continue to run further when the variable \texttt{ret} is set to \texttt{True} by the return value of the trigger function.
+The following code snipped shows how the trigger function is used in the main loop.
+\begin{lstlisting}
+	# get the image
+	ret_val, img = cap.read()
+	imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	
+	# get an image from the trigger
+	ret, imgray = trigger(imgray, np.mean(var))
+	if ret:
+	# edge detection
+\end{lstlisting}
+Implemented like that, the main loop continuously reads frames trough the OpenCV function \texttt{cap.read()}, transforms the frame into a grayscale image and calls the trigger function passing the grayscale image as an argument.
+The trigger function then calculates the variance of every tenth value of the first column of the given argument. This column represents the first trigger line and is displayed in Figure \ref{development:trigger} as a red line. The corresponding python code in the trigger function looks like this:
+\begin{lstlisting}
+	# variance of the first column
+	var = np.var(imgray[sep:h - sep:10, 0])
+\end{lstlisting}
+If this variance is lower than a typical value for this column, the whole column is assumed to be uniform and therefore no spring is entering the frame (the springs are moving from left to right trough the image). 
+The trigger function not being activated returns a \texttt{False} value. In the main loop the variable \texttt{ret} is set to \texttt{False}, leading the loop to start over again and loading the next image.
 
-Turns out that this is not fast enough.
-While testing the software, in about half of the cases the problem occurred, that the object could be detected entering the frame, but moved to fast and was therefore the next frame already in partly outside.
-In such a case, no image contains the whole object and no measurements can be done.
+If the variance is higher than a certain threshold, it is assumed that an object is entering the frame and the trigger searches in the next 4 frames for an image which contains the whole object.
+This is done again by calculating the variances of four trigger lines, the first column, two around the center and the last column of the image. 
+The reason to save 4 images right after another is to reduce the time between the function \texttt{cap.read()} calls. 
+The placement of the first trigger line (displayed in red) and the other three trigger lines (displayed in blue) are shown in  the Figure \ref{development:trigger}.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{3-development/software/images/trigger.pdf}
+	\caption{Trigger lines.\label{development:trigger}}
+\end{figure}
+
+If a frame contains the whole object, it is returned to the main loop to make further calculations.
+This way it is possible to run the trigger at a max of 22\,fps. 
+Thus the 28\,fps, that are actually possible with the camera are not fully utilized. 
+This slowdown is caused by the \texttt{cap.read()} function used to load the images from the camera driver into OpenCV. 
+Since the software is implemented in python, only very limited interactions with the camera driver are possible. 
+This problem could be solved by implementing the software in C++ and thus having access to the complete camera driver and its options.
+
+While testing the software, in about half of the cases the problem occurred, that the object could be detected entering the frame, but was already partly outside on the other side the next frame. 
+This is caused by a too high speed of the object. 
+With a maximum detection frame rate of 22\,fps, the spring must not exceed a maximum speed of \textbf{xx m/s}.
+The maximum speed is calculated by the camera's field of view width (in mm) subtracted by the maximal spring length the camera detects without correction (in mm), the resulting value then gets divided by the time of one frame. 
+In the case the spring moves faster than the maximum speed, no image contains the whole object and no measurements can be done.
 
 \subsection{Threshold and edge detection}
 To measure a object passing the camera's field of view, the outlines of the object are needed.
@@ -343,14 +376,33 @@ where $(x\quad y)^T$ are coordinates of the points of the object, $(x'\quad y')^
 By applying this transformation beforehand, the geometry estimation is independent of the the angle the object has to the horizontal. 
 
 \subsection{Compensation of the rolling shutter}
-The compensation of the rolling shutter is straight forward.
-The Raspberry Pi Camera has a rolling shutter which stores the pixel values row per row (horizontal).
+Because the object passes through our measuring stand at a certain speed, a so-called rolling shutter error occurs. 
+As the name suggests, this error is caused by the rolling shutter of the camera sensor. 
+The Raspberry Pi camera has a horizontal rolling shutter, which stores the pixels row by row.
 The effect this has in the image can be seen in Figure \ref{development:rolling}.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{3-development/software/images/rolling.png}
+	\includegraphics[width=0.9\textwidth]{3-development/software/images/rolling.pdf}
 	\caption{Rolling shutter effect on a spring moving through the frame (left to right).\label{development:rolling}}
 \end{figure}
-Making measurements with this image makes it necessary to correct the length.
- 
+It can be seen that the object is distorted horizontally.
+Since we can assume that the object always passes horizontally through the image, only the length of the object needs to be corrected.
+If the speed of the objects are assumed constant the fix can be made as by simply reducing the length according to our constant speed.
+To compensate for the distortion caused by the rolling shutter, it is first necessary to determine how many rows $N_{row}$ describe the diameter of the object.
+Next, the time delay $t_d$ of the first row to the last one is calculated 
+\begin{align*}
+t_d = \frac{1\cdot N_{row}}{fps \cdot N_h}
+\end{align*}
+with the frame rate $fps$ and the total number of rows $N_h$.
+
+\begin{lstlisting}
+ # compute amount of rows
+n_rows = (bl[1] - tl[1] + br[1] - tr[1]) / 2
+
+# get the time delay between the rows
+t_delay = 1 / 28 / h * n_rows
+
+# correct the rolling shutter
+L -= t_delay * v_est * 1000 / ppm
+\end{lstlisting} 
 
