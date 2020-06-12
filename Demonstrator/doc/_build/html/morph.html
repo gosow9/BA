@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>morph module &#8212; Demonstrator 1.0 documentation</title>
@@ -32,8 +32,131 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="morph-module">
-<h1>morph module<a class="headerlink" href="#morph-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-morph">
+<span id="morph-module"></span><h1>morph module<a class="headerlink" href="#module-morph" title="Permalink to this headline">¶</a></h1>
+<p>This modul contains the morphological functions.</p>
+<dl class="py function">
+<dt id="morph.get_edge_dilated">
+<code class="sig-prename descclassname">morph.</code><code class="sig-name descname">get_edge_dilated</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="n">kernel</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/morph.html#get_edge_dilated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#morph.get_edge_dilated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements edge detection with an dilated image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>InputArray</em>) – 2d image</p></li>
+<li><p><strong>kernel</strong> (<em>InputArray</em>) – errosion kernel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Processed image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="morph.get_edge_erroded">
+<code class="sig-prename descclassname">morph.</code><code class="sig-name descname">get_edge_erroded</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="n">kernel</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/morph.html#get_edge_erroded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#morph.get_edge_erroded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements edge detection with an eroded image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>InputArray</em>) – 2d image</p></li>
+<li><p><strong>kernel</strong> (<em>InputArray</em>) – errosion kernel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Processed image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="morph.get_edge_errosion_dilation">
+<code class="sig-prename descclassname">morph.</code><code class="sig-name descname">get_edge_errosion_dilation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="n">kernel</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/morph.html#get_edge_errosion_dilation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#morph.get_edge_errosion_dilation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements edge detection with an difference of a dilated and eroded image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>InputArray</em>) – 2d image</p></li>
+<li><p><strong>kernel</strong> (<em>InputArray</em>) – errosion kernel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Processed image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="morph.get_edge_grad">
+<code class="sig-prename descclassname">morph.</code><code class="sig-name descname">get_edge_grad</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="n">kernel</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/morph.html#get_edge_grad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#morph.get_edge_grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements edge detection with an difference of a dilated and eroded image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>InputArray</em>) – 2d image</p></li>
+<li><p><strong>kernel</strong> (<em>InputArray</em>) – errosion kernel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Processed image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="morph.opening_by_reconstruction">
+<code class="sig-prename descclassname">morph.</code><code class="sig-name descname">opening_by_reconstruction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="n">erosion_kernel</span></em>, <em class="sig-param"><span class="n">dilation_kernel</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/morph.html#opening_by_reconstruction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#morph.opening_by_reconstruction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements opening by reconstruction with given kernels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>InputArray</em>) – Source image</p></li>
+<li><p><strong>erosion_kernel</strong> (<em>InputArray</em>) – Erosion kernel</p></li>
+<li><p><strong>dilation_kernel</strong> (<em>InputArray</em>) – Dilation kernel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Processed image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="morph.reconstruction_by_dilation">
+<code class="sig-prename descclassname">morph.</code><code class="sig-name descname">reconstruction_by_dilation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="n">mask</span></em>, <em class="sig-param"><span class="n">dilation_kernel</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/morph.html#reconstruction_by_dilation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#morph.reconstruction_by_dilation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements reconstruction by dilation with given kernel and mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>InputArray</em>) – Eroded image</p></li>
+<li><p><strong>mask</strong> (<em>InputArray</em>) – Source image</p></li>
+<li><p><strong>dilation_kernel</strong> (<em>InputArray</em>) – Dilation kernel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Processed image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -97,7 +220,7 @@
       &copy;2020, Cédric Renda, Manuel Tischhauser.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
