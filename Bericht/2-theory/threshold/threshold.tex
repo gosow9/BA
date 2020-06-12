@@ -10,7 +10,7 @@ Since the method \texttt{THRESH\_TRIANGLE} is not very well described in the Ope
 	\caption{Threshold triangle shown in histogram.\label{theory:triangle}}
 \end{figure} 
 The hypotenuse of the triangle is now used to find orthogonal line between the hypotenuse and the histogram. To find this, usually all distance values have to be calculated. To find the correct length between the histogram and the hypotenuse, there is some complex geometry involved which is time consuming. To make the algorithm faster, OpenCV makes an approximation. To better understand what is calculated we look at the OpenCV C++ code in Figure \ref{theory:code}, which implements the triangle threshold. 
-
+\clearpage
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.8,0,0.82}

@@ -118,7 +118,7 @@ This introduces noise into each image.
 
 To get more insight on the properties of the noise, an image of a white background was taken.
 The histogram of this image with a Gaussian fit is shown in Figure \ref{development:noise_dist}.
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/noise_distribution.pdf}
 	\caption{Histogram of an uniform white background with an Gaussian fit.\label{development:noise_dist}}
@@ -151,7 +151,7 @@ Again it seems that the calibration is not very reliable after a standard deviat
 One can conclude, that noise does not affect the calibration directly, but can lead to unreliable results.
 Thus, it is necessary to keep noise as low as possible.
 This can be done by letting enough light reach the camera sensor, that the exposure control can keep the light sensitivity (ISO) low.
-
+\clearpage
 \subsubsection{Blurred images}
 To get a grasp how the sharpness of each image affect the calibration, the numpy-checkerboards where convolved with a gaussian kernel of size $71\times 71$.
 A blurred image is show in Figure \ref{development:nump_blurred}.
@@ -171,6 +171,7 @@ Even tough the reprojection error of the second calibration is slightly higher, 
 But if the images are blurred even more (bigger kernel size), it is not possible to detect the checkerboard corners.
 Images, which are not sharp, do therefore not affect the calibration, since slightly blurred images do not make the calibration worse, and strongly blurred images are sorted out since no checkerboard corners can be detected.
 
+\clearpage
 \subsubsection{Summary}
 Concerning the images used for the calibration, the most important insights are:
 \begin{itemize}
@@ -180,7 +181,6 @@ Concerning the images used for the calibration, the most important insights are:
 \end{itemize}
 By taking these points into account, it should be possible to obtain the optimal calibration with the introduced methods.
 
-\clearpage
 \subsection{Fixed calibration}
 Following table displays the best possible set of coefficients with their corresponding standard deviation obtained before taking all the learned points into account, denoted with the superscript $(1)$.
 \begin{center}
