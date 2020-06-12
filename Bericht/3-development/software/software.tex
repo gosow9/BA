@@ -1,11 +1,12 @@
+\clearpage
 \section{Software}
 To measure an object with a camera, the software has to perform lots of different tasks in a certain period of time.
-First off, it needs to take the non-linear distortions of the camera into account.
+First, it needs to take the non-linear distortions of the camera into account.
 After that, some sort of trigger is needed, to check the frames for objects and pass a frame on, if an object is within the frame.
 Now, the software needs to detect a known pattern on the plane where the object lies.
 With the known distances of the pattern, a pixel per metric unit can be calculated.
 This unit describes, how many pixels (depended on the camera-pattern distance) fit into one metric unit (in this case mm) and is used to convert dimensions in pixel to dimensions in mm and vice versa.
-This pattern can also be used to calculate a transformation matrix which compensates slight angular errors resulting from an imprecise mounting of the camera.
+This pattern can also be used to calculate a transformation matrix, which compensates slight angular errors resulting from an imprecise mounting of the camera.
 After all these steps, the object has to be recognized and
 finally, the dimensions of the object have to be estimated.
 
@@ -41,9 +42,9 @@ It is important to keep in mind, that OpenCV uses a coordinate-system with a swi
 \lstset{style=mystyle}
 
 \subsection{Initialization}
-In the first step, global variables like frame height \texttt{h} and width \texttt{w} are defined.
-The camera intrinsics, which where obtained in the calibration previously are loaded from a .txt-file into the script, which are used to compute the \texttt{map\_x} and \text{map\_y}.
-This is shown in the following code snipped.
+In the first step, global variables such as frame-height \texttt{h} and width \texttt{w} are defined.
+The camera intrinsics, which where obtained in the calibration previously are loaded from a txt-file into the script, which are used to compute the \texttt{map\_x} and \text{map\_y}.
+This is shown in the following code snippet.
 \begin{lstlisting}
 	# load calibration parameters
 	mtx = np.loadtxt('mtx_normal.txt')
@@ -53,7 +54,7 @@ This is shown in the following code snipped.
 	map_x, map_y = cv2.initUndistortRectifyMap(mtx, dst, None, mtx,
 	                                           (w, h), cv2.CV_32FC1)
 \end{lstlisting}
-These are two maps are arrays which contain the inversion of the distortion for each image point.
+These two maps are arrays which contain the inversion of the distortion model for each image point.
 This calculation has to be done only one time before entering the main loop and can be used efficiently afterwards to undistort points in the image.
 
 There are two more variables the user can define, depended on the environment, geometry pattern and camera-glass plate distance.
@@ -67,9 +68,10 @@ Figure \ref{development:sep} visualizes these two variables.
 \end{figure}
 The red section is the part of the image, in which the geometry pattern is searched and the blue stripe in the middle defines the section where the object has to be.
 
+\newpage
 \subsection{Trigger}
 The trigger is implemented as a function with the intention to be called by the main loop, which can only continue to run further when the variable \texttt{ret} is set to \texttt{True} by the return value of the trigger function.
-The following code snipped shows how the trigger function is used in the main loop.
+The following code snippet shows how the trigger function is used in the main loop.
 \begin{lstlisting}
 	# get the image
 	ret_val, img = cap.read()
@@ -81,7 +83,7 @@ The following code snipped shows how the trigger function is used in the main lo
 	# edge detection
 \end{lstlisting}
 Implemented like that, the main loop continuously reads frames trough the OpenCV function \texttt{cap.read()}, transforms the frame into a grayscale image and calls the trigger function passing the grayscale image as an argument.
-The trigger function then calculates the variance of every tenth value of the first column of the given argument. This column represents the first trigger line and is displayed in Figure \ref{development:trigger} as a red line. The corresponding python code in the trigger function looks like this:
+The trigger function then calculates the variance over every tenth value of the first column of the given argument. This column represents the first trigger line and is displayed in Figure \ref{development:trigger} as a red line. The corresponding Python code in the trigger function looks like this:
 \begin{lstlisting}
 	# variance of the first column
 	var = np.var(imgray[sep:h - sep:10, 0])
@@ -89,9 +91,9 @@ The trigger function then calculates the variance of every tenth value of the fi
 If this variance is lower than a typical value for this column, the whole column is assumed to be uniform and therefore no spring is entering the frame (the springs are moving from left to right trough the image). 
 The trigger function not being activated returns a \texttt{False} value. In the main loop the variable \texttt{ret} is set to \texttt{False}, leading the loop to start over again and loading the next image.
 
-If the variance is higher than a certain threshold, it is assumed that an object is entering the frame and the trigger searches in the next 4 frames for an image which contains the whole object.
+If the variance is higher than a certain threshold, it is assumed that an object is entering the frame and the trigger searches in the next four frames for an image, which contains the whole object.
 This is done again by calculating the variances of four trigger lines, the first column, two around the center and the last column of the image. 
-The reason to save 4 images right after another is to reduce the time between the function \texttt{cap.read()} calls. 
+The reason to save four images right after another is to reduce the time between the function \texttt{cap.read()} calls. 
 The placement of the first trigger line (displayed in red) and the other three trigger lines (displayed in blue) are shown in  the Figure \ref{development:trigger}.
 \begin{figure}[ht]
 	\centering
@@ -103,21 +105,25 @@ If a frame contains the whole object, it is returned to the main loop to make fu
 This way it is possible to run the trigger at a max of 22\,fps. 
 Thus the 28\,fps, that are actually possible with the camera are not fully utilized. 
 This slowdown is caused by the \texttt{cap.read()} function used to load the images from the camera driver into OpenCV. 
-Since the software is implemented in python, only very limited interactions with the camera driver are possible. 
-This problem could be solved by implementing the software in C++ and thus having access to the complete camera driver and its options.
+Since the software is implemented in Python, only very limited interactions with the camera driver are possible. 
+This problem could be solved by implementing the software in C++ and thus having access to the complete camera driver and it's options.
 
-While testing the software, in about half of the cases the problem occurred, that the object could be detected entering the frame, but was already partly outside on the other side the next frame. 
-This is caused by a too high speed of the object. 
-With a maximum detection frame rate of 22\,fps, the spring must not exceed a maximum speed of \textbf{xx m/s}.
-The maximum speed is calculated by the camera's field of view width (in mm) subtracted by the maximal spring length the camera detects without correction (in mm), the resulting value then gets divided by the time of one frame. 
-In the case the spring moves faster than the maximum speed, no image contains the whole object and no measurements can be done.
-
+While testing the software, in about half of the cases the problem occurred, that the object could be detected entering the frame, but was already partly outside on the other side in the next frame. 
+This is caused by a too high speed of the object.
+With a maximum detection frame rate of 22\,fps, the spring must not exceed a maximum speed of
+\begin{align*}
+	v_{\text{max}}= \frac{h_{\text{frame}}(w_{\text{frame}}-l_{\text{spring}})}{(h_{\text{frame}}/22\,\text{fps}+d_{\text{spring}}/28\,\text{fps})\text{ppm} }=1660.7\,\text{mm/s}=1.67\,\text{m/s},	
+\end{align*}
+to work properly.
+The variable $h_\text{frame}$ and $w_{\text{frame}}$ are the frame dimensions in pixels and $l_{\text{spring}}$ and $d_{\text{spring}}$ are the spring dimensions in pixels.
+The variable ppm is described later.
+In the case the spring moves faster than $v_{\text{max}}$, it's not guaranteed that the image contains the whole object.
 \subsection{Threshold and edge detection}
-To measure a object passing the camera's field of view, the outlines of the object are needed.
+To measure an object passing the camera's field of view, the contours of the object are needed.
 The challenge here is to find the edges of an object with little computing power in a time-span such that the measurement time does not become useless.
-For further processing the edges have to be represented by an one pixel thick line.
-This section shows the used method and implementation of the used edge detection.
-The \acs{ISP}driver of the Jetson Nano is used in the automatic mode.
+For further processing, the edges have to be represented by an one pixel thick line.
+This section shows the used method and implementation of the edge detection.
+The \acs{isp} driver of the Jetson Nano is used in the automatic mode.
 In this configuration the \acs{isp} tries to keep the mean of the image close to the value 127, which resembles the middle of its range. Since the communication with the camera driver over Python is somewhat complicated, the camera is only used in automatic mode.
 
 \subsubsection{Threshold}
@@ -139,11 +145,11 @@ This shift is also reproduced by the variance.
 The mean itself is getting corrected by the \acs{isp} and can not be used to detect if an object is in the image or not.
 
 The obvious answer for a threshold would now be to just cut the image around the value 100.
-But with the automatic \acs{ISP}, there is a good chance to loose important information if there is no adaptive threshold.
+But with the automatic \acs{isp}, there is a good chance to loose important information if there is no adaptive threshold.
 Since the goal is to get as much information as possible from the edges, this little bit of noise should be be handled.
 The method which produced the best results with a backlight was the triangle method \ref{theory:triangle}.
 
-The triangle method calculates the value 112 on the given image in Subfigure \ref{development:thre3} which, using a binary threshold, results in the binary image in Figure \ref{development:thresh}.
+The triangle method calculates the value 112 on the given image in Subfigure \ref{development:thre3}, which - using a binary threshold - results in the binary image in Figure \ref{development:thresh}.
 It is visible that we get a lot of noise in the edges of the resulting picture.
 \begin{center}
 	\centering
@@ -189,19 +195,19 @@ To obtain the edge from a thresholded image, morphological algorithms are should
 	}
 \end{center}
 
-This kernel $K$ is used to erode the image and subtract the eroded image from the starting image. Lets name the thresholded image $T$. The math done is 
+This kernel $K$ is used to erode the image and subtract the eroded image from the starting image. Lets name the thresholded image $T$. Mathematically this can be written as
 \begin{align*}
-E = T-(T\ominus K)
+E = T-(T\ominus K),
 \end{align*}
-returning the image containing all the edges $E$. In our example picture, the resulting picture $E$ is displayed in the image \ref{development:edge}.\\
+which returns the image containing all the edges $E$. In our example picture, the resulting picture $E$ is displayed in the image \ref{development:edge}.
 \begin{figure}[ht]
 	\centering
 	\fbox{\includegraphics[width=0.9\linewidth]{3-development/threshold/edge.png}}
-	\caption{Edges of given image with morphological detection}
+	\caption{Edges of given image with morphological detection.}
 	\label{development:edge}
 \end{figure}
-As we can see from the image in Figure\ref{development:edge}, noise which leads to bigger pixel areas than the 3x3 kernel can also be seen as edges. But since we know that our spring can't be located outside of our separation (definde with \texttt{sep}), the corners can just be ignored.
-This shows the following code snipped.
+As we can see from the image in Figure\ref{development:edge}, noise which leads to bigger pixel areas than the 3x3 kernel can also be seen as edges. But since we know that our spring can't be located outside of our separation (defined with \texttt{sep}), the corners can just be ignored.
+This shows the following code snippet.
 \begin{lstlisting}
 	ret3, thresh = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY +
 	                             cv2.THRESH_TRIANGLE)
@@ -239,7 +245,7 @@ In fact it is even more reasonable to do this for a lot of distances and taking 
 
 After that, a numpy-array which describes the same pattern how it should appear on the plane if the camera was mounted correctly is generated
 This points are here called object-points (\texttt{objp}).
-In python this looks like the following code snipped.
+In python this looks like the following code snippet.
 \begin{lstlisting}
 	objp = np.array([[-110 * ppm + cx, -75 * ppm + cy],
 	                 [ -55 * ppm + cx, -75 * ppm + cy],
@@ -309,7 +315,7 @@ A cut through the center of this cylinder along the $y$-axis (OpenCV coordinates
 	\includegraphics[width=0.9\linewidth]{3-development/software/images/diameter_estimation.pdf}
 	\caption{Steel spring cut through the center along $y$-axis.\label{development:diameter}}
 \end{figure}
-$x_{\text{obj}}$ denotes the center of the object (spring) while $cx$ is the $x-$coordinate of the calibrated principal point.
+$x_{\text{obj}}$ denotes the center of the object (spring) while $c_x$ is the $x-$coordinate of the calibrated principal point.
 The distance from the camera to the plane can be calculated by using the theorem of intersecting lines, since the focal length and pixel-size are known from the data-sheet of the camera and the pixel per metric unit has been calculated previously.
 Also known are the two observed points on the plane $(x_{\text{obj}}, y_p^{(1)})$ and $(x_{\text{obj}}, y_p^{(2)})$.
 
@@ -375,8 +381,9 @@ This transformation can be expressed as
 where $(x\quad y)^T$ are coordinates of the points of the object, $(x'\quad y')^T$ are transformed coordinates and $(x_{\text{obj}}, y_{\text{obj}})$ are again the coordinates of the center of the object, or respectively the min area rectangle.
 By applying this transformation beforehand, the geometry estimation is independent of the the angle the object has to the horizontal. 
 
+\newpage
 \subsection{Compensation of the rolling shutter}
-Because the object passes through our measuring stand at a certain speed, a so-called rolling shutter error occurs. 
+Because the object passes through our measuring setup at a certain speed, a so-called rolling shutter error occurs. 
 As the name suggests, this error is caused by the rolling shutter of the camera sensor. 
 The Raspberry Pi camera has a horizontal rolling shutter, which stores the pixels row by row.
 The effect this has in the image can be seen in Figure \ref{development:rolling}.
@@ -387,22 +394,25 @@ The effect this has in the image can be seen in Figure \ref{development:rolling}
 \end{figure}
 It can be seen that the object is distorted horizontally.
 Since we can assume that the object always passes horizontally through the image, only the length of the object needs to be corrected.
-If the speed of the objects are assumed constant the fix can be made as by simply reducing the length according to our constant speed.
-To compensate for the distortion caused by the rolling shutter, it is first necessary to determine how many rows $N_{row}$ describe the diameter of the object.
+If the speed of the objects are assumed constant, the fix can be made by simply compensating the length according to the object velocity.
+To compensate for the distortion caused by the rolling shutter, it is first necessary to estimate how many rows $N_{\text{row}}$ describe the diameter of the object.
 Next, the time delay $t_d$ of the first row to the last one is calculated 
 \begin{align*}
-t_d = \frac{1\cdot N_{row}}{fps \cdot N_h}
+t_d = \frac{N_{\text{row}}}{f \cdot h}
 \end{align*}
-with the frame rate $fps$ and the total number of rows $N_h$.
+with the frame rate $f$ and the height $h$ of the image in pixel.
 
+The following code snipped shows how it is implemented.
 \begin{lstlisting}
- # compute amount of rows
-n_rows = (bl[1] - tl[1] + br[1] - tr[1]) / 2
+	# estimate amount of rows
+	n_rows = (bl[1] - tl[1] + br[1] - tr[1]) / 2
 
-# get the time delay between the rows
-t_delay = 1 / 28 / h * n_rows
+	# get the time delay between the rows
+	t_delay = 1 / 28 / h * n_rows
 
-# correct the rolling shutter
-L -= t_delay * v_est * 1000 / ppm
+	# correct the rolling shutter
+	L -= t_delay * v_est * 1000 / ppm
 \end{lstlisting} 
+The estimated velocity \texttt{v\_est} is here multiplied by factor of 1000 to get from m/s to mm/s.
+
 

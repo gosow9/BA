@@ -1,9 +1,10 @@
+\newpage
 \section{Measurement with back-light illumination}
-There are multiple ways to measure the size and form of an object. A popular way to get the contour of an object is to place a light source behind it and aim the camera on the object from the other side. With this method the optical sensors get the silhouette of the object. In this section a short introduction to photometry and the typical construction of backlighting systems are discussed.
+There are multiple ways to measure the size and form of an object. A popular way to get the contour of an object, is to place a light source behind it and aim the camera on the object from the other side. With this method the optical sensors captures the silhouette of the object. In this section a short introduction to photometry and the typical construction of backlighting systems are discussed.
 \subsection{Introduction to photometry}
-Photometry is the science concerned with the electromagnetic radiation visible to the human eye. In this section some important basics used further in this thesis are explained. The theories of the following sections were taken from the textbook Physik 2 \cite{ruh}.
+Photometry is the science concerned with the electromagnetic radiation visible to the human eye. In this section, important basics used further in this thesis are explained. The theories of the following sections were taken from the textbook Physik 2 \cite{ruh}.
 \subsubsection{Photometric quantities}
-In principle the normal physical quantities and units such as watts and joules could be used for the measurements of light radiation. However, in order to take the spectral sensitivity of the human eye into account, special photometric quantities and units, displayed in Table \ref{theory:photo} are introduced.\\
+In principle the normal physical quantities and units, such as watts and joules, could be used for the measurements of light radiation. However, in order to take the spectral sensitivity of the human eye into account, special photometric quantities and units, displayed in Table \ref{theory:photo} are introduced.\\
 
 \begin{table}[ht]
 \centering
@@ -41,7 +42,7 @@ This is illustrated in Figure \ref{theory:light}.
 
 \subsubsection{Solid angle}
 In photometry, the usage of the so-called solid angle is very common.
-A beam of rays emanates from a point. The area of a sphere with radius one and the same point in it's center which is illuminated is called the solid angle $\Omega$.
+A beam of rays emanates from a point. The area of a sphere with radius one and the same point in it's center, which is illuminated is called the solid angle $\Omega$.
 %If spherical coordinates (with $r$, $\theta$ and $\varphi$) are used, a differential solid angle element $\text{d} \Omega$ can be expressed as
 %\begin{align*}
 %\text{d} \Omega=\sin(\theta) \text{d} \theta\text{d} \varphi.
@@ -56,8 +57,8 @@ A beam of rays emanates from a point. The area of a sphere with radius one and t
 %\end{align*}
 %One can see from this definition, that the solid angle is a dimensionless quantity.
 \subsubsection{Luminous flux}
-Luminous flux has the unit lumen (lm) and used to describe the total amount of light a lamp emits.
-The Table in \ref{theory:lumflux} shows some examples, to give a better understanding of how bright a lumen really is.
+Luminous flux has the unit lumen (lm) and is used to describe the total amount of light a lamp emits.
+The Table \ref{theory:lumflux} shows some examples, to give a better understanding of how bright a lumen really is.
 \begin{table}[ht]
 \begin{tabular}{ |p{12cm}| p{2cm}|  }
 	\hline
@@ -78,11 +79,10 @@ The Table in \ref{theory:lumflux} shows some examples, to give a better understa
 
 \subsubsection{Luminous intensity}
 Luminous intensity or candela is the luminous flux divided by the solid angle.
-Let's for example take a light 10 lumen light source.
 If the light beam is now focused onto one steradian (solid angle $\Omega = 4\pi$), this beam would be 10 candela.
 
 \subsubsection{Luminance}
-Luminace $L_v$ is the luminous intensity per area of the illuminated area. It is often used to measure reflections or emissions from flat, diffuse surfaces.
+Luminace $L_v$ is the luminous intensity per area of the illuminated area. It is often used to measure reflections or emissions from flat and diffuse surfaces.
 For a human it describes how bright a surface appears.
 %\begin{align*}
 %L_{\mathrm{v}}=\frac{\mathrm{d}^{2} \Phi_{\mathrm{v}}}{\mathrm{d} \Sigma \mathrm{d} \Omega_{\Sigma} \cos \theta_{\Sigma}}
@@ -154,22 +154,22 @@ Some examples of illuminance are in the following table.
 
 \subsection{Backlight illumination}
 The principle of backlight illumination is straight forward.
-By placing an object in front of an light source the camera sees the silhouette of the object.
+By placing an object in front of an light source the camera captures the silhouette of the object.
 This is shown in Figure \ref{theory:backlight}.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[trim=0 0 0 38,clip,width=0.5\linewidth]{2-theory/backlight/principle_backlight_illumination.jpg}
-	\caption{Principle of the backlight illumination \cite{backlight}.\label{theory:backlight}}	
+	\includegraphics[width=0.9\linewidth]{2-theory/backlight/object.pdf}
+	\caption{Principle of the backlight illumination.\label{theory:backlight}}	
 \end{figure}
 
-Each infinitesimal area of the backlight-surface is a light source from which light rays spread in all directions.
+Each infinitesimal area of the backlight-surface is a light source, from which light rays spread in all directions.
 If an object is now placed right on the backlight, it is possible that the object displays shade effects on the edges.
-This happens because the light points on the side of the backlight illuminating the objects surface from the side and not only from the back. 
+This happens because the light points on the side of the backlight - illuminating the objects surface from the side - and not only from the back. 
 
 In Figure \ref{theory:close} the effect of the shaded edges can be clearly seen.
-To reduce this effect the object can be placed further away from the light source.
+To reduce this effect, the object can be placed further away from the light source.
 This enhances the contrast.
-In Figure \ref{theory:far} the backlight is placed 8\,cm away which leads to less stray light and sharper edges.
+In Figure \ref{theory:far} the backlight is placed 8\,cm away which, leads to less stray light and sharper edges.
 
 \begin{figure}[ht]
 	\centering
@@ -179,21 +179,21 @@ In Figure \ref{theory:far} the backlight is placed 8\,cm away which leads to les
 \end{figure}
 
 Another way to control stray light is to work with so called light control filters.
-This filters are build in a way, so that only light rays orthogonal to the filter can pass, thus removing the stray light from the side and giving much sharper edges.
+These filters are build in a way, so that only light rays orthogonal to the filter can pass, thus removing the stray light from the side, resulting in much sharper edges.
 Figure \ref{theory:filter} shows the effect of such a filter.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\linewidth]{2-theory/backlight/Light_Control_Film_principle.png}
-	\caption{Principle of a light control filter \cite{filter}.\label{theory:filter}}	
+	\includegraphics[width=0.9\linewidth]{2-theory/backlight/object_filter.pdf}
+	\caption{Principle of a light control filter.\label{theory:filter}}	
 \end{figure}
 
-The disadvantage of this method is that the luminance after is way less than before the filter.
+The disadvantage of this method is that the luminance after is lower than before the filter.
 This leads to a darker image and makes use of an even brighter backlight necessary.
 This effect is visible in Figure \ref{theory:filtercompare}.
 \begin{figure}[ht]
 	\centering
 	\subfigure[Without filter \cite{filter1}.\label{theory:filter1}]{\includegraphics[width=0.45\linewidth, height=5cm]{2-theory/backlight/Durchlicht_ohne_LightControl_Filter.jpg}}
 	\subfigure[With filter \cite{filter2}.\label{theory:filter2}]{\includegraphics[width=0.45\linewidth, height=5cm]{2-theory/backlight/Durchlicht_mit_LightControl_Filter.jpg}}
-	\caption{Light control filter \label{theory:filtercompare}}	
+	\caption{Light control filter.\label{theory:filtercompare}}	
 \end{figure}
 

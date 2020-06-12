@@ -13,6 +13,8 @@ Welcome to Demonstrator's documentation!
    main
    morph
    geometry
+   calib
+   setup
 
 
 Indices and tables

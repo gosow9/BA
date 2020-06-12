@@ -1,5 +1,6 @@
+\clearpage
 \section{Calibration}
-This section focuses on the calibration of the Rasperry Pi Camera Module V2 (resolution set to $3280\times 2464$\,pixels),
+This section focuses on the calibration of the Rasperry Pi Camera Module V2 (resolution set to $3280\times <2464$\,pixels),
 but all insights learned from these first attempts are of course applicable to similar cameras.
 
 To capture the whole spring, the camera has to be mounted approximately 250\,mm away from it.
@@ -38,22 +39,23 @@ In other words, we take a look at the distortion between the image center and th
 
 This plot is shown in Figure \ref{development:stat}.
 Each label displays the reprojection error.
-The problems which occurred in the first attempts are clearly visible in the scattering of the curves.
+The problems, which occurred in the first attempts, are clearly visible in the scattering of the curves.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/stat.pdf}
 	\caption{Distortion over the radius according to different sets if images\label{development:stat}}
 \end{figure}
 The distortion model introduces decentering effects and one could argue, that this plot should be made in all quadrants of the image.
-But since these effects are rather small in comparison with the radial distortion which is symmetric with respect to the center-point, it should be sufficient to plot only one quadrant.
+But since these effects are rather small in comparison with the radial distortion, which is symmetric with respect to the center-point, it should be sufficient to plot only one quadrant.
 Thus the assumption is made, that if the distortions are high in one quadrant, that the distortions in all other quadrants is also high and vice versa.
 
+\newpage
 \subsection{Numpy-checkerboards\label{development:checker}}  
-To estimate the contribution to the bad result of for example additive noise or blurred edges, one has the observe each effect isolated.
+To estimate the contribution to the bad result, for example additive noise or blurred edges, one has the observe each effect isolated.
 
-In order to do that, a python script was written, which generates a checkerboard as a numpy-array.
+In order to do that, a Python script was written, which generates a checkerboard as a numpy-array.
 This array is then translated and rotated in three dimensions, and projected back to the 2D-plane.
-As a last step, the images is distorted by the model in \ref{theory:dist} with the coefficients set to:
+As a last step, the images are distorted by the model in \ref{theory:dist} with the coefficients set to:
 \begin{center}
 	\begin{tabular}{lll}
 		$k_1 = 4.1$   &$k_2 = 36$     &$k_3 = 38$\\
@@ -63,10 +65,10 @@ As a last step, the images is distorted by the model in \ref{theory:dist} with t
 	\end{tabular} 
 \end{center}
 These coefficients were not chosen randomly, but were taken from a calibration which was made with one of the ten sets from the calibration statistics in \ref{development:statistics}.
-They should therefore not be completely off.
-Some of these (in total 24) images are shown in Figure \ref{development:nump}
-To stay close to the real camera, these are not black and white images but the black part has a value of 40 and the white a value of 170.
-The mean of the images comes with these values close to 127, which is the value which the exposure control of the camera aims to achieve.
+Some of these (in total 24) images are shown in Figure \ref{development:nump}.
+To stay close to the real camera, these are not purely black and white images.
+The black part has a value of 40 and the white a value of 170.
+The mean of the images comes with these values close to 127, which is the intensity, which \acs{isp} of the camera driver aims to achieve.
 \begin{figure}[ht]
 	\centering
 	\subfigure[\label{development:nump0}]{\includegraphics[width=0.3\linewidth]{3-development/calibration/images/nump0.png}}
@@ -79,35 +81,36 @@ The mean of the images comes with these values close to 127, which is the value 
 	\caption{Some of the numpy-arrays \label{development:nump}}		
 \end{figure}
 These numpy-checkerboards can now be further manipulated to simulate real effects.
-To assess, how much these effects influence the calibration, the coefficients obtained by the calibration process can be compared to the real coefficients which were used to distort the images in the first place.
+To assess, how much these effects influence the calibration, the coefficients obtained by the calibration process can be compared to the real coefficients, which were used to distort the images in the first place.
 
+\newpage
 \subsection{Possible causes of error}
 This subsection takes a closer look on details, which could be influencing the calibration and lead to the bad results in section \ref{development:statistics}.
 The numpy-checkerboards where hereby used as a basis.
 
 \subsubsection{Location of the checkerboard in the image}
-To show that it is important to include images in the calibration process in which the checkerboard has corners far away from the image center, the calibration has been performed two times.
-The first did include images like \ref{development:nump0} - \ref{development:nump4} and similar, but not images, where the checkerboard reached outside the frame, like \ref{development:nump5}.
+To show that it is important to include images in the calibration process, in which the checkerboard has corners far away from the image center, the calibration has been performed two times.
+The first calibration did include images like \ref{development:nump0} - \ref{development:nump4} and similar, but not images, where the checkerboard reached outside the frame, like \ref{development:nump5}.
 The second calibration included all images.
 
-Again a plot of the distortion, as described in section \ref{development:statistics} is generated.
+A plot of the distortion, as described in section \ref{development:statistics} is generated.
 This plot shown in Figure \ref{development:loc}, contains the real model coefficients and the ones, which were obtained by the calibration.
 The label displays additionally the reprojection error $e_{\text{rp}}$.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/location.pdf}
-	\caption{Comparison of the calibration to the model. 1: Excluding images with checkerboards overlapping the frame, 2: All images included. \label{development:loc}}
+	\caption{Comparison of the calibration to the model. 1: Excluding images with checkerboards overlapping the frame; 2: All images included. \label{development:loc}}
 \end{figure}
 There is no argument that the second calibration (including all images) does a much better job and follows the real curve closer.
 At the maximal radius, the difference between the model and the second calibration is 2.12 pixel.
-This also illustrates, that the reprojection error is really a training error rate and is not sufficient to asses the quality of the calibration.
+This also illustrates, that the reprojection error is a training error rate and is not sufficient to assess the quality of the calibration.
 
 One further observation can be made: The second calibration represents some sort of best case calibration.
 The only error comes from the detection of the checkerboard corners and since these numpy-checkerboards have the sharpest possible edges and there is no noise in the image, it is impossible detect the corners more precise in a real environment with these methods.
-Thus to get a better calibration, a better feature detection is necessary and its development would take more steps into account which are not in the scope of this thesis.
+Thus, to get a better calibration, a better feature detection is necessary and its development would take more steps into account, which would exceed the scope of the this thesis.
 
 \subsubsection{Additive noise in the image} 
-Exposure in photography contains of three parts: aperture, shutter speed and light sensitivity (ISO) \cite{exposure}.
+Exposure in photography contains three parts: Aperture, shutter speed and light sensitivity (ISO) \cite{exposure}.
 The camera operates in automatic exposure control and tries to fix the average brightness to 127.
 Since the aperture is fixed, it can only adjust the shutter speed and ISO.
 If the overall environment is dark, the control needs to make the chip more sensitive against the incoming light by increasing the ISO.
@@ -118,9 +121,9 @@ The histogram of this image with a Gaussian fit is shown in Figure \ref{developm
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/noise_distribution.pdf}
-	\caption{Histogram of an uniform white background with an Gaussian fit\label{development:noise_dist}}
+	\caption{Histogram of an uniform white background with an Gaussian fit.\label{development:noise_dist}}
 \end{figure}
-Since the background itself is (approximately) uniformly white, there should theoretically only be one spike at the intensity of 127 (fixed by the automatic exposure control).
+Since the background itself is (approximately) uniformly white, there should theoretically be only one spike at the intensity of 127 (fixed by the \acs{isp}).
 But there is also noise introduced by the chip of the camera, which blurres the histogram.
 As this plot shows, the assumption that the noise has a normal-distribution is, as one might expected, valid.
 
@@ -128,26 +131,26 @@ To understand now, how much this noise influences the calibration, zero mean add
 
 It turns out, that more noise does not necessarily mean a worse calibration.
 But there are some insights, which can be taken from this experiment.
-Figure \ref{development:noise_rpe} shows how the reprojection error depends on the standard deviation of the additive white noise.
+Figure \ref{development:noise_rpe}, shows how the reprojection error depends on the standard deviation of the additive white noise.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/noise_rpe.pdf}
 	\caption{Reprojection error in dependence of additive noise\label{development:noise_rpe}}
 \end{figure}
 It was to be expected, that the reprojection error increases with more noise, but what really could pose a problem are the spikes.
-It seems, that after a standard deviation of 25, bad reprojection errors become more likely even if the underlying increase is linear.
+It seems, that after a standard deviation of 25, bad reprojection errors become more likely - even if the underlying increase is linear.
 
-This can also be seen in Figure \ref{development:noise_k} where the radial coefficients are plotted.
+This can also be seen in Figure \ref{development:noise_k}, where the radial coefficients are plotted.
 Tangential and thin prism coefficients are not shown, since they show similar plots.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/noise_k.pdf}
-	\caption{Blue: Calibrated radial coefficients in dependence of additive noise (deviation = $\sigma$). Red: Real coefficient\label{development:noise_k}}
+	\caption{Blue: Calibrated radial coefficients in dependence of additive noise (deviation = $\sigma$). Red: Real coefficient.\label{development:noise_k}}
 \end{figure}
 Again it seems that the calibration is not very reliable after a standard deviation of 25.
 One can conclude, that noise does not affect the calibration directly, but can lead to unreliable results.
-thus it is necessary to keep noise as low as possible .
-this can be done by letting enough light reach the camera sensor, that the exposure control can keep the light sensitivity (ISO) low.
+Thus, it is necessary to keep noise as low as possible.
+This can be done by letting enough light reach the camera sensor, that the exposure control can keep the light sensitivity (ISO) low.
 
 \subsubsection{Blurred images}
 To get a grasp how the sharpness of each image affect the calibration, the numpy-checkerboards where convolved with a gaussian kernel of size $71\times 71$.
@@ -155,29 +158,29 @@ A blurred image is show in Figure \ref{development:nump_blurred}.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/nump1_blurred.png}
-	\caption{Blurred image\label{development:nump_blurred}}
+	\caption{Blurred image.\label{development:nump_blurred}}
 \end{figure}
 With these blurred images, it is still possible to obtain a good calibration as Figure \ref{development:blurred} shows.
 The blue curve is again the model, the first (orange) curve is plotted with coefficients of the calibration out of the unaltered images and the second (green) with the blurred images.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\linewidth]{3-development/calibration/images/blurred.pdf}
-	\caption{Blurred calibration\label{development:blurred}}
+	\caption{Blurred calibration.\label{development:blurred}}
 \end{figure}
 Even tough the reprojection error of the second calibration is slightly higher, it does not seem that the calibration itself is worse.
-But if the images is blurred even more (with bigger size of the kernel), it is not possible to detect the checkerboard corners.
-Images which are not sharp, do therefore not affect the calibration, since slightly blurred images do not make the calibration worse, and strongly blurred images are sorted out since no checkerboard corners can be detected.
+But if the images are blurred even more (bigger kernel size), it is not possible to detect the checkerboard corners.
+Images, which are not sharp, do therefore not affect the calibration, since slightly blurred images do not make the calibration worse, and strongly blurred images are sorted out since no checkerboard corners can be detected.
 
 \subsubsection{Summary}
 Concerning the images used for the calibration, the most important insights are:
 \begin{itemize}
 \item Including images, with checkerboard corners close to the edges makes the calibration much more stable.
-\item Noise should be kept as low as possible. To ensure this, one should try to get as much light on the sensor of the camera, so that the automatic exposure control can reduce the ISO to a minimum.
+\item Noise should be kept as low as possible. To ensure this, one should try to get as much light on the sensor of the camera.
 \item Blurred images do not affect the calibration. But since the blurry images are sorted out, it is necessary to have a certain amount of good images.
 \end{itemize}
 By taking these points into account, it should be possible to obtain the optimal calibration with the introduced methods.
 
-
+\clearpage
 \subsection{Fixed calibration}
 Following table displays the best possible set of coefficients with their corresponding standard deviation obtained before taking all the learned points into account, denoted with the superscript $(1)$.
 \begin{center}
@@ -202,16 +205,16 @@ The next table then shows the best possible calibration coefficients when consid
 	\end{tabular}		
 \end{center}
 With this calibration we get a reprojection error $e_{\text{rp}}^{(2)}$ of 0.287.
-The standard deviations are (excluding $p_2^{(2)}$ and $s_1^{(2)}$) at least on order of magnitude smaller than the coefficient itself.
-This is seems something better than before, but since this error is a training error, we can not tell if this really performs better.
+The standard deviations are (excluding $p_2^{(2)}$ and $s_1^{(2)}$) at least one order of magnitude smaller than the coefficient itself.
+This seems to be better than before, but since this error is a training error, we can not tell if this really performs better.
 
 We now use the method suggested in section \ref{theory:error_propagation} to combine all these standard deviations into one value in dependence of the radius.
-This will give us an additional value on which base we can assess the quality of the calibration. 
-With the resolution set to $3280\times 2464$\,pixels, we get at the maximum radius a standard deviation of $\Delta r^{(1)}(2051)=2464\,$pixels ind the first case, and $\Delta r^{(2)}(2051)=72\,$pixels in the fixed calibration.
+This will give us an additional value on which basis we can assess the quality of the calibration. 
+With the resolution set to $3280\times 2464$\,pixels, we get at the maximum radius a standard deviation of $\Delta r^{(1)}(2051)=2464\,$pixels in the first case, and $\Delta r^{(2)}(2051)=72\,$pixels in the fixed calibration.
 
-If we applied this calibration, our standard deviation in the image corners would (especially in the first case) be much lower than these value.
+If we applied this calibration, our standard deviation in the image corners would (especially in the first case) be much lower than these values.
 But the propagation of error is a linearization of the non-linear calibration model in equation \ref{theory:dist} and adds up all errors.
-Despite all of this, when looking at the two uncertainties ($\Delta r^{(1)}(r)$ and $\Delta r^{(2)}(r)$) that the second, fixed calibration seems to perform much better.
-How much is hard to say, again because we are working with linearization.
+Despite all of this, when looking at the two uncertainties ($\Delta r^{(1)}(r)$ and $\Delta r^{(2)}(r)$) one notices, that the second, fixed calibration seems to perform much better.
+How much is hard to say, again because we are working with a linearization.
 The only thing which can be concluded is, that the second calibration does a better job than the first, but we have no quantity to estimate how much better.
 Nevertheless, it is reasonable to use this second calibration, since we included all our gained knowledge into it.

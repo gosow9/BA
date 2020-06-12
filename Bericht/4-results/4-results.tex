@@ -1,22 +1,22 @@
 \chapter{Results}
 The demonstrator can operate in two modes.
 In the static mode, the trigger is deactivated and the spring is put on the glass plate with no movement.
-In the dynamic mode, the demonstrator is tilted to an angle of 15 degrees, and the spring can be sided over the glass plate through the filed of view of the camera.
-It is assumed that the spring moves this way with with a velocity of 2\,m/s.
+In the dynamic mode, the demonstrator is tilted to an angle of 15 degrees, and the spring can be slided over the glass plate through the camera's field of view.
+It is assumed that the spring moves this way with a velocity of 2\,m/s.
 It can later be shown that this velocity estimation seems accurate.
 
 In this section we take first a look, if the software operates fast enough and how accurate the measurements are.
 
 \section{Speed}
-As stated earlier, the demonstrator is expected to deal with 200\,springs/minute which is is about 3.33\,springs/second.
+As stated earlier, the demonstrator is expected to deal with 200\,springs/minute, which is about 3.33\,springs/second.
 The main loop itself is fast enough to deal with 15\,fps, while the trigger checks for images at a rate of 22\,fps.
-In a fully synchronized system (every frame contains a spring), this would be about four times more than necessary.
+In a fully synchronized system (every frame contains a spring), this would be about four times more than required.
 
-But unfortunately, a problem is caused by the triggering of the image.
-After the trigger detected that a spring is entering the frame, it searches in the next five frames for an image which contains the full spring an can therefore be used for measuring.
-The problem is now, that the springs move with 2\,m/s to fast that in the next frame the trigger gets, the spring is already leaving the images.
+But unfortunately, a problem is caused by the trigger.
+After the trigger detected that a spring is entering the frame, it searches in the next four frames for an image, which contains the full spring and can therefore be used for measuring.
+The problem is now, that when the spring moves with 2\,m/s, it is too fast and the frame rate is too low to keep up with the speed of the spring. Consequently, the spring is already leaving the frame when the next image is taken. 
 This happens in about half of all measurement attempts.
-But despite all this, since it works half of the time, it was possible to make the measurements at this speed nevertheless.
+Nevertheless, since it works half of the time it was still possible to make the measurements at this speed.
 
 The question is how fast the springs are moving in the real world environment.
 One spring has an approximated length of about 220\,mm.
@@ -25,12 +25,12 @@ If it is assumed, that only one spring at the time is allowed in the frame and 3
 \begin{align*}
 	v_{\text{spring}}=(0.33\,\text{m}+0.22\,\text{m})\cdot 3.33\,1/\text{s}=1.83\,\text{m/s}.
 \end{align*}
-2\,m/s should therefore be sufficient.
+2\,m/s should therefore be sufficient to simulate the real world application.
 
 \section{Measurement accuracy}
-Both the length ($L$) and the diameter ($D$) of a the steel spring, have been measured.
+Both, the length ($L$) and the diameter ($D$) of the steel spring have been measured.
 300 measurements were taken with no movement (static) and again 300 measurements with a moving object.
-The object velocity in the horizontal direction, used for the rolling shutter correction, is estimated as 2\,m/s.
+The object velocity in the horizontal direction, used for the rolling shutter correction, is estimated at 2\,m/s.
 Unfortunately, the implemented trigger has it's given limitations and does not work with higher velocities.
 
 The histograms are shown in Figure \ref{development:hist}.

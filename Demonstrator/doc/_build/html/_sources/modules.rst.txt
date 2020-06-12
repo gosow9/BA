@@ -6,3 +6,6 @@ Demonstrator
 
    main
    morph
+   geometry
+   calib
+   setup

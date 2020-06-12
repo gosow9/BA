@@ -1,15 +1,14 @@
 \chapter*{Abstract}
 
-Mass production in the industry requires a periodical check of quality and dimensions of each part in different stations of the production chain.
-In the special case of this thesis, the object to be measured is a steel spring.
-Until today the spring has to be measured by hand by a production worker. In a production chain with a capacity of 200 springs per minute only some few springs actually get measured.
-With conventional methods it s hard to get an accurate measurement because of the geometry of the spring and even harder to make these measurements reproducible because of the elasticity of the used steel.
+Today, the production industry finds itself in a changing environment, facing enormous challenges, including rising costs.
+Therefore, increasing the level of production is often used to lower costs and to gain competitive advantage. However, mass production requires periodical quality control, as well as dimension checks for all goods produced. 
+The quality control should be implemented in several places along the production chain. Currently, a steel spring has to be manually measured by a production worker. This is not only inefficient and costly, but also results in inaccuracies. This is due to the high production capacity of 200 springs per minute - only few springs are measured.
+Thus, faulty springs can bypass the implemented quality controls and be sold undetected. Because of the geometry of the spring and its elasticity, it is very difficult to reproduce the measurement.
 
-This two difficulties can be solved by using cameras to estimate the geometry.
-But such cameras and lenses suitable for such tasks are in many cases simply to expensive.
+The object of this thesis is to accurately measure a steel spring by using a camera and estimate the geometry, resulting in reproducible measurement values. Usually, the necessary material, as for example the cameras and lenses, are very expensive. Therefore, this thesis further aims to develop a measurement setup at lower cost. 
 
 It should be possible to compensate the flaws of a low-cost hardware by the software running on a platform with high computing power.
-The software has to take into account and correct all the imperfections of the lens while at the same time manage to execute these task fast enough so the whole setup can be placed in the production chain.
+The software has to take into account and correct all the imperfections of the lens, while at the same time manage to execute these task fast enough so the whole setup can be placed in the production chain.
 Instead of making periodic measurements, it should this way be possible to estimate the geometry of every passing object.
 
 In the case of the steel spring, the setup should be able to make accurate measurements (relative error = standard deviation/mean > 1\%).
@@ -18,9 +17,9 @@ With 200 springs per minute the setup has therefore to handle about 4 geometry e
 Over the course of this thesis, a demonstrator, using a Raspberry Pi Camera Module V2, has been developed.
 To demonstrate measurements performed on a moving object, the steel springs can be sidled over a tilted glass plate mounted in front of a backlight.
 The camera is mounted parallel to the glass plate.
-The software detects if a object moves through the field of view of the camera and measures the length and diameter.
+The software detects, if an object moves through the camera's field of view and measures the length and diameter.
 These tasks are performed on a Nvidia Jetson Nano developer kit.
 
 In the static case, it was possible to achieve a relative error in the length of 0.22\% and in the diameter of 0.55\%.
-With an object sliding with at an estimated speed of 2\,m/s over the glass plate, a relative error of 1.01\% in the length and 1.60\% in the diameter could be achieved.
-The trigger checks for object in image with 21\,fps and the calculations can be performed at a rate of 15\,fps. 
+With an object sliding with an estimated speed of 2\,m/s over the glass plate, a relative error of 1.01\% in the length and 1.60\% in the diameter could be achieved.
+The trigger checks for objects in image with 22\,fps and the calculations can be performed at a rate of 15\,fps. 

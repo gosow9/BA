@@ -1,5 +1,5 @@
 \section{Hardware}
-In this chapter we give a short oversight what hardware is used and how big the price tag of the demonstrator is. 
+In this chapter, we give a short oversight what hardware is used and how big the price tag of the demonstrator is. 
 
 \subsection{Computer}
 The computer used is the Nvidia Jetson Nano developer kit.
@@ -26,7 +26,7 @@ A short technical overview is listed in Table \ref{development:nano}.
 	\caption{Jetson Nano specifications \cite{jetson}.\label{development:nano}}
 \end{table}
 
-
+\newpage
 \input{3-development/hardware/camera.tex}
 
 \subsection{Backlight}
@@ -55,10 +55,10 @@ This is shown in Figure \ref{development:glass}.
 \end{figure}
 
 The geometry pattern consists of five black squares in two rows.
-The PCB is equipped with 39 LEDs an used two times.
+The PCB is equipped with 39 LEDs and used two times.
 One LED has a luminious flux of 76\,lm @ 4000\,K 80\,CRI \cite{led}.
 The backlight should therefore have a total luminious flux of 5928\,lm.
-The whole backlight consumes ca. 12\,A at 5\,V which corresponds to a total power consumption of 60\,W. 
+The whole backlight consumes ca. 12\,A at 5\,V, which corresponds to a total power consumption of 60\,W. 
 
 The PCB is shown in Figure \ref{development:pcb}.
 \begin{figure}[ht]
@@ -70,7 +70,7 @@ The LEDs have been placed less dense in the center, to compensate that the image
 This is also called vignetting \cite{vignetting}.
 
 To spread the light evenly, a diffusion filter (Kimoto OptSaver 100ST) is mounted in front of the two PCBs.
-To inspect the how the luminance of the backlight is captured by the camera, different images of the backlight are plotted as a surface- and contour-plot.
+To inspect how the luminance of the backlight is captured by the camera, different images of the backlight are plotted as a surface- and contour-plot.
 Firstly, the empty surface (diffusion filter but no geometry pattern) is analyzed in Figure \ref{development:3d0}. 
 \begin{figure}[ht]
 	\centering
@@ -86,7 +86,7 @@ The image used for the plots in Figure \ref{development:3d1} are taken with the 
 	\caption{Backlight with diffusion filter and geometry pattern.\label{development:3d1}}
 \end{figure} 
 Now the lowest point lays in the black squares with the value 3.
-The maximum value of 210 is an outlier which can be caused by a reflection or not well positioned diffusion filter.
+The maximum value of 210 is an outlier, which can be caused by a reflection or not well positioned diffusion filter.
 In the plot in Figure \ref{development:3d4} we can see that the some edges of the spring are very close to the background brightness.
 \begin{figure}[ht]
 	\centering
@@ -96,10 +96,11 @@ In the plot in Figure \ref{development:3d4} we can see that the some edges of th
 This happens because there is stray light illuminating the edge of the spring.
 Since the object is three dimensional, the parts closer to the backlight (on the plane) are illuminated more by stray light than parts further away.
 
+\newpage
 \subsection{Demonstrator}
 The demonstrator consists of three essential components.
 A mechanical construction made out of aluminum profiles, the backlight with the glass plate and the Jetson Nano with the Raspberry Pi camera.  
-This construction as shown in Figure \ref{development:demo} makes it easy to make adjustments in distance and position of the parts, while developing the software.
+This construction, as shown in Figure \ref{development:demo}, makes it easy to adjust the distance and position of the parts, while developing the software.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.9\textwidth]{3-development/images/Demonstrator.png}
@@ -108,6 +109,7 @@ This construction as shown in Figure \ref{development:demo} makes it easy to mak
 The whole construction can be tilted.
 This makes it possible to let objects slide through the field of view of the camera, to simulate dynamic measuring.
 
+\newpage
 \subsection{Production cost}
 Table \ref{development:cost} lists the cost of the Demonstrator.
 Note that the price of one PCB drops to 1.35\,CHF if a batch of 2000 is ordered.

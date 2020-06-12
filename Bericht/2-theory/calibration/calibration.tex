@@ -1,14 +1,14 @@
 \section{Camera Calibration in OpenCV\label{theory:calibration}}
-A camera has to be calibrated in order to obtain camera parameters like focal length and center-point.
+A camera has to be calibrated in order to obtain camera parameters, like focal length and center-point.
 Further, it provides a method to correct distortions caused by the imperfect optics according to a certain distortion model.
 For that, images of a known pattern (usually a checkerboard) have to be taken from different view-points an angles.
-These points provide the training data which is needed to estimate all the coefficients.
+These points provide the training data, which is needed to estimate all the coefficients.
 
 This section describes the theory behind the calibration process in OpenCV.
 The subsections \ref{theory:pinhole} and \ref{theory:distortion} adapt parts of theory and notation from the OpenCV 4.3.0 documentation \cite{cv_calib}, which is the latest version at the time of writing this thesis.
 
 \subsection{The pinhole camera model\label{theory:pinhole}}
-The functions OpenCV provides to calibrate the camera use the so-called pinhole camera model.
+OpenCV provides functions to calibrate the camera which use the so-called pinhole camera model.
 This model describes, how a 3D-point specified in world-coordinates ($P_w$) is transformed to a 3D-point in camera-coordinates ($P_c$) and then further projected onto the image plane ($p$). After this step, the point is described as a 2D-point in pixel coordinates. The pinhole-model is shown in Figure \ref{theory:pin1}.
 \begin{figure}[ht]
 	\centering
@@ -161,6 +161,7 @@ P_w\\
 \end{align}
 The rotation and translation in $\begin{pmatrix}R&|&t\end{pmatrix}$ are called the extrinsic parameters. The camera matrix $K$ contains analogously the linear intrinsic parameters.
 
+\newpage
 \subsection{The distortion model in OpenCV\label{theory:distortion}}
 Non linear distortions, which appear before the projection in \ref{theory:camera-pixel} should be considered too.
 OpenCV compensates the effects of radial, tangential and thin prism distortion.
@@ -272,6 +273,7 @@ y''\\
 which completes the model so far.
 Keep in mind, that when correcting the distortion, equation \ref{theory:dist} has to be inverted.
 
+\newpage
 \subsection{Reprojection error}
 The reprojection error is a value to assess the quality of a calibration.
 It is the error between the detected image point and the projection (using the obtained coefficients) of its corresponding world point onto the image plane.
@@ -281,9 +283,9 @@ Calibration functions in OpenCV return the overall \acs{rms} reprojection error 
 
 \subsection{Error propagation as further quality assessment\label{theory:error_propagation}}
 As argued before, the reprojection error is a training error rate.
-A low reprojection error is therefore not necessarily enough to estimate, how good the calibration really performs.
+A low reprojection error is therefore not necessarily enough to estimate how good the calibration really performs.
 
-OpenCV returns with its extended calibration functions not only the camera intrinsics, but also an estimated standard deviation of each coefficient \cite{cv_calib}.
+The extended calibration functions in OpenCV return not only the camera intrinsics, but also an estimated standard deviation of each coefficient \cite{cv_calib}.
 Under assumption that low standard deviations suggest a good calibration, it is valid to combine all standard deviations into one value, using the propagation of uncertainty.
 
 The propagation of error (theory taken from \cite{benno}) states that influence of each error of the inputs $x_i$ on the output value $y$ of a function
@@ -303,13 +305,13 @@ and
 \begin{align*}
 	\Delta y''=\sqrt{\sum_{i=1}^{6}\left(\frac{\partial y''}{\partial k_i}\Delta k_i \right)^2+\sum_{i=1}^{2}\left( \frac{\partial y''}{\partial p_i}\Delta p_i\right)^2+\sum_{i=1}^{4}\left( \frac{\partial y''}{\partial s_i}\Delta s_i\right)^2}.
 \end{align*}
-The computed derivatives are listed in the appendix.
+The computed derivatives are listed in the appendix \ref{app}.
 If we look at pixel coordinates with respect to the center of the image, the radius (distance from the center-point) can be expressed as
 \begin{align*}
 	r = \sqrt{(f_x\cdot x'')^2+(f_y\cdot y'')^2}
 \end{align*}
-and therefore, if errors in $f_x$ and $f_y$ are neglected, with the propagation in \ref{theory:prop} applied
+and therefore, with the propagation in \ref{theory:prop} applied (errors in $f_x$ and $f_y$ are neglected)
 \begin{align}
 	\Delta r = \sqrt{\left(\frac{\partial r}{\partial x''} \Delta x''\right)^2+\left(\frac{\partial r}{\partial y''} \Delta y''\right)^2}\label{theory:delta_r}.
 \end{align}
-The value $\Delta r$ can now be used to compare calibration coefficients of different calibration approaches.
+The value $\Delta r$ can now be used to compare calibration coefficients of different calibration approaches to each other.
