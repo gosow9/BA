@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>main module &#8212; Demonstrator 1.0 documentation</title>
@@ -32,8 +32,49 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="main-module">
-<h1>main module<a class="headerlink" href="#main-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-main">
+<span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
+<p>Main module, used for measuring</p>
+<dl class="py function">
+<dt id="main.gstreamer_pipeline">
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">gstreamer_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">capture_width</span><span class="o">=</span><span class="default_value">3264</span></em>, <em class="sig-param"><span class="n">capture_height</span><span class="o">=</span><span class="default_value">1848</span></em>, <em class="sig-param"><span class="n">display_width</span><span class="o">=</span><span class="default_value">3264</span></em>, <em class="sig-param"><span class="n">display_height</span><span class="o">=</span><span class="default_value">1848</span></em>, <em class="sig-param"><span class="n">framerate</span><span class="o">=</span><span class="default_value">28</span></em>, <em class="sig-param"><span class="n">flip_method</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#gstreamer_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.gstreamer_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures gstreamer string
+:param capture_width: Capture width of camera
+:type capture_width: Int
+:param capture_height: Capture height of camera
+:type capture_height: Int
+:param display_width: Display width of the captured image
+:type display_width: Int
+:param display_height: Display height of the captured image
+:type display_height: Int
+:param framerate: Frames per second
+:type framerate: Int
+:param flip_method: Orientation of the image
+:type flip_method: Int
+:return: The gstreamer pipeline
+:return type: String</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="main.trigger">
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">trigger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">imgray</span></em>, <em class="sig-param"><span class="n">var_r</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#trigger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for an object in the frames, and returns the image in which the object doesn’t touch the edges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imgray</strong> (<em>InputArray</em>) – Images to check</p></li>
+<li><p><strong>var_r</strong> (<em>Float</em>) – Reference variance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>frame with object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -97,7 +138,7 @@
       &copy;2020, Cédric Renda, Manuel Tischhauser.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

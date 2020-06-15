@@ -31,65 +31,419 @@
           <div class="body" role="main">
             
   <h1>Source code for main</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Main module, used for measuring</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">main module</span>
-<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">morph</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">distance</span> <span class="k">as</span> <span class="n">dist</span>
+<span class="kn">from</span> <span class="nn">morph</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">collections</span>
 
+<span class="c1"># Global variables</span>
+<span class="n">w</span> <span class="o">=</span> <span class="mi">3264</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1848</span>
 
 <div class="viewcode-block" id="gstreamer_pipeline"><a class="viewcode-back" href="../main.html#main.gstreamer_pipeline">[docs]</a><span class="k">def</span> <span class="nf">gstreamer_pipeline</span><span class="p">(</span>
-    <span class="n">capture_width</span><span class="o">=</span><span class="mi">3280</span><span class="p">,</span>
-    <span class="n">capture_height</span><span class="o">=</span><span class="mi">2464</span><span class="p">,</span>
-    <span class="n">display_width</span><span class="o">=</span><span class="mi">3280</span><span class="p">,</span>
-    <span class="n">display_height</span><span class="o">=</span><span class="mi">2464</span><span class="p">,</span>
-    <span class="n">framerate</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-    <span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">capture_width</span><span class="o">=</span><span class="n">w</span><span class="p">,</span>
+        <span class="n">capture_height</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
+        <span class="n">display_width</span><span class="o">=</span><span class="n">w</span><span class="p">,</span>
+        <span class="n">display_height</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
+        <span class="n">framerate</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span>
+        <span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configures gstreamer string</span>
+<span class="sd">    :param capture_width: Capture width of camera</span>
+<span class="sd">    :type capture_width: Int</span>
+<span class="sd">    :param capture_height: Capture height of camera</span>
+<span class="sd">    :type capture_height: Int</span>
+<span class="sd">    :param display_width: Display width of the captured image</span>
+<span class="sd">    :type display_width: Int</span>
+<span class="sd">    :param display_height: Display height of the captured image</span>
+<span class="sd">    :type display_height: Int</span>
+<span class="sd">    :param framerate: Frames per second</span>
+<span class="sd">    :type framerate: Int</span>
+<span class="sd">    :param flip_method: Orientation of the image</span>
+<span class="sd">    :type flip_method: Int</span>
+<span class="sd">    :return: The gstreamer pipeline</span>
+<span class="sd">    :return type: String</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
-        <span class="s2">&quot;nvarguscamerasrc ! &quot;</span>
-        <span class="s2">&quot;video/x-raw(memory:NVMM), &quot;</span>
-        <span class="s2">&quot;width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, &quot;</span>
-        <span class="s2">&quot;format=(string)NV12, framerate=(fraction)</span><span class="si">%d</span><span class="s2">/1 ! &quot;</span>
-        <span class="s2">&quot;nvvidconv flip-method=</span><span class="si">%d</span><span class="s2"> ! &quot;</span>
-        <span class="s2">&quot;video/x-raw, width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, format=(string)BGRx ! &quot;</span>
-        <span class="s2">&quot;videoconvert ! &quot;</span>
-        <span class="s2">&quot;video/x-raw, format=(string)BGR ! appsink&quot;</span>
-        <span class="o">%</span> <span class="p">(</span>
-            <span class="n">capture_width</span><span class="p">,</span>
-            <span class="n">capture_height</span><span class="p">,</span>
-            <span class="n">framerate</span><span class="p">,</span>
-            <span class="n">flip_method</span><span class="p">,</span>
-            <span class="n">display_width</span><span class="p">,</span>
-            <span class="n">display_height</span><span class="p">,</span>
-        <span class="p">)</span>
+            <span class="s2">&quot;nvarguscamerasrc ! &quot;</span>
+            <span class="s2">&quot;video/x-raw(memory:NVMM), &quot;</span>
+            <span class="s2">&quot;width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;format=(string)NV12, framerate=(fraction)</span><span class="si">%d</span><span class="s2">/1 ! &quot;</span>
+            <span class="s2">&quot;nvvidconv flip-method=</span><span class="si">%d</span><span class="s2"> ! &quot;</span>
+            <span class="s2">&quot;video/x-raw, width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, format=(string)BGRx ! &quot;</span>
+            <span class="s2">&quot;videoconvert ! &quot;</span>
+            <span class="s2">&quot;video/x-raw, format=(string)BGR ! appsink&quot;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="n">capture_width</span><span class="p">,</span>
+                <span class="n">capture_height</span><span class="p">,</span>
+                <span class="n">framerate</span><span class="p">,</span>
+                <span class="n">flip_method</span><span class="p">,</span>
+                <span class="n">display_width</span><span class="p">,</span>
+                <span class="n">display_height</span><span class="p">,</span>
+            <span class="p">)</span>
     <span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="trigger"><a class="viewcode-back" href="../main.html#main.trigger">[docs]</a><span class="k">def</span> <span class="nf">trigger</span><span class="p">(</span><span class="n">imgray</span><span class="p">,</span> <span class="n">var_r</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks for an object in the frames, and returns the image in which the object doesn&#39;t touch the edges.</span>
+
+<span class="sd">    :param imgray: Images to check</span>
+<span class="sd">    :type imgray: InputArray</span>
+<span class="sd">    :param var_r: Reference variance</span>
+<span class="sd">    :type var_r: Float</span>
+<span class="sd">    :return: frame with object</span>
+<span class="sd">    :return type: OutputArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># variance of the first column</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># check frames if the object is in the first column</span>
+    <span class="k">if</span> <span class="n">var</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">*</span><span class="n">var_r</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;get frames...&#39;</span><span class="p">)</span>
+
+        <span class="n">place</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">imsave</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># save the next 4 frames</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">imgs</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">imsave</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span>
+
+        <span class="c1"># for i in range(len(imsave)):</span>
+        <span class="c1">#     cv2.imwrite(&#39;im{:}.png&#39;.format(i), imsave[i])</span>
+
+        <span class="c1"># search through the next frames for the object</span>
+        <span class="k">while</span> <span class="nb">iter</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">imsave</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">place</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">place</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">imsave</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="nb">iter</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">imsave</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Object not in frame&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span>
+
+            <span class="n">imgray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">imsave</span><span class="p">[</span><span class="n">place</span><span class="p">],</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+            <span class="c1"># compute variances of different columns</span>
+            <span class="n">var1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span><span class="o">-</span><span class="n">sep</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">var2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span><span class="o">-</span><span class="n">sep</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)])</span>
+            <span class="n">var3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span><span class="o">-</span><span class="n">sep</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)])</span>
+            <span class="n">var4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span><span class="o">-</span><span class="n">sep</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="n">w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">var1</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="o">*</span><span class="n">var_r</span> <span class="ow">and</span> <span class="n">var4</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="o">*</span><span class="n">var_r</span> <span class="ow">and</span> <span class="n">var2</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">*</span><span class="n">var_r</span> <span class="ow">and</span> <span class="n">var3</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">*</span><span class="n">var_r</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+
+            <span class="c1"># go to next frame</span>
+            <span class="k">if</span> <span class="n">var1</span> <span class="o">&gt;</span> <span class="mi">60</span><span class="p">:</span>
+                <span class="n">place</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># go to previous frame</span>
+            <span class="k">if</span> <span class="n">var4</span> <span class="o">&gt;</span> <span class="mi">60</span><span class="p">:</span>
+                <span class="n">place</span> <span class="o">-=</span> <span class="mi">1</span>
+
+            <span class="nb">iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">ret</span><span class="p">,</span> <span class="n">imgray</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span></div>
+
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c1"># To flip the image, modify the flip_method parameter (0 and 2 are the most common)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">gstreamer_pipeline</span><span class="p">(</span><span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="c1"># camera parameters (mm)</span>
+    <span class="n">focal_length</span> <span class="o">=</span> <span class="mf">3.04</span>
+    <span class="n">pixel_size</span> <span class="o">=</span> <span class="mf">1.12</span><span class="o">/</span><span class="mi">1000</span>
+
+    <span class="c1"># estimated velocity of the object (m/s)</span>
+    <span class="n">v_est</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="c1"># load calibration parameters</span>
+    <span class="n">mtx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;mtx_normal.txt&#39;</span><span class="p">)</span>
+    <span class="n">dst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;dist_normal.txt&#39;</span><span class="p">)</span>
+
+    <span class="c1"># get calibration map</span>
+    <span class="n">map_x</span><span class="p">,</span> <span class="n">map_y</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">initUndistortRectifyMap</span><span class="p">(</span><span class="n">mtx</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mtx</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CV_32FC1</span><span class="p">)</span>
+
+    <span class="c1"># separation from edge</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="mi">250</span>
+    <span class="n">vec</span> <span class="o">=</span> <span class="mi">400</span>
+
+    <span class="c1"># ringbuffer for geometry pattern</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="c1"># to flip the image, modify the flip_method parameter (0 and 2 are the most common)</span>
     <span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">gstreamer_pipeline</span><span class="p">(</span><span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CAP_GSTREAMER</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">cap</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span>
-        <span class="n">window_handle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_AUTOSIZE</span><span class="p">)</span>
-        <span class="c1"># Window</span>
-        <span class="k">while</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getWindowProperty</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">window_handle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_NORMAL</span><span class="p">)</span>
+
+        <span class="n">t_ref</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># wait for exposure control</span>
+        <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_ref</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getWindowProperty</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">ret_val</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="n">imggray</span>  <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
-            <span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">blackAndWhiteImage</span><span class="p">)</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">imggray</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
-            <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">-</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-            <span class="c1">#cv2.imshow(&quot;CSI Camera&quot;, img)</span>
-            <span class="c1"># This also acts as</span>
-            <span class="n">keyCode</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
-            <span class="c1"># Stop the program on the ESC key</span>
-            <span class="k">if</span> <span class="n">keyCode</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
-                <span class="k">break</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+            <span class="n">thresh_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Init mode, max value = </span><span class="si">{:.0f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thresh_value</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Entering measurement mode...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># kernel for edge detection</span>
+        <span class="n">kernel</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+        <span class="c1"># get image</span>
+        <span class="n">ret_val</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">imgray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+        <span class="c1"># compute a reference variance</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)]))</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)]))</span>
+        <span class="n">var</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">imgray</span><span class="p">[</span><span class="n">sep</span><span class="p">:</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="n">w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]))</span>
+
+        <span class="n">fps_trigger</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">fps_process</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">time_old</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getWindowProperty</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">time_old</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_old</span>
+            <span class="n">t_ref</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+            <span class="c1"># get the image</span>
+            <span class="n">ret_val</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">imgray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+            <span class="c1"># get an image from the trigger</span>
+            <span class="n">ret</span><span class="p">,</span> <span class="n">imgray</span> <span class="o">=</span> <span class="n">trigger</span><span class="p">(</span><span class="n">imgray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">var</span><span class="p">))</span>
+
+            <span class="n">t_process</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ret</span><span class="p">:</span>
+                <span class="c1"># edge detection</span>
+                <span class="n">edge</span> <span class="o">=</span> <span class="n">get_edge_erroded</span><span class="p">(</span><span class="n">imgray</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+
+                <span class="c1"># find geometry pattern (upper and lower)</span>
+                <span class="n">cnts_upper</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">sep</span><span class="p">,</span> <span class="n">vec</span><span class="p">:(</span><span class="n">w</span> <span class="o">-</span> <span class="n">vec</span><span class="p">)],</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_NONE</span><span class="p">)</span>
+                <span class="n">cnts_lower</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">edge</span><span class="p">[(</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">):</span><span class="n">h</span><span class="p">,</span> <span class="n">vec</span><span class="p">:(</span><span class="n">w</span> <span class="o">-</span> <span class="n">vec</span><span class="p">)],</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span>
+                                                 <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_NONE</span><span class="p">)</span>
+
+                <span class="c1"># only keep valid contours</span>
+                <span class="n">cnts_upper</span> <span class="o">=</span> <span class="n">remove_contours</span><span class="p">(</span><span class="n">cnts_upper</span><span class="p">,</span> <span class="mi">2600</span><span class="p">,</span> <span class="mi">3400</span><span class="p">)</span>
+                <span class="n">cnts_lower</span> <span class="o">=</span> <span class="n">remove_contours</span><span class="p">(</span><span class="n">cnts_lower</span><span class="p">,</span> <span class="mi">2600</span><span class="p">,</span> <span class="mi">3400</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cnts_upper</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">cnts_lower</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+                    <span class="c1"># undistort contours</span>
+                    <span class="n">cnts_upper</span> <span class="o">=</span> <span class="n">remap_contours</span><span class="p">(</span><span class="n">cnts_upper</span><span class="p">,</span> <span class="n">map_x</span><span class="p">,</span> <span class="n">map_y</span><span class="p">)</span>
+                    <span class="n">cnts_lower</span> <span class="o">=</span> <span class="n">remap_contours</span><span class="p">(</span><span class="n">cnts_lower</span><span class="p">,</span> <span class="n">map_x</span><span class="p">,</span> <span class="n">map_y</span><span class="p">)</span>
+
+                    <span class="c1"># collect image points (geometry pattern)</span>
+                    <span class="n">imgp_upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cnts_upper</span><span class="p">:</span>
+                        <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">minAreaRect</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                        <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boxPoints</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+
+                        <span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">bl</span><span class="p">)</span> <span class="o">=</span> <span class="n">box</span>
+                        <span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vec</span>
+                        <span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vec</span>
+                        <span class="n">br</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vec</span>
+                        <span class="n">bl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vec</span>
+
+                        <span class="n">p</span> <span class="o">=</span> <span class="n">rect_center</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">bl</span><span class="p">)</span>
+                        <span class="n">imgp_upper</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
+                        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                    <span class="n">imgp_lower</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cnts_lower</span><span class="p">:</span>
+                        <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">minAreaRect</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                        <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boxPoints</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+
+                        <span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">bl</span><span class="p">)</span> <span class="o">=</span> <span class="n">box</span>
+                        <span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vec</span>
+                        <span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vec</span>
+                        <span class="n">br</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vec</span>
+                        <span class="n">bl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vec</span>
+                        <span class="n">tl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">)</span>
+                        <span class="n">tr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">)</span>
+                        <span class="n">br</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">)</span>
+                        <span class="n">bl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">)</span>
+                        <span class="n">p</span> <span class="o">=</span> <span class="n">rect_center</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">bl</span><span class="p">)</span>
+                        <span class="n">imgp_lower</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
+                        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                    <span class="c1"># sort the points</span>
+                    <span class="n">imgp_upper</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">imgp_upper</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">imgp_lower</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">imgp_lower</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+                    <span class="c1"># append the buffer with a combined array</span>
+                    <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">imgp_upper</span><span class="p">,</span> <span class="n">imgp_lower</span><span class="p">]))</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No pattern detected&#39;</span><span class="p">)</span>
+
+                <span class="c1"># reject frame if buffer is empty</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No image points in buffer&#39;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># use the mean of the buffer as image points</span>
+                <span class="n">imgp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+                <span class="c1"># get pixels per metric unit</span>
+                <span class="n">ppm_array</span> <span class="o">=</span> <span class="p">[</span><span class="n">dist</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">imgp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">imgp</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">/</span> <span class="mi">220</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">imgp</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">imgp</span><span class="p">[</span><span class="mi">9</span><span class="p">])</span> <span class="o">/</span> <span class="mi">220</span><span class="p">,</span>
+                             <span class="n">dist</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">imgp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">imgp</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">/</span> <span class="mi">110</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">imgp</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">imgp</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span> <span class="o">/</span> <span class="mi">110</span><span class="p">]</span>
+
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+                    <span class="n">ppm_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">imgp</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">imgp</span><span class="p">[</span><span class="mi">5</span> <span class="o">+</span> <span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="mi">150</span><span class="p">)</span>
+
+                <span class="n">ppm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ppm_array</span><span class="p">)</span>
+
+                <span class="c1"># get the principal point</span>
+                <span class="n">cx</span> <span class="o">=</span> <span class="n">mtx</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">cy</span> <span class="o">=</span> <span class="n">mtx</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+                <span class="c1"># generate array with objectpoints</span>
+                <span class="n">objp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">110</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cx</span><span class="p">,</span> <span class="o">-</span><span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="o">-</span><span class="mi">55</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cx</span><span class="p">,</span> <span class="o">-</span><span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="n">cx</span><span class="p">,</span> <span class="o">-</span><span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="mi">55</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cx</span><span class="p">,</span> <span class="o">-</span><span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="mi">110</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cx</span><span class="p">,</span> <span class="o">-</span><span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="o">-</span><span class="mi">110</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cx</span><span class="p">,</span> <span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="o">-</span><span class="mi">55</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cx</span><span class="p">,</span> <span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="n">cx</span><span class="p">,</span> <span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="mi">55</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cx</span><span class="p">,</span> <span class="mi">75</span>  <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="mi">110</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cx</span><span class="p">,</span> <span class="mi">75</span> <span class="o">*</span> <span class="n">ppm</span> <span class="o">+</span> <span class="n">cy</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+                <span class="c1"># get transformation matrix</span>
+                <span class="n">T</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findHomography</span><span class="p">(</span><span class="n">imgp</span><span class="p">,</span> <span class="n">objp</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+                <span class="c1"># find object-contours inside the separation</span>
+                <span class="n">cnts_m</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="n">sep</span><span class="p">:(</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">),</span> <span class="p">:],</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_NONE</span><span class="p">)</span>
+
+                <span class="c1"># remove invalid contours</span>
+                <span class="n">cnts_m</span> <span class="o">=</span> <span class="n">remove_contours</span><span class="p">(</span><span class="n">cnts_m</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">900000</span><span class="p">)</span>
+
+                <span class="c1"># undistort contours</span>
+                <span class="n">cnts_m</span> <span class="o">=</span> <span class="n">remap_contours</span><span class="p">(</span><span class="n">cnts_m</span><span class="p">,</span> <span class="n">map_x</span><span class="p">,</span> <span class="n">map_y</span><span class="p">)</span>
+
+                <span class="c1"># reject frame if cnts_m is empty</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">cnts_m</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No object found&#39;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># combine contours to one</span>
+                <span class="n">cnts_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">cnts_m</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+                <span class="c1"># warp perspective of the contours</span>
+                <span class="n">cnts_m</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">perspectiveTransform</span><span class="p">(</span><span class="n">cnts_m</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+                <span class="c1"># minimum area rectangle around cnts_m</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">minAreaRect</span><span class="p">(</span><span class="n">cnts_m</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boxPoints</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+                <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sep</span>
+                <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sep</span>
+                <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sep</span>
+                <span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sep</span>
+
+                <span class="c1"># sort the points clockwise</span>
+                <span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="n">bl</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">br</span><span class="p">)</span> <span class="o">=</span> <span class="n">sort_points</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+
+                <span class="c1"># compute the center of the rectangle</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">rect_center</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">bl</span><span class="p">)</span>
+
+                <span class="c1"># compute the rotation matrix</span>
+                <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">((</span><span class="n">tr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">tl</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)],</span>
+                              <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)]])</span>
+
+                <span class="c1"># rotate the rectangle</span>
+                <span class="n">tl</span> <span class="o">=</span> <span class="n">D</span> <span class="o">@</span> <span class="p">(</span><span class="n">tl</span><span class="o">-</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">tr</span> <span class="o">=</span> <span class="n">D</span> <span class="o">@</span> <span class="p">(</span><span class="n">tr</span><span class="o">-</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">br</span> <span class="o">=</span> <span class="n">D</span> <span class="o">@</span> <span class="p">(</span><span class="n">br</span><span class="o">-</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">bl</span> <span class="o">=</span> <span class="n">D</span> <span class="o">@</span> <span class="p">(</span><span class="n">bl</span><span class="o">-</span><span class="n">c</span><span class="p">)</span>
+
+                <span class="c1"># compute camera-plane distance (in mm)</span>
+                <span class="n">height</span> <span class="o">=</span> <span class="n">focal_length</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">ppm</span><span class="o">*</span><span class="n">pixel_size</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># compute the triangle around object</span>
+                <span class="n">a_l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">height</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">tl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">ppm</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">b_l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">height</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">bl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">ppm</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">c_l</span> <span class="o">=</span> <span class="p">(</span><span class="n">bl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">tl</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">ppm</span>
+                <span class="n">a_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">height</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">ppm</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">b_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">height</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">br</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">ppm</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">c_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">br</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">tr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">ppm</span>
+
+                <span class="c1"># compute the radius (incircles)</span>
+                <span class="n">s_l</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_l</span> <span class="o">+</span> <span class="n">b_l</span> <span class="o">+</span> <span class="n">c_l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">r_l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">s_l</span> <span class="o">-</span> <span class="n">a_l</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s_l</span> <span class="o">-</span> <span class="n">b_l</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s_l</span> <span class="o">-</span> <span class="n">c_l</span><span class="p">))</span> <span class="o">/</span> <span class="n">s_l</span><span class="p">)</span>
+                <span class="n">s_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_r</span> <span class="o">+</span> <span class="n">b_r</span> <span class="o">+</span> <span class="n">c_r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">r_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">s_r</span> <span class="o">-</span> <span class="n">a_r</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s_r</span> <span class="o">-</span> <span class="n">b_r</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s_r</span> <span class="o">-</span> <span class="n">c_r</span><span class="p">))</span> <span class="o">/</span> <span class="n">s_r</span><span class="p">)</span>
+
+                <span class="c1"># compute Diameter</span>
+                <span class="n">D</span> <span class="o">=</span> <span class="n">r_r</span> <span class="o">+</span> <span class="n">r_l</span>
+
+                <span class="c1"># correction factors (theorem of intersecting lines)</span>
+                <span class="n">x_cor</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">D</span><span class="p">)</span> <span class="o">/</span> <span class="n">height</span>
+
+                <span class="c1"># readjust x values</span>
+                <span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">cx</span> <span class="o">-</span> <span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">x_cor</span>
+                <span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">cx</span> <span class="o">-</span> <span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">x_cor</span>
+                <span class="n">br</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">br</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">cx</span> <span class="o">-</span> <span class="n">br</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">x_cor</span>
+                <span class="n">bl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">bl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">cx</span> <span class="o">-</span> <span class="n">bl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">x_cor</span>
+
+                <span class="c1"># compute length</span>
+                <span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">br</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">bl</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">ppm</span>
+
+                <span class="c1"># compute amount of rows</span>
+                <span class="n">n_rows</span> <span class="o">=</span> <span class="p">(</span><span class="n">bl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">tl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">br</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">tr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+
+                <span class="c1"># get the time delay between the rows</span>
+                <span class="n">t_delay</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">28</span> <span class="o">/</span> <span class="n">h</span> <span class="o">*</span> <span class="n">n_rows</span>
+
+                <span class="c1"># correct the rolling shutter</span>
+                <span class="n">L</span> <span class="o">-=</span> <span class="n">t_delay</span> <span class="o">*</span> <span class="n">v_est</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">/</span> <span class="n">ppm</span>
+
+                <span class="c1"># print the result</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;L = </span><span class="si">{:.2f}</span><span class="s1">, D = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">D</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">fps_process</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">fps_process</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_process</span><span class="p">)</span>
+                    <span class="n">time_old</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">fps_process</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">fps_process</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">/</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_process</span><span class="p">)</span>
+                    <span class="n">time_old</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;fps = </span><span class="si">{:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fps_process</span><span class="p">))</span>
+
+                <span class="c1"># show the measured contour (remove for full fps)</span>
+                <span class="c1"># cv2.namedWindow(&quot;Contours&quot;, cv2.WINDOW_NORMAL)</span>
+                <span class="c1"># cv2.resizeWindow(&quot;Contours&quot;, 1632, 924)</span>
+                <span class="c1"># cv2.putText(imgray, &quot;L = {:.3f}, D = {:.3f}&quot;.format(L, D), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)</span>
+                <span class="c1"># cv2.drawContours(imgray, [np.array([tl+c, tr+c, br+c, bl+c]).astype(&quot;int&quot;)], -1, (255, 255, 0), 10)</span>
+                <span class="c1"># cv2.imshow(&quot;Contours&quot;, imgray)</span>
+
+                <span class="c1"># Show the edges for visual control (remove for full fps)</span>
+                <span class="c1"># cv2.resizeWindow(&quot;CSI Camera&quot;, 1632, 924)</span>
+                <span class="c1"># cv2.putText(edge, &quot;{:.2f} fps&quot;.format(fps_process), (100, 150), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 255, 255), 3)</span>
+                <span class="c1"># cv2.imshow(&quot;CSI Camera&quot;, edge)</span>
+
+                <span class="n">keyCode</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+                <span class="c1"># stop the program on the ESC key</span>
+                <span class="k">if</span> <span class="n">keyCode</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+                    <span class="k">break</span>
+
         <span class="n">cap</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
         <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
@@ -116,6 +470,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../morph.html">morph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geometry.html">geometry module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../calib.html">calib module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">setup module</a></li>
 </ul>
 
 <div class="relations">

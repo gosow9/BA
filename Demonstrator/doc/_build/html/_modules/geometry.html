@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>geometry &#8212; Demonstrator 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for geometry</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">This modul contains functions, which are usefull to handle countours and points in order to get the geometry pattern.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">distance</span> <span class="k">as</span> <span class="n">dist</span>
+
+
+<div class="viewcode-block" id="rect_center"><a class="viewcode-back" href="../geometry.html#geometry.rect_center">[docs]</a><span class="k">def</span> <span class="nf">rect_center</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">bl</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">    Computes centerpoint of a rectangle given it&#39;s corners</span>
+
+<span class="sd">    :param tl: Point in the top left</span>
+<span class="sd">    :type tl: InputArray</span>
+<span class="sd">    :param tr: Point in the top right</span>
+<span class="sd">    :type tr: InputArray</span>
+<span class="sd">    :param br: Point in the bottom right</span>
+<span class="sd">    :type br: InputArray</span>
+<span class="sd">    :param bl: Point in the bottom left</span>
+<span class="sd">    :type bl: InputArray</span>
+<span class="sd">    :return: Centerpoint</span>
+<span class="sd">    :return type: Output Array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">br</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">bl</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                  <span class="p">[</span><span class="n">tl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">br</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">bl</span><span class="p">[</span><span class="mi">1</span><span class="p">]]])</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">tl</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                  <span class="p">[</span><span class="n">tr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">tl</span><span class="p">[</span><span class="mi">1</span><span class="p">]]])</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">b</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">tl</span> <span class="o">-</span> <span class="n">br</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">tl</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="remove_contours"><a class="viewcode-back" href="../geometry.html#geometry.remove_contours">[docs]</a><span class="k">def</span> <span class="nf">remove_contours</span><span class="p">(</span><span class="n">cnts</span><span class="p">,</span> <span class="n">minArea</span><span class="p">,</span> <span class="n">maxArea</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Removes contours outside the definded to areas</span>
+
+<span class="sd">    :param cnts: Input Contours</span>
+<span class="sd">    :type cnts: InputArray</span>
+<span class="sd">    :param minArea:</span>
+<span class="sd">    :param maxArea:</span>
+<span class="sd">    :return: Output Contours</span>
+<span class="sd">    :return type: OutputArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cnts</span><span class="p">))):</span>
+        <span class="n">area</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">contourArea</span><span class="p">(</span><span class="n">cnts</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">area</span> <span class="o">&gt;</span> <span class="n">maxArea</span> <span class="ow">or</span> <span class="n">area</span> <span class="o">&lt;</span> <span class="n">minArea</span><span class="p">:</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">cnts</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cnts</span></div>
+
+
+<div class="viewcode-block" id="remap_contours"><a class="viewcode-back" href="../geometry.html#geometry.remap_contours">[docs]</a><span class="k">def</span> <span class="nf">remap_contours</span><span class="p">(</span><span class="n">cnts</span><span class="p">,</span> <span class="n">map_x</span><span class="p">,</span> <span class="n">map_y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remaps the contours points</span>
+
+<span class="sd">    :param cnts: Contours</span>
+<span class="sd">    :type cnts: InputArray</span>
+<span class="sd">    :param map_x: Undistortion map in x</span>
+<span class="sd">    :type map_x: InputArray</span>
+<span class="sd">    :param map_y: Undistortion map in y</span>
+<span class="sd">    :type map_y: InputArray</span>
+<span class="sd">    :return: Remaped Contours</span>
+<span class="sd">    :return type: OutputArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cnts</span><span class="p">:</span>
+        <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">y_tmp</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">map_x</span><span class="p">[</span><span class="n">y_tmp</span><span class="p">][</span><span class="n">x_tmp</span><span class="p">]</span>
+        <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">map_y</span><span class="p">[</span><span class="n">y_tmp</span><span class="p">][</span><span class="n">x_tmp</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">cnts</span></div>
+
+
+<div class="viewcode-block" id="sort_points"><a class="viewcode-back" href="../geometry.html#geometry.sort_points">[docs]</a><span class="k">def</span> <span class="nf">sort_points</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sorts a set of four points</span>
+
+<span class="sd">    :param p: set of four points</span>
+<span class="sd">    :type p: InputArray</span>
+<span class="sd">    :return: Sorted set of points</span>
+<span class="sd">    :return type: OutputArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># sort with respect to x</span>
+    <span class="n">xsort</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># get left and right points</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">xsort</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">xsort</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+    <span class="c1"># sort with respect to y</span>
+    <span class="n">tl</span><span class="p">,</span> <span class="n">bl</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">tr</span><span class="p">,</span> <span class="n">br</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">tl</span><span class="p">,</span> <span class="n">bl</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">br</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Demonstrator</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../morph.html">morph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geometry.html">geometry module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../calib.html">calib module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">setup module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Cédric Renda, Manuel Tischhauser.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

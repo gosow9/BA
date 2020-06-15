@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>setup &#8212; Demonstrator 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for setup</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This script opens a window, which helps the user to set up the demostrator, make sure to set w, h, vec, sep to the same</span>
+<span class="sd">values as later used in main.py.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">morph</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">geometry</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Global variable</span>
+<span class="n">w</span> <span class="o">=</span> <span class="mi">3264</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">1848</span>
+
+<div class="viewcode-block" id="gstreamer_pipeline"><a class="viewcode-back" href="../setup.html#setup.gstreamer_pipeline">[docs]</a><span class="k">def</span> <span class="nf">gstreamer_pipeline</span><span class="p">(</span>
+        <span class="n">capture_width</span><span class="o">=</span><span class="n">w</span><span class="p">,</span>
+        <span class="n">capture_height</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
+        <span class="n">display_width</span><span class="o">=</span><span class="n">w</span><span class="p">,</span>
+        <span class="n">display_height</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
+        <span class="n">framerate</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span>
+        <span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configures gstreamer string</span>
+<span class="sd">    :param capture_width: Capture width of camera</span>
+<span class="sd">    :type capture_width: Int</span>
+<span class="sd">    :param capture_height: Capture height of camera</span>
+<span class="sd">    :type capture_height: Int</span>
+<span class="sd">    :param display_width: Display width of the captured image</span>
+<span class="sd">    :type display_width: Int</span>
+<span class="sd">    :param display_height: Display height of the captured image</span>
+<span class="sd">    :type display_height: Int</span>
+<span class="sd">    :param framerate: Frames per second</span>
+<span class="sd">    :type framerate: Int</span>
+<span class="sd">    :param flip_method: Orientation of the image</span>
+<span class="sd">    :type flip_method: Int</span>
+<span class="sd">    :return: String</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+            <span class="s2">&quot;nvarguscamerasrc ! &quot;</span>
+            <span class="s2">&quot;video/x-raw(memory:NVMM), &quot;</span>
+            <span class="s2">&quot;width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;format=(string)NV12, framerate=(fraction)</span><span class="si">%d</span><span class="s2">/1 ! &quot;</span>
+            <span class="s2">&quot;nvvidconv flip-method=</span><span class="si">%d</span><span class="s2"> ! &quot;</span>
+            <span class="s2">&quot;video/x-raw, width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, format=(string)BGRx ! &quot;</span>
+            <span class="s2">&quot;videoconvert ! &quot;</span>
+            <span class="s2">&quot;video/x-raw, format=(string)BGR ! appsink&quot;</span>
+            <span class="o">%</span> <span class="p">(</span>
+                <span class="n">capture_width</span><span class="p">,</span>
+                <span class="n">capture_height</span><span class="p">,</span>
+                <span class="n">framerate</span><span class="p">,</span>
+                <span class="n">flip_method</span><span class="p">,</span>
+                <span class="n">display_width</span><span class="p">,</span>
+                <span class="n">display_height</span><span class="p">,</span>
+            <span class="p">)</span>
+    <span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># separation from edge</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="mi">250</span>
+    <span class="n">vec</span> <span class="o">=</span> <span class="mi">400</span>
+
+    <span class="c1"># kernel for edge detection</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="c1"># To flip the image, modify the flip_method parameter (0 and 2 are the most common)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">gstreamer_pipeline</span><span class="p">(</span><span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">gstreamer_pipeline</span><span class="p">(</span><span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CAP_GSTREAMER</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cap</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span>
+        <span class="n">window_handle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_NORMAL</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getWindowProperty</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ret_val</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">imgray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+            <span class="n">edge</span> <span class="o">=</span> <span class="n">get_edge_erroded</span><span class="p">(</span><span class="n">imgray</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+
+            <span class="c1"># find geometry pattern (upper and lower)</span>
+            <span class="n">cnts_upper</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">sep</span><span class="p">,</span> <span class="n">vec</span><span class="p">:(</span><span class="n">w</span> <span class="o">-</span> <span class="n">vec</span><span class="p">)],</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_NONE</span><span class="p">)</span>
+            <span class="n">cnts_lower</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">edge</span><span class="p">[(</span><span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">):</span><span class="n">h</span><span class="p">,</span> <span class="n">vec</span><span class="p">:(</span><span class="n">w</span> <span class="o">-</span> <span class="n">vec</span><span class="p">)],</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span>
+                                             <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_NONE</span><span class="p">)</span>
+            <span class="c1"># only keep valid contours</span>
+            <span class="n">cnts_upper</span> <span class="o">=</span> <span class="n">remove_contours</span><span class="p">(</span><span class="n">cnts_upper</span><span class="p">,</span> <span class="mi">2600</span><span class="p">,</span> <span class="mi">3400</span><span class="p">)</span>
+            <span class="n">cnts_lower</span> <span class="o">=</span> <span class="n">remove_contours</span><span class="p">(</span><span class="n">cnts_lower</span><span class="p">,</span> <span class="mi">2600</span><span class="p">,</span> <span class="mi">3400</span><span class="p">)</span>
+
+            <span class="c1"># pattern area</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># draw the contours, compute pattern area</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cnts_upper</span><span class="p">:</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">minAreaRect</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+                <span class="n">a</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">contourArea</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">area</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+                <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boxPoints</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">box</span> <span class="o">+</span> <span class="p">[</span><span class="n">vec</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">drawContours</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">[</span><span class="n">box</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cnts_lower</span><span class="p">:</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">minAreaRect</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+                <span class="n">a</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">contourArea</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">area</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+                <span class="n">box</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boxPoints</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+                <span class="n">box</span> <span class="o">=</span> <span class="n">box</span> <span class="o">+</span> <span class="p">[</span><span class="n">vec</span><span class="p">,</span> <span class="n">h</span> <span class="o">-</span> <span class="n">sep</span><span class="p">]</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">drawContours</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">[</span><span class="n">box</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+
+            <span class="c1"># print out the pattern area</span>
+            <span class="k">if</span> <span class="n">area</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;size: </span><span class="si">{:.0f}</span><span class="s1"> - </span><span class="si">{:.0f}</span><span class="s1">, mean: </span><span class="si">{:.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">area</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">area</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">area</span><span class="p">)),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># draw lines to postion pattern</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">sep</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineType</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">h</span><span class="o">-</span><span class="n">sep</span><span class="p">),</span> <span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineType</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span><span class="o">-</span><span class="n">vec</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">w</span><span class="o">-</span><span class="n">vec</span><span class="p">,</span> <span class="n">sep</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineType</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">vec</span><span class="p">,</span> <span class="n">h</span><span class="o">-</span><span class="n">sep</span><span class="p">),</span> <span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">vec</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineType</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">sep</span><span class="p">),</span> <span class="p">(</span><span class="n">w</span><span class="o">-</span><span class="n">vec</span><span class="p">,</span> <span class="n">sep</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineType</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">h</span><span class="o">-</span><span class="n">sep</span><span class="p">),</span> <span class="p">(</span><span class="n">w</span><span class="o">-</span><span class="n">vec</span><span class="p">,</span> <span class="n">h</span><span class="o">-</span><span class="n">sep</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">thickness</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineType</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">cv2</span><span class="o">.</span><span class="n">resizeWindow</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="mi">1632</span><span class="p">,</span> <span class="mi">924</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+
+            <span class="n">keyCode</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+            <span class="k">if</span> <span class="n">keyCode</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">cap</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to open camera&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Demonstrator</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../morph.html">morph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geometry.html">geometry module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../calib.html">calib module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">setup module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Cédric Renda, Manuel Tischhauser.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

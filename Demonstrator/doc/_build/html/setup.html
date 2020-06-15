@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>setup module &#8212; Demonstrator 1.0 documentation</title>
@@ -31,8 +31,29 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="setup-module">
-<h1>setup module<a class="headerlink" href="#setup-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-setup">
+<span id="setup-module"></span><h1>setup module<a class="headerlink" href="#module-setup" title="Permalink to this headline">¶</a></h1>
+<p>This script opens a window, which helps the user to set up the demostrator, make sure to set w, h, vec, sep to the same
+values as later used in main.py.</p>
+<dl class="py function">
+<dt id="setup.gstreamer_pipeline">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">gstreamer_pipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">capture_width</span><span class="o">=</span><span class="default_value">3264</span></em>, <em class="sig-param"><span class="n">capture_height</span><span class="o">=</span><span class="default_value">1848</span></em>, <em class="sig-param"><span class="n">display_width</span><span class="o">=</span><span class="default_value">3264</span></em>, <em class="sig-param"><span class="n">display_height</span><span class="o">=</span><span class="default_value">1848</span></em>, <em class="sig-param"><span class="n">framerate</span><span class="o">=</span><span class="default_value">28</span></em>, <em class="sig-param"><span class="n">flip_method</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/setup.html#gstreamer_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#setup.gstreamer_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configures gstreamer string
+:param capture_width: Capture width of camera
+:type capture_width: Int
+:param capture_height: Capture height of camera
+:type capture_height: Int
+:param display_width: Display width of the captured image
+:type display_width: Int
+:param display_height: Display height of the captured image
+:type display_height: Int
+:param framerate: Frames per second
+:type framerate: Int
+:param flip_method: Orientation of the image
+:type flip_method: Int
+:return: String</p>
+</dd></dl>
+
 </div>
 
 
@@ -95,7 +116,7 @@
       &copy;2020, Cédric Renda, Manuel Tischhauser.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

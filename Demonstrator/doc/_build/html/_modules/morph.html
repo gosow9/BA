@@ -32,7 +32,7 @@
             
   <h1>Source code for morph</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This model contains the morphological functions.</span>
+<span class="sd">This modul contains the morphological functions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -77,6 +77,70 @@
             <span class="k">break</span>
         <span class="n">im_old</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">img</span></div>
+
+
+<div class="viewcode-block" id="get_edge_erroded"><a class="viewcode-back" href="../morph.html#morph.get_edge_erroded">[docs]</a><span class="k">def</span> <span class="nf">get_edge_erroded</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements edge detection with an eroded image.</span>
+
+<span class="sd">    :param img: 2d image</span>
+<span class="sd">    :type img: InputArray</span>
+<span class="sd">    :param kernel: errosion kernel</span>
+<span class="sd">    :type kernel: InputArray</span>
+<span class="sd">    :return: Processed image</span>
+<span class="sd">    :return type: OutputArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret3</span><span class="p">,</span> <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span> <span class="o">+</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_TRIANGLE</span><span class="p">)</span>
+    <span class="n">erode</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">erode</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">erode</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_edge_dilated"><a class="viewcode-back" href="../morph.html#morph.get_edge_dilated">[docs]</a><span class="k">def</span> <span class="nf">get_edge_dilated</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements edge detection with an dilated image.</span>
+
+<span class="sd">    :param img: 2d image</span>
+<span class="sd">    :type img: InputArray</span>
+<span class="sd">    :param kernel: errosion kernel</span>
+<span class="sd">    :type kernel: InputArray</span>
+<span class="sd">    :return: Processed image</span>
+<span class="sd">    :return type: OutputArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret3</span><span class="p">,</span> <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span> <span class="o">+</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_TRIANGLE</span><span class="p">)</span>
+    <span class="n">dilat</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">dilat</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_edge_grad"><a class="viewcode-back" href="../morph.html#morph.get_edge_grad">[docs]</a><span class="k">def</span> <span class="nf">get_edge_grad</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements edge detection with an difference of a dilated and eroded image.</span>
+
+<span class="sd">    :param img: 2d image</span>
+<span class="sd">    :type img: InputArray</span>
+<span class="sd">    :param kernel: errosion kernel</span>
+<span class="sd">    :type kernel: InputArray</span>
+<span class="sd">    :return: Processed image</span>
+<span class="sd">    :return type: OutputArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret3</span><span class="p">,</span> <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span> <span class="o">+</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_TRIANGLE</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">morphologyEx</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_GRADIENT</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_edge_errosion_dilation"><a class="viewcode-back" href="../morph.html#morph.get_edge_errosion_dilation">[docs]</a><span class="k">def</span> <span class="nf">get_edge_errosion_dilation</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements edge detection with an difference of a dilated and eroded image.</span>
+
+<span class="sd">    :param img: 2d image</span>
+<span class="sd">    :type img: InputArray</span>
+<span class="sd">    :param kernel: errosion kernel</span>
+<span class="sd">    :type kernel: InputArray</span>
+<span class="sd">    :return: Processed image</span>
+<span class="sd">    :return type: OutputArray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret3</span><span class="p">,</span> <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span> <span class="o">+</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_TRIANGLE</span><span class="p">)</span>
+    <span class="n">erode</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">erode</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dilat</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">dilat</span><span class="p">,</span> <span class="n">erode</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -99,6 +163,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../morph.html">morph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geometry.html">geometry module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../calib.html">calib module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">setup module</a></li>
 </ul>
 
 <div class="relations">

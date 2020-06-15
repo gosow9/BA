@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>geometry module &#8212; Demonstrator 1.0 documentation</title>
@@ -32,8 +32,91 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="geometry-module">
-<h1>geometry module<a class="headerlink" href="#geometry-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-geometry">
+<span id="geometry-module"></span><h1>geometry module<a class="headerlink" href="#module-geometry" title="Permalink to this headline">¶</a></h1>
+<p>This modul contains functions, which are usefull to handle countours and points in order to get the geometry pattern.</p>
+<dl class="py function">
+<dt id="geometry.rect_center">
+<code class="sig-prename descclassname">geometry.</code><code class="sig-name descname">rect_center</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tl</span></em>, <em class="sig-param"><span class="n">tr</span></em>, <em class="sig-param"><span class="n">br</span></em>, <em class="sig-param"><span class="n">bl</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geometry.html#rect_center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geometry.rect_center" title="Permalink to this definition">¶</a></dt>
+<dd><p>”
+Computes centerpoint of a rectangle given it’s corners</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tl</strong> (<em>InputArray</em>) – Point in the top left</p></li>
+<li><p><strong>tr</strong> (<em>InputArray</em>) – Point in the top right</p></li>
+<li><p><strong>br</strong> (<em>InputArray</em>) – Point in the bottom right</p></li>
+<li><p><strong>bl</strong> (<em>InputArray</em>) – Point in the bottom left</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Centerpoint</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Output Array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="geometry.remap_contours">
+<code class="sig-prename descclassname">geometry.</code><code class="sig-name descname">remap_contours</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cnts</span></em>, <em class="sig-param"><span class="n">map_x</span></em>, <em class="sig-param"><span class="n">map_y</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geometry.html#remap_contours"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geometry.remap_contours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remaps the contours points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cnts</strong> (<em>InputArray</em>) – Contours</p></li>
+<li><p><strong>map_x</strong> (<em>InputArray</em>) – Undistortion map in x</p></li>
+<li><p><strong>map_y</strong> (<em>InputArray</em>) – Undistortion map in y</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Remaped Contours</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="geometry.remove_contours">
+<code class="sig-prename descclassname">geometry.</code><code class="sig-name descname">remove_contours</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cnts</span></em>, <em class="sig-param"><span class="n">minArea</span></em>, <em class="sig-param"><span class="n">maxArea</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geometry.html#remove_contours"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geometry.remove_contours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes contours outside the definded to areas</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cnts</strong> (<em>InputArray</em>) – Input Contours</p></li>
+<li><p><strong>minArea</strong> – </p></li>
+<li><p><strong>maxArea</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Output Contours</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="geometry.sort_points">
+<code class="sig-prename descclassname">geometry.</code><code class="sig-name descname">sort_points</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">p</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/geometry.html#sort_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#geometry.sort_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts a set of four points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>p</strong> (<em>InputArray</em>) – set of four points</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sorted set of points</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OutputArray</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -97,7 +180,7 @@
       &copy;2020, Cédric Renda, Manuel Tischhauser.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
